@@ -1,0 +1,90 @@
+<?php
+
+namespace App\Http\Controllers\user;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Models\Product;
+
+class CartController extends Controller
+{
+    public function index()
+    {
+        $cart = session()->get('cart', []);
+        $total = 0;
+        foreach ($cart as $item) {
+            $total += $item['price'] * $item['quantity'];
+        }
+        return view('frontend.cart', compact('cart', 'total'));
+    }
+
+    public function add(Request $request)
+    {
+        $request->validate([
+            'product_id' => 'required|exists:products,id',
+            'quantity' => 'required|integer|min:1',
+        ]);
+
+        $product = Product::findOrFail($request->product_id);
+        $cart = session()->get('cart', []);
+
+        if (isset($cart[$product->id])) {
+            $cart[$product->id]['quantity'] += $request->quantity;
+        } else {
+            $cart[$product->id] = [
+                'id' => $product->id,
+                'name' => $product->name,
+                'slug' => $product->slug,
+                'price' => $product->price,
+                'thumbnail' => $product->thumbnail,
+                'quantity' => $request->quantity,
+            ];
+        }
+
+        session()->put('cart', $cart);
+        return response()->json([
+            'success' => true,
+            'message' => 'Product added to cart!',
+            'cart_count' => count($cart),
+        ]);
+    }
+
+    public function update(Request $request)
+    {
+        $request->validate([
+            'product_id' => 'required|exists:products,id',
+            'quantity' => 'required|integer|min:1|max:99',
+        ]);
+
+        $cart = session()->get('cart', []);
+        if (isset($cart[$request->product_id])) {
+            $cart[$request->product_id]['quantity'] = $request->quantity;
+            session()->put('cart', $cart);
+        }
+
+        return response()->json(['success' => true, 'message' => 'Cart updated!']);
+    }
+
+    public function remove($productId)
+    {
+        $cart = session()->get('cart', []);
+        if (isset($cart[$productId])) {
+            unset($cart[$productId]);
+            session()->put('cart', $cart);
+        }
+
+        return redirect()->back()->with('success', 'Item removed from cart.');
+    }
+
+    public function clear()
+    {
+        session()->forget('cart');
+        return redirect()->back()->with('success', 'Cart cleared.');
+    }
+
+    public function count()
+    {
+        $cart = session()->get('cart', []);
+        return response()->json(['count' => count($cart)]);
+    }
+}
