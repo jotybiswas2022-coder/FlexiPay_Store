@@ -14,16 +14,14 @@
                     </div>
 
                     <div class="fp-pay-summary">
-                        <div class="fp-ps-row"><span>Order Amount</span><span>₦{{ number_format($order->total, 0) }}</span></div>
+                        <div class="fp-ps-row"><span>Order Amount</span><span>₦{{ number_format($order->total_amount, 0) }}</span></div>
                         <div class="fp-ps-row"><span>Paid</span><span class="green">₦{{ number_format($order->paid_amount ?? 0, 0) }}</span></div>
                         <div class="fp-ps-divider"></div>
-                        <div class="fp-ps-row fp-ps-total"><span>Due Now</span><span>₦{{ number_format(($order->remaining_balance ?? $order->total) - ($order->paid_amount ?? 0), 0) }}</span></div>
+                        <div class="fp-ps-row fp-ps-total"><span>Due Now</span><span>₦{{ number_format($order->remaining_amount - ($order->paid_amount ?? 0), 0) }}</span></div>
                     </div>
 
-                    <form action="{{ route('checkout.process') }}" method="POST" class="mt-4">
+                    <form action="{{ route('payment.process', $order->id) }}" method="POST" class="mt-4">
                         @csrf
-                        <input type="hidden" name="order_id" value="{{ $order->id }}">
-
                         <div class="fp-pay-methods">
                             <label class="fp-pm-option">
                                 <input type="radio" name="gateway" value="paystack" checked>

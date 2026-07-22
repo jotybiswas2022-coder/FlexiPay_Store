@@ -37,6 +37,7 @@ Route::middleware(['auth'])->prefix('checkout')->controller(CheckoutController::
     Route::get('/', 'index')->name('checkout.index');
     Route::post('/process', 'process')->name('checkout.process');
     Route::get('/payment/{order}', 'paymentGateway')->name('payment.gateway');
+    Route::post('/payment/{order}/process', 'processPayment')->name('payment.process');
     Route::get('/confirmation/{order}', 'confirmation')->name('order.confirmation');
 });
 

@@ -194,6 +194,25 @@ class CheckoutController extends Controller
         return view('frontend.payment.gateway', compact('order'));
     }
 
+    public function processPayment(Request $request, Order $order)
+    {
+        $request->validate([
+            'gateway' => 'required|in:paystack,flutterwave,korapay',
+        ]);
+
+        $transaction = PaymentTransaction::create([
+            'order_id' => $order->id,
+            'user_id' => auth()->id(),
+            'amount' => $order->remaining_amount ?? $order->grand_total,
+            'transaction_reference' => 'TXN-' . strtoupper(Str::random(15)),
+            'gateway' => $request->gateway,
+            'status' => 'pending',
+        ]);
+
+        return redirect()->route('order.confirmation', $order->id)
+            ->with('success', 'Order placed successfully!');
+    }
+
     public function confirmation(Order $order)
     {
         $order->load(['items.product', 'installmentPlan', 'installmentPayments', 'deliveryAddress']);
