@@ -22,8 +22,12 @@ class CartController extends Controller
     {
         $request->validate([
             'product_id' => 'required|exists:products,id',
-            'quantity' => 'required|integer|min:1',
+            'quantity' => 'nullable|integer|min:1',
         ]);
+
+        if (!$request->quantity) {
+            $request->merge(['quantity' => 1]);
+        }
 
         $product = Product::findOrFail($request->product_id);
         $cart = session()->get('cart', []);
