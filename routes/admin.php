@@ -97,6 +97,7 @@ Route::prefix('admin')->middleware('admin')->group(function () {
 
     // ===== BRANDS =====
     Route::prefix('brands')->controller(BrandController::class)->group(function () {
+        Route::get('/edit/{brand}', 'edit')->name('admin.brands.edit');
         Route::get('/', 'index')->name('admin.brands.index');
         Route::get('/create', 'create')->name('admin.brands.create');
         Route::post('/store', 'store')->name('admin.brands.store');
