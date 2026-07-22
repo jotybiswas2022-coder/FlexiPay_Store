@@ -121,7 +121,9 @@ class AdminProductController extends Controller
             $product->thumbnail = $request->file('thumbnail')->store('products/thumbnails', 'public');
         }
 
-        $product->update($request->except('thumbnail', 'images'));
+        $data = $request->except('thumbnail', 'images');
+        $data['featured'] = $request->featured === '1';
+        $product->update($data);
 
         // Handle new images
         if ($request->hasFile('images')) {
