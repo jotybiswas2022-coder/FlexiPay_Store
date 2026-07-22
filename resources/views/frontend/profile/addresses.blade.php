@@ -53,11 +53,14 @@
                 @csrf
                 <div class="modal-body">
                     <div class="row g-3">
-                        <div class="col-12">
-                            <input type="text" name="label" class="fp-input" placeholder="Label (e.g. Home, Office)" required>
+                        <div class="col-6">
+                            <input type="text" name="recipient_name" class="fp-input" placeholder="Recipient name" required>
+                        </div>
+                        <div class="col-6">
+                            <input type="text" name="label" class="fp-input" placeholder="Label (e.g. Home, Office)">
                         </div>
                         <div class="col-12">
-                            <textarea name="address" class="fp-input" rows="2" placeholder="Street address" required></textarea>
+                            <input type="text" name="address_line1" class="fp-input" placeholder="Street address" required>
                         </div>
                         <div class="col-6">
                             <input type="text" name="city" class="fp-input" placeholder="City" required>
@@ -67,6 +70,12 @@
                         </div>
                         <div class="col-12">
                             <input type="text" name="phone" class="fp-input" placeholder="Phone number" required>
+                        </div>
+                        <div class="col-12">
+                            <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+                                <input type="checkbox" name="is_default" value="1" style="width:16px;height:16px;accent-color:var(--gold-500);">
+                                <span style="color:var(--text-muted);font-size:13px;">Set as default address</span>
+                            </label>
                         </div>
                     </div>
                 </div>

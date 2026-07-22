@@ -27,7 +27,7 @@
                                 <input type="radio" name="delivery_address_id" value="{{ $addr->id }}" {{ old('delivery_address_id') == $addr->id ? 'checked' : '' }} required style="margin-top:3px;accent-color:var(--gold-500);">
                                 <div>
                                     <strong style="color:var(--text-primary);display:block;">{{ $addr->label ?? 'Address' }}</strong>
-                                    <span style="color:var(--text-muted);font-size:13px;">{{ $addr->address }}, {{ $addr->city }}, {{ $addr->state }}</span>
+                                    <span style="color:var(--text-muted);font-size:13px;">{{ $addr->address_line1 }}, {{ $addr->city }}, {{ $addr->state }}</span>
                                 </div>
                             </label>
                             @endforeach
