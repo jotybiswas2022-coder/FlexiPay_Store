@@ -68,11 +68,12 @@ class AdminProductController extends Controller
             'shipping_fee' => $request->shipping_fee ?? 0,
             'insurance_fee' => $request->insurance_fee ?? 0,
             'interest_rate' => $request->interest_rate ?? 0,
+            'sort_order' => $request->sort_order ?? 0,
             'stock_quantity' => $request->stock_quantity,
             'sku' => $request->sku,
             'thumbnail' => $thumbnailPath,
             'status' => $request->status ?? 'active',
-            'featured' => $request->has('featured'),
+            'featured' => $request->featured === '1',
             'specifications' => $request->specifications,
         ]);
 
