@@ -20,33 +20,31 @@
                     @php $total = 0; @endphp
                     @foreach($cart as $item)
                     @php
-                        $product = \App\Models\Product::with('primaryImage')->find($item['product_id']);
-                        if(!$product) continue;
-                        $subtotal = $product->price * ($item['quantity'] ?? 1);
+                        $subtotal = $item['price'] * ($item['quantity'] ?? 1);
                         $total += $subtotal;
                     @endphp
                     <div class="fp-cart-item">
                         <div class="fp-ci-image">
-                            @if($product->primaryImage)
-                                <img src="{{ asset('storage/'.$product->primaryImage->image_path) }}" alt="{{ $product->name }}">
+                            @if($item['thumbnail'])
+                                <img src="{{ asset('storage/'.$item['thumbnail']) }}" alt="{{ $item['name'] }}">
                             @else
                                 <div class="fp-ci-no-img"><i class="bi bi-image"></i></div>
                             @endif
                         </div>
                         <div class="fp-ci-info">
-                            <a href="{{ url('/product/'.$product->slug) }}" class="fp-ci-name">{{ $product->name }}</a>
-                            <div class="fp-ci-price">₦{{ number_format($product->price, 0) }}</div>
+                            <a href="{{ url('/product/'.$item['slug']) }}" class="fp-ci-name">{{ $item['name'] }}</a>
+                            <div class="fp-ci-price">₦{{ number_format($item['price'], 0) }}</div>
                         </div>
                         <div class="fp-ci-qty">
                             <form action="{{ route('cart.update') }}" method="POST" class="d-flex align-items-center gap-2">
                                 @csrf
-                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                <input type="hidden" name="product_id" value="{{ $item['id'] }}">
                                 <input type="number" name="quantity" value="{{ $item['quantity'] ?? 1 }}" min="1" class="fp-qty-input">
                                 <button type="submit" class="fp-qty-btn"><i class="bi bi-check-lg"></i></button>
                             </form>
                         </div>
                         <div class="fp-ci-total">₦{{ number_format($subtotal, 0) }}</div>
-                        <a href="{{ route('cart.remove', $product->id) }}" class="fp-ci-remove"><i class="bi bi-trash-fill"></i></a>
+                        <a href="{{ route('cart.remove', $item['id']) }}" class="fp-ci-remove"><i class="bi bi-trash-fill"></i></a>
                     </div>
                     @endforeach
                 </div>
