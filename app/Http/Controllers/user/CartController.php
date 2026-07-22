@@ -46,11 +46,7 @@ class CartController extends Controller
         }
 
         session()->put('cart', $cart);
-        return response()->json([
-            'success' => true,
-            'message' => 'Product added to cart!',
-            'cart_count' => count($cart),
-        ]);
+        return redirect()->back()->with('success', 'Product added to cart!');
     }
 
     public function update(Request $request)

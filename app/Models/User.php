@@ -145,6 +145,11 @@ class User extends Authenticatable
         return $this->hasMany(PaymentTransaction::class);
     }
 
+    public function installmentPayments()
+    {
+        return $this->hasManyThrough(InstallmentPayment::class, Order::class);
+    }
+
     // ===== REQUESTS =====
     public function planChangeRequests()
     {
