@@ -60,4 +60,14 @@ class Product extends Model
     {
         return $this->belongsToMany(User::class, 'wishlists')->withTimestamps();
     }
+
+    public function installmentPlans()
+    {
+        return $this->belongsToMany(InstallmentPlan::class, 'product_installment_plan');
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
 }
