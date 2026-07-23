@@ -71,7 +71,7 @@
 .fp-tu-dot { width: 10px; height: 10px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
 .fp-tu-dot.completed { background: #4ade80; box-shadow: 0 0 0 3px rgba(34,197,94,0.15); }
 .fp-tu-dot.pending { background: var(--card-border); }
-.fp-tu-item strong { display: block; color: var(--text-primary); font-size: 13px; }
+.fp-tu-item strong { display: block; color: var(--text-primary); font-size: 13px; overflow-wrap: break-word; }
 .fp-tu-item small { color: var(--text-dim); font-size: 11px; }
 
 .fp-track-footer {
