@@ -33,6 +33,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            overscroll-behavior: none;
         }
         a { text-decoration: none; }
         ::selection { background: var(--gold-500); color: var(--near-black); }

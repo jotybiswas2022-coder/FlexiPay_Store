@@ -53,6 +53,7 @@
             line-height: 1.6;
             text-rendering: optimizeLegibility;
             -webkit-font-smoothing: antialiased;
+            overscroll-behavior: none;
         }
 
         body::before {
