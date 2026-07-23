@@ -4,7 +4,7 @@
 @push('styles')
 <style>
 .fp-wa-hero {
-    position: relative; padding: 30px 0 20px; overflow: hidden;
+    position: relative; padding: 30px 0 20px; overflow: hidden; isolation: isolate;
     background: linear-gradient(180deg, rgba(234,179,8,0.03) 0%, transparent 100%);
 }
 .fp-wa-orb {
@@ -22,6 +22,7 @@
     background:linear-gradient(135deg,var(--gold-500),var(--gold-600),var(--gold-700));
     border-radius:var(--radius-lg);padding:32px;text-align:center;
     position:relative;overflow:hidden;transition:transform 0.3s;
+    transform:translateZ(0);
 }
 .fp-wallet-balance-card:hover { transform:translateY(-3px); }
 .fp-wallet-balance-card::before {
