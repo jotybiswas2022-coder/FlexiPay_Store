@@ -43,7 +43,7 @@
                         <div class="fp-filter-group">
                             <label><i class="bi bi-tag-fill"></i> Category</label>
                             <div class="fp-select-wrap">
-                                <select name="category_id" class="fp-filter-input fp-select-input">
+                                <select name="category_id" class="fp-filter-input fp-select-input" aria-label="Filter by category">
                                     <option value="">All Categories</option>
                                     @foreach($categories ?? [] as $cat)
                                         <option value="{{ $cat->id }}" {{ request('category_id') == $cat->id ? 'selected' : '' }}>{{ $cat->name }}</option>
@@ -57,7 +57,7 @@
                         <div class="fp-filter-group">
                             <label><i class="bi bi-building"></i> Brand</label>
                             <div class="fp-select-wrap">
-                                <select name="brand_id" class="fp-filter-input fp-select-input">
+                                <select name="brand_id" class="fp-filter-input fp-select-input" aria-label="Filter by brand">
                                     <option value="">All Brands</option>
                                     @foreach($brands ?? [] as $brand)
                                         <option value="{{ $brand->id }}" {{ request('brand_id') == $brand->id ? 'selected' : '' }}>{{ $brand->name }}</option>
@@ -71,7 +71,7 @@
                         <div class="fp-filter-group">
                             <label><i class="bi bi-sort-down"></i> Sort By</label>
                             <div class="fp-select-wrap">
-                                <select name="sort" class="fp-filter-input fp-select-input">
+                                <select name="sort" class="fp-filter-input fp-select-input" aria-label="Sort products">
                                     <option value="newest" {{ request('sort') == 'newest' ? 'selected' : '' }}>Newest</option>
                                     <option value="price_asc" {{ request('sort') == 'price_asc' ? 'selected' : '' }}>Price: Low</option>
                                     <option value="price_desc" {{ request('sort') == 'price_desc' ? 'selected' : '' }}>Price: High</option>
