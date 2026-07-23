@@ -67,7 +67,7 @@
 .fp-order-item:last-child { margin-bottom: 0; }
 .fp-order-item img { width: 48px; height: 48px; border-radius: 6px; object-fit: cover; background: var(--dark-900); }
 .fp-oi-no-img { width: 48px; height: 48px; border-radius: 6px; background: var(--dark-900); display: flex; align-items: center; justify-content: center; color: var(--card-border); }
-.fp-oi-info span { display: block; color: var(--text-primary); font-size: 13px; font-weight: 500; }
+.fp-oi-info span { display: block; color: var(--text-primary); font-size: 13px; font-weight: 500; overflow-wrap: break-word; }
 .fp-oi-info small { color: var(--text-dim); font-size: 12px; }
 .fp-order-more { color: var(--text-dim); font-size: 12px; padding-left: 60px; font-weight: 500; }
 
