@@ -69,7 +69,7 @@
     </style>
 </head>
 <body>
-    <nav class="fp-auth-nav">
+    <nav class="fp-auth-nav" aria-label="Site navigation">
         <a href="{{ url('/') }}" class="fp-auth-brand">
             <div class="fp-auth-brand-icon"><i class="bi bi-currency-exchange"></i></div>
             <span>Flexi<span>Pay</span></span>
