@@ -71,9 +71,10 @@
 
 .fp-contact-form-card {
     background: var(--card-dark); border: 1px solid var(--card-border);
-    border-radius: var(--radius-lg); padding: 36px 32px;
-    position: relative; overflow: hidden;
+    border-radius: var(--radius); padding: 36px 32px; position: relative; overflow: hidden;
+    transition: all 0.3s;
 }
+.fp-contact-form-card:hover { border-color: rgba(234,179,8,0.15); }
 .fp-contact-form-card::before {
     content: ''; position: absolute; top: 0; left: 0; right: 0;
     height: 3px;
