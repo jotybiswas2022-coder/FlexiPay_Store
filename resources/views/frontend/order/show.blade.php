@@ -39,7 +39,7 @@
 .fp-dc-header h4 i { color:var(--gold-500); }
 .fp-dc-body { padding:20px; }
 .fp-dc-body label { display:block;font-size:11px;color:var(--text-dim);font-weight:500;margin-bottom:2px;text-transform:uppercase;letter-spacing:0.5px; }
-.fp-dc-body span { color:var(--text-primary);font-size:14px;font-weight:500; }
+.fp-dc-body span { color:var(--text-primary);font-size:14px;font-weight:500;overflow-wrap:break-word; }
 .fp-gold { color:var(--gold-400) !important;font-weight:700 !important; }
 .fp-green { color:#4ade80 !important;font-weight:700 !important; }
 
