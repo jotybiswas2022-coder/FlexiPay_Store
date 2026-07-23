@@ -232,6 +232,9 @@
         @media (max-width: 768px) {
             #cursorGlow { display: none; }
         }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+        }
     </style>
 </head>
 <body>
