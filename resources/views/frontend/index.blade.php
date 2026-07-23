@@ -640,7 +640,7 @@
     padding: 4px 12px; border-radius: 99px;
     font-size: 12px; font-weight: 500;
     border: 1px solid rgba(234,179,8,0.15);
-    transition: all 0.3s;
+    transition: all 0.3s; touch-action: manipulation;
 }
 .fp-quick-tag:hover { background: rgba(234,179,8,0.15); border-color: rgba(234,179,8,0.3); color: var(--gold-400); }
 
