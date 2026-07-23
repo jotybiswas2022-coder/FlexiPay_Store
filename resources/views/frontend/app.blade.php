@@ -55,6 +55,7 @@
             -webkit-font-smoothing: antialiased;
             overscroll-behavior: none;
             font-variant-numeric: tabular-nums;
+            -webkit-text-size-adjust: 100%;
         }
 
         body::before {
@@ -69,6 +70,7 @@
         a { text-decoration: none; color: inherit; }
         :focus-visible { outline: 2px solid var(--gold-500); outline-offset: 2px; border-radius: 4px; }
         a, button, input, select, textarea, [tabindex] { -webkit-tap-highlight-color: transparent; }
+        select { appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23A1A1AA' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e"); background-repeat: no-repeat; background-position: right 12px center; background-size: 12px; }
         ::selection { background: var(--gold-500); color: var(--near-black); }
 
         #pageLoader {
