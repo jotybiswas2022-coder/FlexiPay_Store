@@ -15,7 +15,8 @@
 @endif
 
 <!-- ===== HERO SECTION ===== -->
-<section class="fp-hero">
+<section class="fp-hero" id="fpHero">
+    <div id="particles-canvas"></div>
     <div class="fp-hero-bg">
         <div class="fp-grid-lines"></div>
         <div class="fp-glow-orb orbl"></div>
@@ -29,7 +30,7 @@
         <div class="fp-float-icon" style="top:50%;right:16%;animation-delay:3s;"><i class="bi bi-headphones"></i></div>
     </div>
 
-    <div class="container">
+    <div class="container position-relative">
         <div class="row align-items-center">
             <div class="col-lg-7">
                 <div class="fp-hero-badge">
@@ -38,7 +39,7 @@
                 </div>
 
                 <h1 class="fp-hero-title">
-                    Shop What You Love,<br>
+                    <span class="fp-hero-line">Shop What You Love,</span><br>
                     <span class="fp-highlight-wrap">
                         <span class="fp-highlight">Pay in Installments</span>
                     </span>
@@ -49,7 +50,6 @@
                     No hidden fees, zero stress — just easy payments that fit your budget.
                 </p>
 
-                <!-- Search Bar -->
                 <div class="fp-hero-search">
                     <form action="{{ url('/shop') }}" method="GET" class="fp-hero-search-box">
                         <div class="fp-hs-field">
@@ -70,28 +70,26 @@
                     </div>
                 </div>
 
-                <!-- Stats -->
                 <div class="fp-hero-stats">
                     <div class="fp-stat-item">
-                        <strong class="fp-stat-num" data-count="5000">0</strong>
+                        <strong class="fp-stat-num fp-hero-stat-num" data-count="5000">0</strong>
                         <span>+ Products</span>
                     </div>
                     <div class="fp-stat-divider"></div>
                     <div class="fp-stat-item">
-                        <strong class="fp-stat-num" data-count="15000">0</strong>
+                        <strong class="fp-stat-num fp-hero-stat-num" data-count="15000">0</strong>
                         <span>+ Happy Customers</span>
                     </div>
                     <div class="fp-stat-divider"></div>
                     <div class="fp-stat-item">
-                        <strong class="fp-stat-num" data-count="36">0</strong>
+                        <strong class="fp-stat-num fp-hero-stat-num" data-count="36">0</strong>
                         <span>+ Payment Plans</span>
                     </div>
                 </div>
             </div>
 
-            <!-- Hero Visual -->
             <div class="col-lg-5 d-none d-lg-block">
-                <div class="fp-hero-visual">
+                <div class="fp-hero-visual" data-tilt="10">
                     <div class="fp-visual-card fp-vc-main">
                         <div class="fp-vc-header">
                             <div class="fp-vc-img">
@@ -152,9 +150,36 @@
         </div>
     </div>
 
-    <!-- Wave -->
     <div class="fp-wave">
         <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path fill="#0A0A0B" d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z"/></svg>
+    </div>
+</section>
+
+<!-- ===== BRAND MARQUEE ===== -->
+<section class="fp-marquee-section">
+    <div class="fp-marquee-track">
+        <div class="fp-marquee-content">
+            <span class="fp-marquee-item"><i class="bi bi-shield-fill-check"></i> 100% Secure</span>
+            <span class="fp-marquee-dot">•</span>
+            <span class="fp-marquee-item"><i class="bi bi-coin"></i> 0% Interest Plans</span>
+            <span class="fp-marquee-dot">•</span>
+            <span class="fp-marquee-item"><i class="bi bi-truck"></i> Free Delivery</span>
+            <span class="fp-marquee-dot">•</span>
+            <span class="fp-marquee-item"><i class="bi bi-arrow-repeat"></i> Easy Exchange</span>
+            <span class="fp-marquee-dot">•</span>
+            <span class="fp-marquee-item"><i class="bi bi-headset"></i> 24/7 Support</span>
+            <span class="fp-marquee-dot">•</span>
+            <span class="fp-marquee-item"><i class="bi bi-shield-fill-check"></i> 100% Secure</span>
+            <span class="fp-marquee-dot">•</span>
+            <span class="fp-marquee-item"><i class="bi bi-coin"></i> 0% Interest Plans</span>
+            <span class="fp-marquee-dot">•</span>
+            <span class="fp-marquee-item"><i class="bi bi-truck"></i> Free Delivery</span>
+            <span class="fp-marquee-dot">•</span>
+            <span class="fp-marquee-item"><i class="bi bi-arrow-repeat"></i> Easy Exchange</span>
+            <span class="fp-marquee-dot">•</span>
+            <span class="fp-marquee-item"><i class="bi bi-headset"></i> 24/7 Support</span>
+            <span class="fp-marquee-dot">•</span>
+        </div>
     </div>
 </section>
 
@@ -162,15 +187,15 @@
 <section class="section-padding" style="background:var(--surface-dark);">
     <div class="container">
         <div class="section-head">
-            <div class="section-badge"><i class="bi bi-star-fill"></i> Featured Products</div>
-            <h2>Popular Items You'll Love</h2>
-            <p>Top-rated products with flexible installment plans starting from 4 weeks</p>
+            <div class="section-badge reveal-up"><i class="bi bi-star-fill"></i> Featured Products</div>
+            <h2 class="reveal-up">Popular Items You'll Love</h2>
+            <p class="reveal-up">Top-rated products with flexible installment plans starting from 4 weeks</p>
         </div>
 
         <div class="row g-4">
             @forelse($featuredProducts ?? [] as $product)
             <div class="col-lg-3 col-md-4 col-6">
-                <div class="fp-product-card reveal-up">
+                <div class="fp-product-card reveal-up" data-tilt="6" style="transition-delay:{{ ($loop->index % 4) * 0.08 }}s">
                     <a href="{{ url('/product/'.$product->slug) }}" class="fp-product-link">
                         <div class="fp-product-img-wrap">
                             @if($product->primaryImage)
@@ -207,7 +232,7 @@
             @endforelse
         </div>
 
-        <div class="text-center mt-4">
+        <div class="text-center mt-4 reveal-up">
             <a href="{{ url('/shop') }}" class="btn-primary-gold"><i class="bi bi-grid-fill"></i> View All Products</a>
         </div>
     </div>
@@ -217,33 +242,39 @@
 <section class="section-padding" style="background:var(--near-black);">
     <div class="container">
         <div class="section-head">
-            <div class="section-badge"><i class="bi bi-info-circle-fill"></i> How It Works</div>
-            <h2>Get Your Dream Item in 3 Easy Steps</h2>
-            <p>No stress, no rush — pay at your own pace</p>
+            <div class="section-badge reveal-up"><i class="bi bi-info-circle-fill"></i> How It Works</div>
+            <h2 class="reveal-up">Get Your Dream Item in 3 Easy Steps</h2>
+            <p class="reveal-up">No stress, no rush — pay at your own pace</p>
         </div>
-        <div class="row g-4 justify-content-center">
-            <div class="col-md-4 reveal-up">
-                <div class="fp-how-card">
-                    <div class="fp-how-num">01</div>
-                    <div class="fp-how-icon"><i class="bi bi-hand-index-thumb"></i></div>
-                    <h4>Choose Your Product</h4>
-                    <p>Browse thousands of items from trusted brands and select what you want</p>
+        <div class="fp-how-steps">
+            <div class="fp-how-step-line"></div>
+            <div class="row g-4 justify-content-center">
+                <div class="col-md-4 reveal-up">
+                    <div class="fp-how-card">
+                        <div class="fp-how-card-glow"></div>
+                        <div class="fp-how-num">01</div>
+                        <div class="fp-how-icon"><i class="bi bi-hand-index-thumb"></i></div>
+                        <h4>Choose Your Product</h4>
+                        <p>Browse thousands of items from trusted brands and select what you want</p>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-4 reveal-up" style="transition-delay:0.15s">
-                <div class="fp-how-card fp-how-card--accent">
-                    <div class="fp-how-num">02</div>
-                    <div class="fp-how-icon"><i class="bi bi-calendar-check"></i></div>
-                    <h4>Pick Your Plan</h4>
-                    <p>Choose from 4 to 40 weeks or 1 to 12 months — whatever suits your budget</p>
+                <div class="col-md-4 reveal-up" style="transition-delay:0.15s">
+                    <div class="fp-how-card fp-how-card--accent">
+                        <div class="fp-how-card-glow"></div>
+                        <div class="fp-how-num">02</div>
+                        <div class="fp-how-icon"><i class="bi bi-calendar-check"></i></div>
+                        <h4>Pick Your Plan</h4>
+                        <p>Choose from 4 to 40 weeks or 1 to 12 months — whatever suits your budget</p>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-4 reveal-up" style="transition-delay:0.3s">
-                <div class="fp-how-card">
-                    <div class="fp-how-num">03</div>
-                    <div class="fp-how-icon"><i class="bi bi-truck"></i></div>
-                    <h4>Pay & Get Delivered</h4>
-                    <p>Pay 70% and get your item shipped. Continue paying the balance comfortably</p>
+                <div class="col-md-4 reveal-up" style="transition-delay:0.3s">
+                    <div class="fp-how-card">
+                        <div class="fp-how-card-glow"></div>
+                        <div class="fp-how-num">03</div>
+                        <div class="fp-how-icon"><i class="bi bi-truck"></i></div>
+                        <h4>Pay & Get Delivered</h4>
+                        <p>Pay 70% and get your item shipped. Continue paying the balance comfortably</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -254,9 +285,9 @@
 <section class="section-padding" style="background:var(--surface-dark);">
     <div class="container">
         <div class="section-head">
-            <div class="section-badge"><i class="bi bi-shield-fill-check"></i> Why FlexiPay</div>
-            <h2>We Make Payments Painless</h2>
-            <p>Designed for real people with real budgets</p>
+            <div class="section-badge reveal-up"><i class="bi bi-shield-fill-check"></i> Why FlexiPay</div>
+            <h2 class="reveal-up">We Make Payments Painless</h2>
+            <p class="reveal-up">Designed for real people with real budgets</p>
         </div>
         <div class="row g-4">
             <div class="col-md-4 reveal-up">
@@ -309,9 +340,9 @@
 <section class="section-padding" style="background:var(--near-black);">
     <div class="container">
         <div class="section-head">
-            <div class="section-badge"><i class="bi bi-grid-3x3-gap-fill"></i> Shop by Category</div>
-            <h2>Explore Our Categories</h2>
-            <p>Find exactly what you need</p>
+            <div class="section-badge reveal-up"><i class="bi bi-grid-3x3-gap-fill"></i> Shop by Category</div>
+            <h2 class="reveal-up">Explore Our Categories</h2>
+            <p class="reveal-up">Find exactly what you need</p>
         </div>
 
         <div class="row g-3">
@@ -322,6 +353,7 @@
                         <i class="bi {{ ['bi-phone-fill','bi-laptop-fill','bi-tv-fill','bi-watch-fill','bi-headphones','bi-speaker-fill','bi-camera-fill','bi-printer-fill','bi-joystick','bi-house-gear-fill','bi-car-front-fill','bi-tshirt'][$loop->index % 12] }}"></i>
                     </div>
                     <h6>{{ $category->name }}</h6>
+                    <i class="bi bi-chevron-right fp-cat-arrow"></i>
                 </a>
             </div>
             @empty
@@ -369,18 +401,60 @@
     </div>
 </section>
 
+<!-- ===== TESTIMONIALS ===== -->
+<section class="section-padding" style="background:var(--surface-dark);">
+    <div class="container">
+        <div class="section-head">
+            <div class="section-badge reveal-up"><i class="bi bi-chat-square-quote-fill"></i> Testimonials</div>
+            <h2 class="reveal-up">What Our Customers Say</h2>
+            <p class="reveal-up">Hear from people who love shopping with FlexiPay</p>
+        </div>
+        <div class="row g-4">
+            @php
+                $testimonials = [
+                    ['name' => 'Amara O.', 'role' => 'Lagos', 'text' => 'I got my dream laptop without breaking the bank. The installment plan was super flexible and the process was seamless!', 'rating' => 5],
+                    ['name' => 'Chidi E.', 'role' => 'Abuja', 'text' => 'Finally a platform that understands budgeting. I\'ve recommended FlexiPay to all my friends and family.', 'rating' => 5],
+                    ['name' => 'Zainab K.', 'role' => 'Kano', 'text' => 'The delivery was faster than expected and the payment plan was easy to set up. Absolutely love it!', 'rating' => 4],
+                ];
+            @endphp
+            @foreach($testimonials as $i => $t)
+            <div class="col-md-4 reveal-up" style="transition-delay:{{ $i * 0.1 }}s">
+                <div class="fp-testimonial-card">
+                    <div class="fp-testi-stars">
+                        @for($s = 0; $s < $t['rating']; $s++)
+                            <i class="bi bi-star-fill"></i>
+                        @endfor
+                        @for($s = $t['rating']; $s < 5; $s++)
+                            <i class="bi bi-star"></i>
+                        @endfor
+                    </div>
+                    <p class="fp-testi-text">"{{ $t['text'] }}"</p>
+                    <div class="fp-testi-author">
+                        <div class="fp-testi-avatar">{{ substr($t['name'], 0, 1) }}</div>
+                        <div>
+                            <strong>{{ $t['name'] }}</strong>
+                            <small>{{ $t['role'] }}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endforeach
+        </div>
+    </div>
+</section>
+
 <!-- ===== NEW ARRIVALS ===== -->
 <section class="section-padding" style="background:var(--near-black);">
     <div class="container">
         <div class="section-head">
-            <div class="section-badge"><i class="bi bi-clock-history"></i> New Arrivals</div>
-            <h2>Just Dropped</h2>
-            <p>The latest products added to our catalog</p>
+            <div class="section-badge reveal-up"><i class="bi bi-clock-history"></i> New Arrivals</div>
+            <h2 class="reveal-up">Just Dropped</h2>
+            <p class="reveal-up">The latest products added to our catalog</p>
         </div>
         <div class="row g-4">
             @forelse($newArrivals ?? [] as $product)
             <div class="col-lg-3 col-md-4 col-6">
-                <div class="fp-product-card reveal-up">
+                <div class="fp-product-card reveal-up" data-tilt="6" style="transition-delay:{{ ($loop->index % 4) * 0.06 }}s">
                     <a href="{{ url('/product/'.$product->slug) }}" class="fp-product-link">
                         <div class="fp-product-img-wrap">
                             @if($product->primaryImage)
@@ -416,10 +490,12 @@
         <div class="fp-cta-circle c3"></div>
     </div>
     <div class="container text-center position-relative">
-        <i class="bi bi-gift-fill fp-cta-icon"></i>
-        <h2 class="fp-cta-title">Ready to Start Shopping?</h2>
-        <p class="fp-cta-desc">Create your account in minutes and get access to thousands of products with flexible payment plans tailored to your budget.</p>
-        <div class="fp-cta-btns">
+        <div class="fp-cta-icon-wrap">
+            <i class="bi bi-gift-fill fp-cta-icon"></i>
+        </div>
+        <h2 class="fp-cta-title reveal-up">Ready to Start Shopping?</h2>
+        <p class="fp-cta-desc reveal-up">Create your account in minutes and get access to thousands of products with flexible payment plans tailored to your budget.</p>
+        <div class="fp-cta-btns reveal-up">
             <a href="{{ url('/register') }}" class="fp-cta-btn-primary">
                 <i class="bi bi-person-plus-fill"></i> Create Free Account
             </a>
@@ -427,7 +503,7 @@
                 <i class="bi bi-grid-fill"></i> Browse Products
             </a>
         </div>
-        <div class="fp-cta-trust">
+        <div class="fp-cta-trust reveal-up">
             <span><i class="bi bi-shield-fill-check"></i> No hidden fees</span>
             <span><i class="bi bi-clock-fill"></i> Instant approval</span>
             <span><i class="bi bi-arrow-repeat"></i> Flexible payments</span>
@@ -446,7 +522,12 @@
     position: relative; overflow: hidden;
     padding: 100px 0 140px;
 }
-.fp-hero-bg { position: absolute; inset: 0; pointer-events: none; }
+#particles-canvas {
+    position: absolute; inset: 0;
+    pointer-events: none; z-index: 1;
+    opacity: 0.5;
+}
+.fp-hero-bg { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
 .fp-grid-lines {
     position: absolute; inset: 0;
     background-image:
@@ -497,11 +578,18 @@
     margin-bottom: 20px;
     animation: slideInLeft 0.9s ease-out 0.1s both;
 }
+.fp-hero-line { display: inline-block; }
 .fp-highlight-wrap { position: relative; display: inline-block; }
 .fp-highlight {
     background: linear-gradient(135deg, var(--gold-400), var(--gold-600));
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     background-clip: text;
+    position: relative;
+}
+.fp-highlight::after {
+    content: ''; position: absolute; bottom: 2px; left: 0; right: 0;
+    height: 6px; background: rgba(234,179,8,0.15);
+    border-radius: 3px; z-index: -1;
 }
 .fp-hero-desc {
     font-size: 17px; color: var(--text-muted);
@@ -517,6 +605,11 @@
     align-items: center; overflow: hidden;
     border: 1px solid var(--card-border);
     box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+.fp-hero-search-box:focus-within {
+    border-color: rgba(234,179,8,0.3);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(234,179,8,0.1);
 }
 .fp-hs-field { display: flex; align-items: center; gap: 10px; padding: 0 20px; flex: 1; }
 .fp-hs-field i { color: var(--text-dim); font-size: 18px; }
@@ -556,18 +649,20 @@
     margin-top: 36px;
     animation: slideInLeft 0.9s ease-out 0.4s both;
 }
-.fp-stat-item { color: var(--text-primary); }
-.fp-stat-item .fp-stat-num { font-size: 28px; font-weight: 800; display: block; color: var(--text-primary); font-family: 'Syne', sans-serif; }
+.fp-hero-stat-num {
+    font-size: 28px; font-weight: 800; display: block;
+    color: var(--text-primary); font-family: 'Syne', sans-serif;
+}
 .fp-stat-item span { font-size: 13px; color: var(--text-muted); }
 .fp-stat-divider { width: 1px; height: 40px; background: var(--card-border); }
 
-/* Hero Visual */
 .fp-hero-visual { position: relative; height: 460px; animation: slideInRight 0.9s ease-out 0.3s both; }
 .fp-visual-card {
     background: var(--card-dark); border: 1px solid var(--card-border);
     border-radius: 16px; padding: 20px; position: absolute;
     box-shadow: 0 20px 60px rgba(0,0,0,0.4);
     animation: cardFloat 4s ease-in-out infinite;
+    transition: transform 0.3s ease;
 }
 @keyframes cardFloat { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-10px);} }
 .fp-vc-main { width: 300px; top: 40px; right: 0; animation-delay: 0s; }
@@ -631,8 +726,41 @@
 }
 .fp-vc-btn:hover { transform: scale(1.05); box-shadow: var(--shadow-gold); }
 
-.fp-wave { position: absolute; bottom: -1px; left: 0; right: 0; }
+.fp-wave { position: absolute; bottom: -1px; left: 0; right: 0; z-index: 2; }
 .fp-wave svg { display: block; width: 100%; height: 80px; }
+
+/* ===== MARQUEE ===== */
+.fp-marquee-section {
+    background: var(--dark-900);
+    padding: 12px 0;
+    border-top: 1px solid var(--card-border);
+    border-bottom: 1px solid var(--card-border);
+    overflow: hidden;
+}
+.fp-marquee-track {
+    overflow: hidden;
+    mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+}
+.fp-marquee-content {
+    display: flex; align-items: center; gap: 0;
+    animation: marqueeScroll 28s linear infinite;
+    width: max-content;
+}
+.fp-marquee-item {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: var(--text-muted); font-size: 13px; font-weight: 600;
+    white-space: nowrap;
+}
+.fp-marquee-item i { color: var(--gold-500); font-size: 14px; }
+.fp-marquee-dot {
+    color: var(--gold-500); margin: 0 24px;
+    font-size: 8px; opacity: 0.4;
+}
+@keyframes marqueeScroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
 
 /* ===== PRODUCT CARD ===== */
 .fp-product-card {
@@ -642,11 +770,11 @@
     overflow: hidden;
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     height: 100%;
+    will-change: transform;
 }
 .fp-product-card:hover {
-    transform: translateY(-6px);
     border-color: rgba(234,179,8,0.3);
-    box-shadow: var(--shadow-card-hover);
+    box-shadow: 0 12px 48px rgba(234,179,8,0.08);
 }
 .fp-product-link { display: block; text-decoration: none; height: 100%; }
 .fp-product-img-wrap {
@@ -655,6 +783,11 @@
     display: flex; align-items: center; justify-content: center;
     overflow: hidden;
 }
+.fp-product-img-wrap::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(to bottom, transparent 60%, rgba(0,0,0,0.3));
+    pointer-events: none;
+}
 .fp-product-img-wrap img {
     width: 100%; height: 100%; object-fit: cover;
     transition: transform 0.5s ease;
@@ -662,7 +795,7 @@
 .fp-product-card:hover .fp-product-img-wrap img { transform: scale(1.08); }
 .fp-product-no-img { color: var(--card-border); font-size: 36px; }
 .fp-product-badge {
-    position: absolute; bottom: 8px; left: 8px;
+    position: absolute; bottom: 8px; left: 8px; z-index: 1;
     background: linear-gradient(135deg, var(--gold-500), var(--gold-600));
     color: var(--near-black); font-size: 11px; font-weight: 700;
     padding: 4px 10px; border-radius: 6px;
@@ -682,6 +815,19 @@
 .fp-product-meta i { color: var(--gold-400); font-size: 11px; }
 
 /* ===== HOW IT WORKS ===== */
+.fp-how-steps { position: relative; }
+.fp-how-step-line {
+    display: none;
+}
+@media (min-width: 768px) {
+    .fp-how-step-line {
+        display: block;
+        position: absolute; top: 80px; left: 16.66%; right: 16.66%;
+        height: 2px;
+        background: linear-gradient(90deg, var(--gold-500), var(--gold-400), var(--gold-500));
+        opacity: 0.15;
+    }
+}
 .fp-how-card {
     background: var(--card-dark); border-radius: var(--radius-lg);
     padding: 36px 28px; text-align: center;
@@ -689,6 +835,14 @@
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     position: relative; overflow: hidden; height: 100%;
 }
+.fp-how-card-glow {
+    position: absolute; top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(circle at 50% 0%, rgba(234,179,8,0.03) 0%, transparent 50%);
+    transition: opacity 0.4s;
+    opacity: 0;
+}
+.fp-how-card:hover .fp-how-card-glow { opacity: 1; }
 .fp-how-card::before {
     content: ''; position: absolute;
     top: 0; left: 0; right: 0; height: 3px;
@@ -750,7 +904,7 @@
     border-radius: var(--radius-sm);
     padding: 16px 18px;
     transition: all 0.3s; height: 100%;
-    text-decoration: none;
+    text-decoration: none; position: relative;
 }
 .fp-cat-card:hover {
     border-color: rgba(234,179,8,0.3);
@@ -762,20 +916,76 @@
     background: rgba(234,179,8,0.1);
     display: flex; align-items: center; justify-content: center;
     color: var(--gold-500); font-size: 20px;
+    flex-shrink: 0;
 }
-.fp-cat-card h6 { font-size: 14px; font-weight: 600; color: var(--text-primary); margin: 0; }
+.fp-cat-card h6 { font-size: 14px; font-weight: 600; color: var(--text-primary); margin: 0; flex: 1; }
+.fp-cat-arrow { color: var(--card-border); font-size: 12px; transition: all 0.3s; }
+.fp-cat-card:hover .fp-cat-arrow { color: var(--gold-500); transform: translateX(3px); }
 
 /* ===== STATS ===== */
-.fp-stats-section { background: linear-gradient(135deg, var(--gold-700), var(--dark-900)); }
+.fp-stats-section {
+    background: linear-gradient(135deg, var(--gold-700), #0d0d0e 40%, var(--dark-900) 100%);
+    position: relative;
+}
+.fp-stats-section::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 30% 50%, rgba(234,179,8,0.05) 0%, transparent 60%);
+    pointer-events: none;
+}
 .fp-stat-card {
     text-align: center; padding: 32px 20px;
     background: rgba(0,0,0,0.2); border-radius: var(--radius);
     border: 1px solid rgba(255,255,255,0.05);
     backdrop-filter: blur(4px);
+    position: relative;
+    transition: all 0.3s;
 }
-.fp-stat-card i { font-size: 36px; color: rgba(255,255,255,0.2); display: block; margin-bottom: 12px; }
-.fp-stat-card .counter-num { font-size: 36px; color: var(--gold-400); }
+.fp-stat-card:hover {
+    border-color: rgba(234,179,8,0.15);
+    background: rgba(0,0,0,0.3);
+}
+.fp-stat-card i { font-size: 36px; color: rgba(255,255,255,0.2); display: block; margin-bottom: 12px; transition: color 0.3s; }
+.fp-stat-card:hover i { color: var(--gold-400); }
 .fp-stat-label { font-size: 14px; color: rgba(255,255,255,0.6); font-weight: 500; }
+
+/* ===== TESTIMONIALS ===== */
+.fp-testimonial-card {
+    background: var(--card-dark);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius);
+    padding: 28px 24px;
+    transition: all 0.4s;
+    height: 100%;
+    display: flex; flex-direction: column;
+}
+.fp-testimonial-card:hover {
+    border-color: rgba(234,179,8,0.2);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-card-hover);
+}
+.fp-testi-stars { color: var(--gold-500); font-size: 14px; margin-bottom: 16px; }
+.fp-testi-text {
+    color: var(--text-muted);
+    font-size: 15px;
+    line-height: 1.8;
+    flex: 1;
+    font-style: italic;
+}
+.fp-testi-author {
+    display: flex; align-items: center; gap: 12px;
+    margin-top: 20px; padding-top: 16px;
+    border-top: 1px solid var(--card-border);
+}
+.fp-testi-avatar {
+    width: 40px; height: 40px; border-radius: 10px;
+    background: linear-gradient(135deg, var(--gold-500), var(--gold-700));
+    color: var(--near-black);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 16px;
+    flex-shrink: 0;
+}
+.fp-testi-author strong { display: block; font-size: 14px; color: var(--text-primary); }
+.fp-testi-author small { font-size: 12px; color: var(--text-dim); }
 
 /* ===== CTA ===== */
 .fp-cta-section {
@@ -793,7 +1003,19 @@
 .c3 { width: 150px; height: 150px; top: 30%; right: -40px; animation-delay: 4s; }
 @keyframes ctaFloat { 0%,100%{transform:scale(1);} 50%{transform:scale(1.1);} }
 
-.fp-cta-icon { font-size: 52px; color: rgba(234,179,8,0.2); display: block; margin-bottom: 20px; animation: iconBounce 2s ease-in-out infinite; }
+.fp-cta-icon-wrap {
+    display: inline-block;
+    position: relative;
+    margin-bottom: 20px;
+}
+.fp-cta-icon {
+    font-size: 52px;
+    background: linear-gradient(135deg, var(--gold-400), var(--gold-600));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: iconBounce 2s ease-in-out infinite;
+    display: block;
+}
 @keyframes iconBounce { 0%,100%{transform:translateY(0) rotate(0deg);} 50%{transform:translateY(-12px) rotate(-5deg);} }
 .fp-cta-title { font-family: 'Syne', sans-serif; font-size: clamp(28px, 4vw, 44px); font-weight: 800; color: var(--text-primary); margin-bottom: 16px; }
 .fp-cta-desc { color: var(--text-muted); font-size: 17px; max-width: 520px; margin: 0 auto 40px; line-height: 1.7; }
@@ -805,7 +1027,14 @@
     padding: 16px 36px; border-radius: 12px; font-weight: 700; font-size: 16px;
     transition: all 0.3s;
     box-shadow: var(--shadow-gold);
+    position: relative; overflow: hidden;
 }
+.fp-cta-btn-primary::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, transparent 20%, rgba(255,255,255,0.15) 50%, transparent 80%);
+    transform: translateX(-100%); transition: transform 0.6s;
+}
+.fp-cta-btn-primary:hover::before { transform: translateX(100%); }
 .fp-cta-btn-primary:hover { transform: translateY(-3px); box-shadow: var(--shadow-gold-lg); color: var(--near-black); }
 .fp-cta-btn-outline {
     display: inline-flex; align-items: center; gap: 8px;
@@ -825,13 +1054,14 @@
 .fp-cta-trust i { color: var(--gold-500); }
 
 @media (max-width: 768px) {
-    .fp-hero { padding: 70px 0 120px; min-height: auto; }
+    .fp-hero { padding: 80px 0 120px; min-height: auto; }
     .fp-hero-search-box { flex-direction: column; }
     .fp-hs-divider { display: none; }
     .fp-hs-btn { width: 100%; justify-content: center; padding: 14px; }
     .fp-hero-stats { gap: 16px; }
-    .fp-stat-item .fp-stat-num { font-size: 22px; }
+    .fp-hero-stat-num { font-size: 22px; }
     .fp-product-img-wrap { height: 160px; }
+    .fp-marquee-item { font-size: 11px; }
 }
 </style>
 
@@ -839,5 +1069,86 @@
 function quickSearch(term) {
     window.location.href = '{{ url("/shop") }}?search=' + encodeURIComponent(term);
 }
+
+// Lightweight particle system (canvas-based)
+(function() {
+    const canvas = document.getElementById('particles-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let W, H;
+    const particles = [];
+    const COUNT = 80;
+
+    function resize() {
+        const hero = document.getElementById('fpHero');
+        if (!hero) return;
+        const rect = hero.getBoundingClientRect();
+        canvas.width = rect.width;
+        canvas.height = rect.height;
+        W = rect.width;
+        H = rect.height;
+    }
+
+    class Particle {
+        constructor() { this.reset(); }
+        reset() {
+            this.x = Math.random() * W;
+            this.y = Math.random() * H;
+            this.size = Math.random() * 2 + 0.5;
+            this.speedX = (Math.random() - 0.5) * 0.3;
+            this.speedY = (Math.random() - 0.5) * 0.3;
+            this.opacity = Math.random() * 0.5 + 0.1;
+        }
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+            if (this.x < 0 || this.x > W || this.y < 0 || this.y > H) this.reset();
+        }
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(234, 179, 8, ${this.opacity})`;
+            ctx.fill();
+        }
+    }
+
+    function initParticles() {
+        particles.length = 0;
+        for (let i = 0; i < COUNT; i++) particles.push(new Particle());
+    }
+
+    function drawLines() {
+        for (let i = 0; i < particles.length; i++) {
+            for (let j = i + 1; j < particles.length; j++) {
+                const dx = particles[i].x - particles[j].x;
+                const dy = particles[i].y - particles[j].y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < 120) {
+                    ctx.beginPath();
+                    ctx.moveTo(particles[i].x, particles[i].y);
+                    ctx.lineTo(particles[j].x, particles[j].y);
+                    ctx.strokeStyle = `rgba(234, 179, 8, ${0.04 * (1 - dist / 120)})`;
+                    ctx.stroke();
+                }
+            }
+        }
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, W, H);
+        particles.forEach(p => { p.update(); p.draw(); });
+        drawLines();
+        requestAnimationFrame(animate);
+    }
+
+    resize();
+    initParticles();
+    animate();
+
+    window.addEventListener('resize', () => {
+        resize();
+        initParticles();
+    });
+})();
 </script>
 @endsection

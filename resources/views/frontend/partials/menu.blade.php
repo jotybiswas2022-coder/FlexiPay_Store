@@ -2,12 +2,12 @@
 <div class="fp-topbar">
     <div class="container-fluid px-4">
         <div class="d-flex justify-content-between align-items-center">
-            <div class="d-flex align-items-center gap-3">
-                <span><i class="bi bi-telephone-fill"></i> +234 800-FLEXIPAY</span>
-                <span class="d-none d-md-inline"><i class="bi bi-envelope-fill"></i> support@flexipay.store</span>
-                <span class="d-none d-lg-inline"><i class="bi bi-clock-fill"></i> Mon–Sat: 8AM–6PM</span>
+            <div class="d-flex align-items-center gap-3 flex-wrap">
+                <span class="fp-topbar-item"><i class="bi bi-telephone-fill"></i> +234 800-FLEXIPAY</span>
+                <span class="fp-topbar-item d-none d-md-inline"><i class="bi bi-envelope-fill"></i> support@flexipay.store</span>
+                <span class="fp-topbar-item d-none d-lg-inline"><i class="bi bi-clock-fill"></i> Mon–Sat: 8AM–6PM</span>
             </div>
-            <div class="d-flex align-items-center gap-2">
+            <div class="d-flex align-items-center gap-1">
                 <a href="#" title="Facebook" class="fp-social-top"><i class="bi bi-facebook"></i></a>
                 <a href="#" title="Twitter/X" class="fp-social-top"><i class="bi bi-twitter-x"></i></a>
                 <a href="#" title="Instagram" class="fp-social-top"><i class="bi bi-instagram"></i></a>
@@ -18,9 +18,8 @@
 </div>
 
 <!-- ===== MAIN NAVBAR ===== -->
-<nav class="fp-navbar navbar navbar-expand-lg sticky-top">
+<nav class="fp-navbar navbar navbar-expand-lg sticky-top" id="fpMainNav">
     <div class="container-fluid px-4">
-        <!-- Brand -->
         <a class="navbar-brand fp-brand" href="{{ url('/') }}">
             <div class="fp-brand-icon">
                 <i class="bi bi-currency-exchange"></i>
@@ -31,13 +30,26 @@
             </div>
         </a>
 
-        <!-- Toggler -->
-        <button class="navbar-toggler fp-toggler border-0" type="button"
-                data-bs-toggle="collapse" data-bs-target="#fpNavCollapse">
-            <i class="bi bi-list"></i>
-        </button>
+        <div class="d-flex align-items-center gap-2 d-lg-none">
+            <a href="{{ url('/cart') }}" class="fp-mobile-cart position-relative">
+                <i class="bi bi-cart-fill"></i>
+                @php
+                    $cartItems = session('cart', []);
+                    $cartCount = is_array($cartItems) ? count($cartItems) : (is_object($cartItems) && method_exists($cartItems, 'count') ? $cartItems->count() : 0);
+                @endphp
+                @if($cartCount > 0)
+                    <span class="fp-cart-badge-mobile">{{ $cartCount }}</span>
+                @endif
+            </a>
+            <button class="navbar-toggler fp-toggler border-0" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#fpNavCollapse"
+                    aria-controls="fpNavCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <div class="fp-toggler-icon">
+                    <span></span><span></span><span></span>
+                </div>
+            </button>
+        </div>
 
-        <!-- Nav Links -->
         <div class="collapse navbar-collapse" id="fpNavCollapse">
             <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
                 <li class="nav-item">
@@ -73,7 +85,7 @@
                 </li>
                 @endauth
 
-                <li class="nav-item">
+                <li class="nav-item d-none d-lg-block">
                     <a class="nav-link fp-nav-link position-relative" href="{{ url('/cart') }}">
                         <i class="bi bi-cart-fill"></i> Cart
                         @php
@@ -95,10 +107,10 @@
                     </li>
                     @endif
                     <li class="nav-item dropdown">
-                        <a class="nav-link fp-nav-link dropdown-toggle" href="#" role="button"
+                        <a class="nav-link fp-nav-link dropdown-toggle d-flex align-items-center" href="#" role="button"
                            data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-person-circle"></i>
-                            {{ auth()->user()->name ?: 'Account' }}
+                            <span class="fp-avatar">{{ substr(auth()->user()->name ?? 'A', 0, 1) }}</span>
+                            <span class="d-none d-lg-inline">{{ auth()->user()->name ?: 'Account' }}</span>
                         </a>
                         <ul class="dropdown-menu fp-dropdown-menu">
                             <li><a class="dropdown-item" href="{{ url('/profile') }}"><i class="bi bi-person-fill"></i> My Profile</a></li>
@@ -134,60 +146,64 @@
 </nav>
 
 <style>
-/* ===== TOP BAR ===== */
 .fp-topbar {
     background: var(--dark-900);
     color: var(--text-dim);
-    padding: 6px 0;
+    padding: 5px 0;
     font-size: 12px;
     font-weight: 500;
     border-bottom: 1px solid var(--card-border);
+    position: relative;
+    z-index: 1041;
 }
 .fp-topbar i { color: var(--gold-500); margin-right: 4px; font-size: 11px; }
+.fp-topbar-item { display: inline-flex; align-items: center; }
 .fp-social-top {
     color: var(--text-dim);
     font-size: 14px;
     transition: all 0.3s;
-    padding: 2px 6px;
+    padding: 2px 5px;
+    border-radius: 4px;
 }
-.fp-social-top:hover { color: var(--gold-400); }
+.fp-social-top:hover { color: var(--gold-400); background: rgba(234,179,8,0.06); }
 
-/* ===== NAVBAR ===== */
 .fp-navbar {
-    background: var(--surface-dark);
-    border-bottom: 2px solid var(--gold-500);
     padding: 0 !important;
     z-index: 1040;
+    background: var(--surface-dark);
+    border-bottom: 1px solid var(--card-border);
     box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-    transition: all 0.3s;
     animation: navSlideDown 0.6s ease-out;
+    transition: all 0.3s ease;
 }
 .fp-navbar.scrolled {
+    background: rgba(18,18,20,0.92);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border-bottom-color: rgba(234,179,8,0.15);
     box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-    background: rgba(18,18,20,0.95);
-    backdrop-filter: blur(12px);
 }
+
 @keyframes navSlideDown {
     from { transform: translateY(-100%); opacity: 0; }
     to { transform: translateY(0); opacity: 1; }
 }
 
-/* ===== BRAND ===== */
 .fp-brand {
     display: flex !important;
     align-items: center;
-    gap: 12px;
-    padding: 8px 0 !important;
+    gap: 10px;
+    padding: 6px 0 !important;
     text-decoration: none;
     transition: transform 0.3s;
 }
 .fp-brand:hover { transform: translateY(-1px); }
 .fp-brand-icon {
-    width: 46px; height: 46px;
+    width: 42px; height: 42px;
     background: linear-gradient(135deg, var(--gold-500), var(--gold-700));
-    border-radius: 12px;
+    border-radius: 10px;
     display: flex; align-items: center; justify-content: center;
-    color: var(--near-black); font-size: 22px;
+    color: var(--near-black); font-size: 20px;
     box-shadow: var(--shadow-gold);
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
@@ -197,18 +213,17 @@
 }
 .fp-brand-text {
     font-family: 'Syne', sans-serif;
-    font-size: 22px; font-weight: 800;
+    font-size: 20px; font-weight: 800;
     color: var(--text-primary); line-height: 1;
     display: block;
 }
 .fp-brand-accent { color: var(--gold-500); }
-.fp-brand-sub { font-size: 10px; color: var(--text-dim); font-weight: 500; margin-top: 1px; }
+.fp-brand-sub { font-size: 9px; color: var(--text-dim); font-weight: 500; margin-top: 1px; letter-spacing: 0.3px; }
 
-/* ===== NAV LINKS ===== */
 .fp-nav-link {
     color: var(--text-muted) !important;
     font-weight: 600; font-size: 13px;
-    padding: 22px 14px !important;
+    padding: 20px 12px !important;
     display: flex; align-items: center; gap: 6px;
     position: relative; transition: all 0.3s;
     white-space: nowrap;
@@ -216,47 +231,93 @@
 .fp-nav-link::after {
     content: ''; position: absolute; bottom: 0;
     left: 50%; transform: translateX(-50%);
-    width: 0; height: 2px; background: var(--gold-500);
+    width: 0; height: 2px;
+    background: linear-gradient(90deg, var(--gold-500), var(--gold-400));
     transition: width 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     border-radius: 2px 2px 0 0;
+    box-shadow: 0 0 8px rgba(234,179,8,0.3);
 }
 .fp-nav-link:hover { color: var(--gold-400) !important; }
 .fp-nav-link:hover::after { width: 70%; }
 .fp-active { color: var(--gold-400) !important; font-weight: 700; }
 .fp-active::after { width: 70% !important; }
 
-/* Badges */
 .fp-cart-badge {
-    position: absolute; top: 12px; right: 2px;
+    position: absolute; top: 10px; right: 0;
     background: var(--gold-500); color: var(--near-black);
     font-size: 10px; font-weight: 800;
     min-width: 18px; height: 18px;
     border-radius: 50%; display: flex;
     align-items: center; justify-content: center;
     line-height: 1;
+    box-shadow: 0 0 8px rgba(234,179,8,0.3);
 }
 .fp-wallet-badge {
-    font-size: 10px; color: var(--gold-400);
+    font-size: 9px; color: var(--gold-400);
     background: rgba(234,179,8,0.12);
-    padding: 2px 6px; border-radius: 4px;
+    padding: 2px 5px; border-radius: 4px;
     font-weight: 600;
+    margin-left: 2px;
 }
 
-/* Toggler */
+.fp-avatar {
+    width: 32px; height: 32px; border-radius: 8px;
+    background: linear-gradient(135deg, var(--gold-500), var(--gold-700));
+    color: var(--near-black);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 800;
+    margin-right: 6px;
+    flex-shrink: 0;
+}
+
 .fp-toggler {
-    padding: 8px !important; font-size: 24px;
-    color: var(--text-primary);
+    padding: 6px !important;
+    background: transparent !important;
+    box-shadow: none !important;
 }
-.fp-toggler:focus { box-shadow: 0 0 0 3px rgba(234,179,8,0.2) !important; }
+.fp-toggler:focus { outline: none; }
+.fp-toggler-icon {
+    width: 24px; height: 18px; position: relative;
+    display: flex; flex-direction: column; justify-content: space-between;
+}
+.fp-toggler-icon span {
+    display: block; height: 2px; width: 100%;
+    background: var(--text-primary);
+    border-radius: 2px;
+    transition: all 0.3s;
+    transform-origin: center;
+}
+.fp-toggler[aria-expanded="true"] .fp-toggler-icon span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+.fp-toggler[aria-expanded="true"] .fp-toggler-icon span:nth-child(2) { opacity: 0; }
+.fp-toggler[aria-expanded="true"] .fp-toggler-icon span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
 
-/* Dropdown */
+.fp-mobile-cart {
+    color: var(--text-primary); font-size: 20px;
+    padding: 6px; transition: color 0.3s;
+}
+.fp-mobile-cart:hover { color: var(--gold-400); }
+.fp-cart-badge-mobile {
+    position: absolute; top: 0; right: 0;
+    background: var(--gold-500); color: var(--near-black);
+    font-size: 9px; font-weight: 800;
+    min-width: 16px; height: 16px;
+    border-radius: 50%; display: flex;
+    align-items: center; justify-content: center;
+    line-height: 1;
+}
+
 .fp-dropdown-menu {
     background: var(--card-dark);
     border: 1px solid var(--card-border);
     border-radius: var(--radius-sm);
-    padding: 8px;
-    box-shadow: var(--shadow-card);
+    padding: 6px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
     min-width: 200px;
+    animation: dropdownFade 0.2s ease-out;
+}
+@keyframes dropdownFade {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 .fp-dropdown-menu .dropdown-item {
     color: var(--text-muted);
@@ -273,17 +334,14 @@
     background: rgba(234,179,8,0.1);
     color: var(--gold-400);
 }
-.fp-dropdown-menu .dropdown-divider {
-    border-color: var(--card-border);
-}
+.fp-dropdown-menu .dropdown-divider { border-color: var(--card-border); }
 .fp-logout-item { background: none !important; border: none; width: 100%; cursor: pointer; font-family: inherit; }
 .fp-logout-item:hover { background: rgba(239,68,68,0.1) !important; color: #ef4444 !important; }
 
-/* Register Button */
 .fp-register-btn {
     background: linear-gradient(135deg, var(--gold-500), var(--gold-600));
     color: var(--near-black) !important;
-    padding: 10px 22px; border-radius: var(--radius-sm);
+    padding: 10px 22px; border-radius: 10px;
     font-weight: 700; font-size: 13px;
     display: inline-flex; align-items: center; gap: 6px;
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -297,28 +355,65 @@
 }
 
 @media (max-width: 991px) {
-    .fp-nav-link { padding: 12px 8px !important; }
-    .fp-navbar .navbar-collapse { padding: 12px 0; border-top: 1px solid var(--card-border); margin-top: 8px; }
-    .fp-register-btn { margin: 8px 0; display: inline-flex; }
+    .fp-nav-link { padding: 12px 16px !important; border-radius: 8px; margin: 2px 8px; }
+    .fp-nav-link::after { display: none; }
+    .fp-active { background: rgba(234,179,8,0.08); }
+    .fp-navbar .navbar-collapse {
+        padding: 8px 0 16px;
+        border-top: 1px solid var(--card-border);
+        margin-top: 4px;
+        max-height: calc(100vh - 80px);
+        overflow-y: auto;
+    }
+    .fp-register-btn { margin: 4px 16px; display: flex; justify-content: center; }
+    .fp-navbar .dropdown-menu {
+        background: transparent; border: none;
+        box-shadow: none; padding: 0 0 0 16px;
+        animation: none;
+    }
+    .fp-navbar .dropdown-menu .dropdown-item {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+    .fp-navbar .dropdown-menu .dropdown-divider { display: none; }
+    .fp-brand { padding: 4px 0 !important; }
+    .fp-brand-icon { width: 36px; height: 36px; font-size: 17px; }
+    .fp-brand-text { font-size: 17px; }
+    .fp-brand-sub { font-size: 8px; }
 }
 </style>
 
 <script>
-// Navbar scroll effect
-const fpNavbar = document.querySelector('.fp-navbar');
-window.addEventListener('scroll', () => {
-    if (window.scrollY > 20) fpNavbar.classList.add('scrolled');
-    else fpNavbar.classList.remove('scrolled');
-});
-
-// Dropdown close on mobile after click
-document.querySelectorAll('.fp-dropdown-menu .dropdown-item').forEach(item => {
-    item.addEventListener('click', () => {
-        const collapse = document.getElementById('fpNavCollapse');
-        if (collapse.classList.contains('show')) {
-            const toggler = document.querySelector('.fp-toggler');
-            if (toggler) toggler.click();
+(function() {
+    const nav = document.getElementById('fpMainNav');
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            window.requestAnimationFrame(() => {
+                nav.classList.toggle('scrolled', window.scrollY > 20);
+                ticking = false;
+            });
+            ticking = true;
         }
     });
-});
+
+    document.querySelectorAll('.fp-dropdown-menu .dropdown-item, .fp-nav-link').forEach(item => {
+        item.addEventListener('click', () => {
+            const collapse = document.getElementById('fpNavCollapse');
+            if (collapse.classList.contains('show')) {
+                const toggler = document.querySelector('.fp-toggler');
+                if (toggler) toggler.click();
+            }
+        });
+    });
+
+    document.querySelectorAll('.fp-navbar .dropdown').forEach(dd => {
+        dd.addEventListener('show.bs.dropdown', () => {
+            dd.querySelector('.dropdown-toggle')?.setAttribute('aria-expanded', 'true');
+        });
+        dd.addEventListener('hide.bs.dropdown', () => {
+            dd.querySelector('.dropdown-toggle')?.setAttribute('aria-expanded', 'false');
+        });
+    });
+})();
 </script>

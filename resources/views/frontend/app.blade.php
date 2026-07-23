@@ -53,6 +53,15 @@
             line-height: 1.6;
         }
 
+        body::before {
+            content: '';
+            position: fixed; inset: 0;
+            background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(234,179,8,0.03) 0%, transparent 70%),
+                        radial-gradient(ellipse 60% 40% at 80% 20%, rgba(234,179,8,0.02) 0%, transparent 60%),
+                        radial-gradient(ellipse 40% 30% at 20% 80%, rgba(234,179,8,0.015) 0%, transparent 50%);
+            pointer-events: none; z-index: 0;
+        }
+
         a { text-decoration: none; color: inherit; }
         ::selection { background: var(--gold-500); color: var(--near-black); }
 
@@ -63,21 +72,46 @@
             transition: opacity 0.6s ease, visibility 0.6s;
         }
         #pageLoader.hidden { opacity: 0; visibility: hidden; }
-        .loader-logo { font-size: 32px; font-weight: 800; color: var(--gold-500); margin-bottom: 24px; font-family: 'Syne', sans-serif; }
+        .loader-logo {
+            font-size: 36px; font-weight: 800; color: var(--gold-500);
+            margin-bottom: 28px; font-family: 'Syne', sans-serif;
+            animation: loaderPulse 1.4s ease-in-out infinite;
+            letter-spacing: -1px;
+        }
         .loader-logo span { color: var(--text-primary); }
-        .loader-bar { width: 220px; height: 4px; background: var(--card-dark); border-radius: 99px; overflow: hidden; }
-        .loader-bar-fill { height: 100%; background: linear-gradient(90deg, var(--gold-500), var(--gold-400)); border-radius: 99px; animation: loaderFill 1.2s ease-in-out infinite; }
-        @keyframes loaderFill { 0% { width: 0%; } 100% { width: 100%; } }
+        @keyframes loaderPulse { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.04);opacity:0.8} }
+        .loader-logo-dot {
+            display: inline-block; width: 10px; height: 10px;
+            background: var(--gold-500); border-radius: 50%;
+            margin-left: 6px; animation: loaderDot 1.4s ease-in-out infinite;
+        }
+        @keyframes loaderDot { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+        .loader-sub { color: var(--text-dim); font-size: 12px; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 20px; }
+        .loader-bar { width: 200px; height: 3px; background: var(--card-dark); border-radius: 99px; overflow: hidden; }
+        .loader-bar-fill { height: 100%; background: linear-gradient(90deg, var(--gold-500), var(--gold-400), var(--gold-500)); background-size: 200% 100%; border-radius: 99px; animation: loaderFill 1s linear infinite; }
+        @keyframes loaderFill { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+
+        #cursorGlow {
+            position: fixed; pointer-events: none; z-index: 99998;
+            width: 300px; height: 300px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(234,179,8,0.04) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            transition: opacity 0.3s;
+            will-change: transform, left, top;
+        }
 
         #scrollTop {
-            position: fixed; bottom: 30px; right: 30px; width: 48px; height: 48px;
-            background: var(--gold-500); color: var(--near-black); border: none; border-radius: 12px;
+            position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px;
+            background: linear-gradient(135deg, var(--gold-500), var(--gold-600));
+            color: var(--near-black); border: none; border-radius: 14px;
             display: flex; align-items: center; justify-content: center; font-size: 20px;
-            cursor: pointer; z-index: 999; opacity: 0; visibility: hidden; transition: all 0.3s;
+            cursor: pointer; z-index: 999; opacity: 0; visibility: hidden;
+            transform: translateY(20px); perspective: 1000px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             box-shadow: var(--shadow-gold);
         }
-        #scrollTop.visible { opacity: 1; visibility: visible; }
-        #scrollTop:hover { background: var(--gold-600); transform: translateY(-3px); box-shadow: var(--shadow-gold-lg); }
+        #scrollTop.visible { opacity: 1; visibility: visible; transform: translateY(0); }
+        #scrollTop:hover { background: var(--gold-600); transform: translateY(-3px) scale(1.05); box-shadow: var(--shadow-gold-lg); }
 
         .alert-success-custom, .alert-danger-custom {
             padding: 14px 20px; text-align: center; font-weight: 600; position: relative; z-index: 1000;
@@ -94,8 +128,14 @@
             color: var(--near-black); padding: 12px 28px; border-radius: var(--radius-sm);
             font-weight: 700; font-size: 14px; border: none; cursor: pointer;
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            font-family: inherit;
+            font-family: inherit; position: relative; overflow: hidden;
         }
+        .btn-primary-gold::before {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(135deg, transparent 20%, rgba(255,255,255,0.15) 50%, transparent 80%);
+            transform: translateX(-100%); transition: transform 0.6s;
+        }
+        .btn-primary-gold:hover::before { transform: translateX(100%); }
         .btn-primary-gold:hover { transform: translateY(-2px); box-shadow: var(--shadow-gold-lg); color: var(--near-black); }
 
         .btn-outline-gold {
@@ -107,7 +147,6 @@
         }
         .btn-outline-gold:hover { background: rgba(234,179,8,0.1); color: var(--gold-300); }
 
-        /* Section styles */
         .section-padding { padding: 80px 0; }
         .section-head {
             text-align: center; margin-bottom: 48px;
@@ -128,7 +167,6 @@
         }
         .section-head p { color: var(--text-muted); font-size: 16px; max-width: 600px; margin: 0 auto; }
 
-        /* Card Base */
         .card-dark {
             background: var(--card-dark);
             border: 1px solid var(--card-border);
@@ -141,7 +179,6 @@
             transform: translateY(-4px);
         }
 
-        /* Counter animation */
         .counter-num {
             font-family: 'Syne', sans-serif;
             font-size: 36px; font-weight: 800;
@@ -151,15 +188,39 @@
             line-height: 1.2;
         }
 
-        /* Reveal animation */
         .reveal-up {
             opacity: 0; transform: translateY(30px);
             transition: opacity 0.7s ease, transform 0.7s ease;
         }
         .reveal-up.visible { opacity: 1; transform: translateY(0); }
 
-        /* Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
+        .reveal-scale {
+            opacity: 0; transform: scale(0.9);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .reveal-scale.visible { opacity: 1; transform: scale(1); }
+
+        .reveal-left {
+            opacity: 0; transform: translateX(-40px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .reveal-left.visible { opacity: 1; transform: translateX(0); }
+
+        .reveal-right {
+            opacity: 0; transform: translateX(40px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+        /* Grain texture overlay */
+        .grain-overlay {
+            position: fixed; inset: 0; pointer-events: none; z-index: 99997;
+            opacity: 0.015;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            background-repeat: repeat; background-size: 256px 256px;
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: var(--near-black); }
         ::-webkit-scrollbar-thumb { background: var(--card-border); border-radius: 99px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--gold-600); }
@@ -167,13 +228,23 @@
         @media (max-width: 768px) {
             .section-padding { padding: 50px 0; }
         }
+
+        @media (max-width: 768px) {
+            #cursorGlow { display: none; }
+        }
     </style>
 </head>
 <body>
+    <div class="grain-overlay"></div>
+
+    <div id="cursorGlow"></div>
+
     <div id="pageLoader">
-        <div class="loader-logo">Flexi<span>Pay</span></div>
+        <div class="loader-logo">Flexi<span>Pay</span><span class="loader-logo-dot"></span></div>
+        <div class="loader-sub">Loading amazing deals</div>
         <div class="loader-bar"><div class="loader-bar-fill"></div></div>
     </div>
+
     <button id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="bi bi-chevron-up"></i></button>
 
     @include('frontend.partials.menu')
@@ -182,13 +253,35 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
     @stack('scripts')
     <script>
+        // Page Loader
         window.addEventListener('load', () => {
-            setTimeout(() => { document.getElementById('pageLoader').classList.add('hidden'); }, 700);
+            setTimeout(() => { document.getElementById('pageLoader').classList.add('hidden'); }, 800);
         });
+
+        // Scroll to Top
         window.addEventListener('scroll', () => {
             const s = document.getElementById('scrollTop');
             window.scrollY > 400 ? s.classList.add('visible') : s.classList.remove('visible');
         });
+
+        // Custom Cursor Glow
+        const cursorGlow = document.getElementById('cursorGlow');
+        let mouseX = -300, mouseY = -300;
+        let cursorX = -300, cursorY = -300;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        function animateCursor() {
+            cursorX += (mouseX - cursorX) * 0.08;
+            cursorY += (mouseY - cursorY) * 0.08;
+            cursorGlow.style.left = cursorX + 'px';
+            cursorGlow.style.top = cursorY + 'px';
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
 
         // Scroll Reveal
         const revealObs = new IntersectionObserver((entries) => {
@@ -196,7 +289,7 @@
                 if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); }
             });
         }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-        document.querySelectorAll('.reveal-up').forEach(el => revealObs.observe(el));
+        document.querySelectorAll('.reveal-up, .reveal-scale, .reveal-left, .reveal-right').forEach(el => revealObs.observe(el));
 
         // Counter Animation
         const counterObs = new IntersectionObserver((entries) => {
@@ -217,6 +310,22 @@
             });
         }, { threshold: 0.5 });
         document.querySelectorAll('[data-count]').forEach(el => counterObs.observe(el));
+
+        // Parallax on mouse move for elements with data-tilt
+        document.querySelectorAll('[data-tilt]').forEach(el => {
+            el.addEventListener('mousemove', (e) => {
+                const rect = el.getBoundingClientRect();
+                const x = (e.clientX - rect.left) / rect.width - 0.5;
+                const y = (e.clientY - rect.top) / rect.height - 0.5;
+                const intensity = parseFloat(el.dataset.tilt) || 10;
+                el.style.transform = `perspective(1000px) rotateY(${x * intensity}deg) rotateX(${-y * intensity}deg)`;
+            });
+            el.addEventListener('mouseleave', () => {
+                el.style.transform = 'perspective(1000px) rotateY(0deg) rotateX(0deg)';
+                el.style.transition = 'transform 0.5s ease';
+                setTimeout(() => { el.style.transition = ''; }, 500);
+            });
+        });
     </script>
 </body>
 </html>

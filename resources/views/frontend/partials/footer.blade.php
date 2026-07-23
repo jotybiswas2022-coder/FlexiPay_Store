@@ -6,15 +6,15 @@ $phone = $settings?->phone ?? '+234 800-FLEXIPAY';
 $location = $settings?->location ?? 'Lagos, Nigeria';
 @endphp
 
-<!-- ===== FOOTER ===== -->
 <footer class="fp-footer">
-    <!-- Newsletter -->
     <div class="fp-newsletter">
         <div class="container">
             <div class="row align-items-center g-4">
                 <div class="col-lg-5">
-                    <div class="fp-nl-content">
-                        <i class="bi bi-envelope-paper-fill fp-nl-icon"></i>
+                    <div class="fp-nl-content reveal-left">
+                        <div class="fp-nl-icon-wrap">
+                            <i class="bi bi-envelope-paper-fill fp-nl-icon"></i>
+                        </div>
                         <div>
                             <h4>Stay in the Loop</h4>
                             <p>Get exclusive deals, payment tips, and new arrivals</p>
@@ -22,8 +22,11 @@ $location = $settings?->location ?? 'Lagos, Nigeria';
                     </div>
                 </div>
                 <div class="col-lg-7">
-                    <form class="fp-nl-form" onsubmit="handleNLSubmit(event)">
-                        <input type="email" placeholder="Enter your email address" required>
+                    <form class="fp-nl-form reveal-right" onsubmit="handleNLSubmit(event)">
+                        <div class="fp-nl-input-wrap">
+                            <i class="bi bi-envelope-fill"></i>
+                            <input type="email" placeholder="Enter your email address" required>
+                        </div>
                         <button type="submit"><i class="bi bi-send-fill"></i> Subscribe</button>
                     </form>
                 </div>
@@ -31,11 +34,9 @@ $location = $settings?->location ?? 'Lagos, Nigeria';
         </div>
     </div>
 
-    <!-- Main Footer -->
     <div class="fp-footer-main">
         <div class="container">
             <div class="row g-5">
-                <!-- Brand Column -->
                 <div class="col-lg-4 col-md-6">
                     <div class="fp-footer-brand">
                         <div class="fp-footer-logo">
@@ -44,22 +45,10 @@ $location = $settings?->location ?? 'Lagos, Nigeria';
                         </div>
                         <p>Nigeria's premier installment payment platform. Shop what you love today and pay over time with flexible plans designed for your budget.</p>
                         <div class="fp-footer-info">
-                            <div class="fp-fi-item">
-                                <i class="bi bi-geo-alt-fill"></i>
-                                <span>{{ $location }}</span>
-                            </div>
-                            <div class="fp-fi-item">
-                                <i class="bi bi-telephone-fill"></i>
-                                <span>{{ $phone }}</span>
-                            </div>
-                            <div class="fp-fi-item">
-                                <i class="bi bi-envelope-fill"></i>
-                                <span>{{ $email }}</span>
-                            </div>
-                            <div class="fp-fi-item">
-                                <i class="bi bi-clock-fill"></i>
-                                <span>Mon–Sat: 8AM – 6PM (WAT)</span>
-                            </div>
+                            <div class="fp-fi-item"><i class="bi bi-geo-alt-fill"></i><span>{{ $location }}</span></div>
+                            <div class="fp-fi-item"><i class="bi bi-telephone-fill"></i><span>{{ $phone }}</span></div>
+                            <div class="fp-fi-item"><i class="bi bi-envelope-fill"></i><span>{{ $email }}</span></div>
+                            <div class="fp-fi-item"><i class="bi bi-clock-fill"></i><span>Mon–Sat: 8AM – 6PM (WAT)</span></div>
                         </div>
                         <div class="fp-social-links">
                             <a href="#" class="fp-social-btn facebook"><i class="bi bi-facebook"></i></a>
@@ -71,7 +60,6 @@ $location = $settings?->location ?? 'Lagos, Nigeria';
                     </div>
                 </div>
 
-                <!-- Quick Links -->
                 <div class="col-lg-2 col-md-6 col-6">
                     <div class="fp-footer-col">
                         <h5>Quick Links</h5>
@@ -85,7 +73,6 @@ $location = $settings?->location ?? 'Lagos, Nigeria';
                     </div>
                 </div>
 
-                <!-- Customer Service -->
                 <div class="col-lg-3 col-md-6 col-6">
                     <div class="fp-footer-col">
                         <h5>Customer Service</h5>
@@ -99,7 +86,6 @@ $location = $settings?->location ?? 'Lagos, Nigeria';
                     </div>
                 </div>
 
-                <!-- Payment & Trust -->
                 <div class="col-lg-3 col-md-6">
                     <div class="fp-footer-col">
                         <h5>Pay With</h5>
@@ -120,12 +106,11 @@ $location = $settings?->location ?? 'Lagos, Nigeria';
         </div>
     </div>
 
-    <!-- Bottom Bar -->
     <div class="fp-footer-bottom">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-6 text-center text-md-start">
-                    <p>&copy; {{ date('Y') }} <span>FlexiPay Store</span> — All rights reserved. Made with <i class="bi bi-heart-fill" style="color:#ef4444;"></i> in Nigeria</p>
+                    <p>&copy; {{ date('Y') }} <span>FlexiPay Store</span> — All rights reserved. Made with <i class="bi bi-heart-fill"></i> in Nigeria</p>
                 </div>
                 <div class="col-md-6 text-center text-md-end mt-2 mt-md-0">
                     <a href="{{ url('/terms/privacy') }}">Privacy</a>
@@ -142,56 +127,72 @@ $location = $settings?->location ?? 'Lagos, Nigeria';
 <style>
 .fp-footer { background: var(--dark-950); }
 
-/* Newsletter */
 .fp-newsletter {
     background: linear-gradient(135deg, var(--gold-600), var(--gold-700));
-    padding: 36px 0;
+    padding: 32px 0;
     border-bottom: 1px solid rgba(255,255,255,0.05);
+    position: relative; overflow: hidden;
+}
+.fp-newsletter::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 100% at 0% 50%, rgba(255,255,255,0.05) 0%, transparent 60%);
+    pointer-events: none;
 }
 .fp-nl-content { display: flex; align-items: center; gap: 16px; color: var(--near-black); }
-.fp-nl-icon { font-size: 38px; color: rgba(0,0,0,0.4); flex-shrink: 0; }
-.fp-nl-content h4 { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 700; margin-bottom: 4px; color: var(--near-black); }
+.fp-nl-icon-wrap { flex-shrink: 0; }
+.fp-nl-icon { font-size: 34px; color: rgba(0,0,0,0.35); }
+.fp-nl-content h4 { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 700; margin-bottom: 3px; color: var(--near-black); }
 .fp-nl-content p { font-size: 14px; color: rgba(0,0,0,0.6); margin: 0; }
-.fp-nl-form { display: flex; gap: 0; border-radius: var(--radius-sm); overflow: hidden; box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
-.fp-nl-form input {
-    flex: 1; padding: 14px 20px; border: none;
-    background: rgba(0,0,0,0.2); color: white;
-    font-size: 14px; outline: none; font-family: inherit;
+.fp-nl-form {
+    display: flex; gap: 0; border-radius: 10px; overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    transition: box-shadow 0.3s;
+}
+.fp-nl-form:focus-within { box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
+.fp-nl-input-wrap {
+    flex: 1; display: flex; align-items: center; gap: 8px;
+    padding: 0 16px;
+    background: rgba(0,0,0,0.2);
     border: 1px solid rgba(255,255,255,0.15);
     border-right: none;
 }
-.fp-nl-form input::placeholder { color: rgba(255,255,255,0.5); }
+.fp-nl-input-wrap i { color: rgba(255,255,255,0.4); font-size: 16px; }
+.fp-nl-input-wrap input {
+    flex: 1; padding: 13px 0; border: none;
+    background: transparent; color: white;
+    font-size: 14px; outline: none; font-family: inherit;
+}
+.fp-nl-input-wrap input::placeholder { color: rgba(255,255,255,0.5); }
 .fp-nl-form button {
     background: var(--near-black); color: var(--gold-400); border: none;
-    padding: 14px 28px; font-weight: 700; font-size: 14px;
+    padding: 13px 26px; font-weight: 700; font-size: 14px;
     cursor: pointer; display: flex; align-items: center; gap: 8px;
     transition: all 0.3s; font-family: inherit; white-space: nowrap;
 }
 .fp-nl-form button:hover { background: var(--dark-900); color: var(--gold-300); }
 
-/* Main Footer */
-.fp-footer-main { padding: 72px 0 48px; }
+.fp-footer-main { padding: 60px 0 40px; }
 
 .fp-footer-logo { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
 .fp-footer-logo-icon {
-    width: 44px; height: 44px; border-radius: 10px;
+    width: 42px; height: 42px; border-radius: 10px;
     background: linear-gradient(135deg, var(--gold-500), var(--gold-700));
     display: flex; align-items: center; justify-content: center;
-    color: var(--near-black); font-size: 20px;
+    color: var(--near-black); font-size: 19px;
 }
 .fp-footer-logo span { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800; color: var(--text-primary); }
 .fp-footer-logo span span { color: var(--gold-500); }
 .fp-footer-brand p { color: var(--text-dim); font-size: 14px; line-height: 1.8; margin-bottom: 24px; max-width: 360px; }
 
-.fp-footer-info { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
+.fp-footer-info { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
 .fp-fi-item { display: flex; align-items: center; gap: 10px; color: var(--text-dim); font-size: 13.5px; }
 .fp-fi-item i { color: var(--gold-500); font-size: 13px; width: 16px; }
 
-.fp-social-links { display: flex; gap: 10px; }
+.fp-social-links { display: flex; gap: 8px; }
 .fp-social-btn {
-    width: 40px; height: 40px; border-radius: 10px;
+    width: 38px; height: 38px; border-radius: 10px;
     display: flex; align-items: center; justify-content: center;
-    font-size: 16px; color: var(--text-muted); transition: all 0.3s;
+    font-size: 15px; color: var(--text-muted); transition: all 0.3s;
     border: 1px solid var(--card-border);
 }
 .fp-social-btn:hover { transform: translateY(-3px); color: white; }
@@ -202,8 +203,8 @@ $location = $settings?->location ?? 'Lagos, Nigeria';
 .fp-social-btn.youtube:hover { background: #ff0000; border-color: #ff0000; }
 
 .fp-footer-col h5 {
-    color: var(--text-primary); font-size: 15px; font-weight: 700;
-    margin-bottom: 20px; padding-bottom: 10px;
+    color: var(--text-primary); font-size: 14px; font-weight: 700;
+    margin-bottom: 18px; padding-bottom: 10px;
     border-bottom: 2px solid rgba(234,179,8,0.2);
     position: relative;
 }
@@ -211,7 +212,7 @@ $location = $settings?->location ?? 'Lagos, Nigeria';
     content: ''; position: absolute; bottom: -2px; left: 0;
     width: 32px; height: 2px; background: var(--gold-500);
 }
-.fp-footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.fp-footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
 .fp-footer-col ul li a {
     color: var(--text-dim); font-size: 14px;
     display: inline-flex; align-items: center; gap: 6px;
@@ -221,30 +222,30 @@ $location = $settings?->location ?? 'Lagos, Nigeria';
 .fp-footer-col ul li a:hover { color: var(--gold-400); padding-left: 4px; }
 .fp-footer-col ul li a:hover::before { transform: translateX(3px); }
 
-.fp-payment-methods { display: flex; flex-wrap: wrap; gap: 8px; }
+.fp-payment-methods { display: flex; flex-wrap: wrap; gap: 6px; }
 .fp-pm-item {
     display: inline-flex; align-items: center; gap: 6px;
     background: var(--card-dark); border: 1px solid var(--card-border);
-    color: var(--text-muted); padding: 8px 14px; border-radius: var(--radius-sm);
-    font-size: 12.5px; font-weight: 500;
+    color: var(--text-muted); padding: 7px 12px; border-radius: 8px;
+    font-size: 12px; font-weight: 500;
 }
 .fp-pm-item i { color: var(--gold-500); }
 
-.fp-trust-badges { display: flex; flex-direction: column; gap: 6px; }
+.fp-trust-badges { display: flex; flex-direction: column; gap: 5px; }
 .fp-trust-badge {
     display: inline-flex; align-items: center; gap: 6px;
-    font-size: 12.5px; font-weight: 500; color: var(--text-dim);
+    font-size: 12px; font-weight: 500; color: var(--text-dim);
 }
-.fp-trust-badge i { color: var(--gold-500); font-size: 13px; }
+.fp-trust-badge i { color: var(--gold-500); font-size: 12px; }
 
-/* Bottom */
 .fp-footer-bottom {
     border-top: 1px solid var(--card-border);
-    padding: 20px 0;
+    padding: 18px 0;
     background: rgba(0,0,0,0.3);
 }
 .fp-footer-bottom p { color: var(--text-dim); font-size: 13px; margin: 0; }
 .fp-footer-bottom p span { color: var(--gold-500); font-weight: 700; }
+.fp-footer-bottom p i { color: #ef4444; }
 .fp-footer-bottom a { color: var(--text-dim); font-size: 13px; transition: color 0.3s; }
 .fp-footer-bottom a:hover { color: var(--gold-400); }
 .fp-sep { color: var(--card-border); margin: 0 8px; }
@@ -254,6 +255,7 @@ $location = $settings?->location ?? 'Lagos, Nigeria';
 }
 @media (max-width: 576px) {
     .fp-nl-form { flex-direction: column; }
+    .fp-nl-input-wrap { border-right: 1px solid rgba(255,255,255,0.15); }
     .fp-nl-form button { justify-content: center; }
 }
 </style>
@@ -263,7 +265,7 @@ function handleNLSubmit(e) {
     e.preventDefault();
     const btn = e.target.querySelector('button');
     btn.innerHTML = '<i class="bi bi-check-circle-fill"></i> Subscribed!';
-    btn.style.background = 'var(--gold-600)';
+    btn.style.background = 'var(--gold-500)';
     btn.style.color = '#000';
     setTimeout(() => {
         btn.innerHTML = '<i class="bi bi-send-fill"></i> Subscribe';
@@ -272,15 +274,4 @@ function handleNLSubmit(e) {
         e.target.querySelector('input').value = '';
     }, 3000);
 }
-
-// Animate footer columns on scroll
-const footerObs = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-        if (e.isIntersecting) {
-            e.target.style.animation = 'fadeInUp 0.6s ease-out both';
-            footerObs.unobserve(e.target);
-        }
-    });
-}, { threshold: 0.1 });
-document.querySelectorAll('.fp-footer-col, .fp-footer-brand').forEach(el => footerObs.observe(el));
 </script>
