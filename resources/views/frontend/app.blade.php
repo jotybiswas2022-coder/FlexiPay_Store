@@ -242,7 +242,7 @@
     <div id="pageLoader">
         <div class="loader-logo">Flexi<span>Pay</span><span class="loader-logo-dot"></span></div>
         <div class="loader-sub">Loading amazing deals</div>
-        <div class="loader-bar"><div class="loader-bar-fill"></div></div>
+        <div class="loader-bar" role="progressbar" aria-label="Loading progress"><div class="loader-bar-fill"></div></div>
     </div>
 
     <button id="scrollTop" aria-label="Scroll to top" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="bi bi-chevron-up"></i></button>
