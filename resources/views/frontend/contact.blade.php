@@ -62,6 +62,7 @@
     display: flex; align-items: center; justify-content: center;
     color: var(--text-muted); font-size: 16px;
     transition: all 0.3s; text-decoration: none;
+    touch-action: manipulation;
 }
 .fp-ci-social a:hover { transform: translateY(-3px); color: white; }
 .fp-ci-social a.s-fb:hover { background: #1877f2; border-color: #1877f2; }
