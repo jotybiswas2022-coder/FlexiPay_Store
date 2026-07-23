@@ -88,7 +88,7 @@
 
 @section('content')
 <section class="fp-ord-hero">
-    <div class="fp-ord-orb"></div>
+    <div class="fp-ord-orb" aria-hidden="true"></div>
     <div class="container">
         <nav class="fp-breadcrumb reveal-up">
             <a href="{{ url('/') }}">Home</a><i class="bi bi-chevron-right"></i>

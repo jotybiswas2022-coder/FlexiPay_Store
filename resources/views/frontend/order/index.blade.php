@@ -106,8 +106,8 @@
 
 @section('content')
 <section class="fp-ord-hero">
-    <div class="fp-ord-orb"></div>
-    <div class="fp-ord-orb2"></div>
+    <div class="fp-ord-orb" aria-hidden="true"></div>
+    <div class="fp-ord-orb2" aria-hidden="true"></div>
     <div class="container">
         <div class="section-head reveal-up">
             <div class="section-badge"><i class="bi bi-box-seam-fill"></i> My Orders</div>

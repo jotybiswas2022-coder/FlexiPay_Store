@@ -93,8 +93,8 @@
 
 @section('content')
 <section class="fp-conf-section">
-    <div class="fp-conf-orb"></div>
-    <div class="fp-conf-orb2"></div>
+    <div class="fp-conf-orb" aria-hidden="true"></div>
+    <div class="fp-conf-orb2" aria-hidden="true"></div>
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-6">
