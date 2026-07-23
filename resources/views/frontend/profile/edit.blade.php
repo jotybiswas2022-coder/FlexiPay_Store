@@ -43,7 +43,7 @@
 
 @section('content')
 <section class="fp-ed-hero">
-    <div class="fp-ed-orb"></div>
+    <div class="fp-ed-orb" aria-hidden="true"></div>
     <div class="container">
         <div class="section-head reveal-up">
             <div class="section-badge"><i class="bi bi-gear-fill"></i> Settings</div>

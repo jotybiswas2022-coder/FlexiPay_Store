@@ -117,7 +117,7 @@
 
 @section('content')
 <section class="fp-prof-hero">
-    <div class="fp-prof-orb"></div>
+    <div class="fp-prof-orb" aria-hidden="true"></div>
     <div class="container">
         <div class="section-head reveal-up">
             <div class="section-badge"><i class="bi bi-person-circle"></i> My Profile</div>
