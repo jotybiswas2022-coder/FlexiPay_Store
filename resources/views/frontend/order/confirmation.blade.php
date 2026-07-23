@@ -71,7 +71,7 @@
 
 .fp-confetti {
     position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-    pointer-events: none; overflow: hidden;
+    pointer-events: none; overflow: hidden; user-select: none;
 }
 .fp-confetti span {
     position: absolute; width: 8px; height: 8px;
