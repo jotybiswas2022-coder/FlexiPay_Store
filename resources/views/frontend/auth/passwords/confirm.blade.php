@@ -22,9 +22,9 @@
     position:relative; z-index:1; width:100%; max-width:440px;
     background:var(--card-dark); border:1px solid var(--card-border);
     border-radius:16px; overflow:hidden;
-    transition:transform 0.3s;
+    transition:transform 0.3s, border-color 0.3s, box-shadow 0.3s;
 }
-.fp-cp-card:hover{transform:translateY(-2px)}
+.fp-cp-card:hover{transform:translateY(-3px);border-color:rgba(234,179,8,0.2);box-shadow:var(--shadow-card-hover)}
 .fp-cp-strip{
     height:4px;background:linear-gradient(90deg,var(--gold-500),var(--gold-400),var(--gold-500));
     background-size:200% 100%;animation:cpShine 2s linear infinite;
