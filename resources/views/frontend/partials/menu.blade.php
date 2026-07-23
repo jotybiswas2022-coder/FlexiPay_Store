@@ -18,7 +18,7 @@
 </div>
 
 <!-- ===== MAIN NAVBAR ===== -->
-<nav class="fp-navbar navbar navbar-expand-lg sticky-top" id="fpMainNav">
+<nav class="fp-navbar navbar navbar-expand-lg sticky-top" id="fpMainNav" aria-label="Main navigation">
     <div class="container-fluid px-4">
         <a class="navbar-brand fp-brand" href="{{ url('/') }}">
             <div class="fp-brand-icon">
