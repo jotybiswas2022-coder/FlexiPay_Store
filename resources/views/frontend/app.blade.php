@@ -245,7 +245,7 @@
         <div class="loader-bar"><div class="loader-bar-fill"></div></div>
     </div>
 
-    <button id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="bi bi-chevron-up"></i></button>
+    <button id="scrollTop" aria-label="Scroll to top" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="bi bi-chevron-up"></i></button>
 
     @include('frontend.partials.menu')
     @yield('content')
