@@ -183,12 +183,12 @@
                 <li role="none"><a class="fp-prod-tab-link" data-tab="reviews" role="tab" aria-selected="false"><i class="bi bi-star-fill"></i> Reviews ({{ $product->reviews->count() }})</a></li>
             </ul>
             <div class="fp-prod-tab-content">
-                <div class="fp-prod-tab-pane active" id="tab-description">
+                <div class="fp-prod-tab-pane active" id="tab-description" role="tabpanel">
                     <div class="fp-prod-tab-inner">
                         {!! nl2br(e($product->description)) !!}
                     </div>
                 </div>
-                <div class="fp-prod-tab-pane" id="tab-plans">
+                <div class="fp-prod-tab-pane" id="tab-plans" role="tabpanel">
                     <div class="fp-prod-tab-inner">
                         <h5 class="fp-prod-tab-title">Choose Your Installment Plan</h5>
                         <p class="fp-prod-tab-sub">Select a plan that fits your budget. All plans are subject to approval.</p>
@@ -216,7 +216,7 @@
                         @endif
                     </div>
                 </div>
-                <div class="fp-prod-tab-pane" id="tab-reviews">
+                <div class="fp-prod-tab-pane" id="tab-reviews" role="tabpanel">
                     <div class="fp-prod-tab-inner">
                         <div class="fp-prod-reviews-header">
                             <div>
