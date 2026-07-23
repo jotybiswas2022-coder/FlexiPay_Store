@@ -177,10 +177,10 @@
 
         <!-- Tabs -->
         <div class="fp-prod-tabs mt-5 reveal-up">
-            <ul class="fp-prod-tab-nav" id="productTabs">
-                <li><a class="fp-prod-tab-link active" data-tab="description"><i class="bi bi-file-text-fill"></i> Description</a></li>
-                <li><a class="fp-prod-tab-link" data-tab="plans"><i class="bi bi-coin"></i> Payment Plans</a></li>
-                <li><a class="fp-prod-tab-link" data-tab="reviews"><i class="bi bi-star-fill"></i> Reviews ({{ $product->reviews->count() }})</a></li>
+            <ul class="fp-prod-tab-nav" id="productTabs" role="tablist">
+                <li role="none"><a class="fp-prod-tab-link active" data-tab="description" role="tab" aria-selected="true"><i class="bi bi-file-text-fill"></i> Description</a></li>
+                <li role="none"><a class="fp-prod-tab-link" data-tab="plans" role="tab" aria-selected="false"><i class="bi bi-coin"></i> Payment Plans</a></li>
+                <li role="none"><a class="fp-prod-tab-link" data-tab="reviews" role="tab" aria-selected="false"><i class="bi bi-star-fill"></i> Reviews ({{ $product->reviews->count() }})</a></li>
             </ul>
             <div class="fp-prod-tab-content">
                 <div class="fp-prod-tab-pane active" id="tab-description">
