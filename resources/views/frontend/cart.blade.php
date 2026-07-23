@@ -229,6 +229,7 @@
     display: flex; align-items: center; justify-content: center;
     cursor: pointer; font-size: 14px;
     transition: all 0.2s; font-family: inherit;
+    touch-action: manipulation;
 }
 .fp-qty-minus:hover, .fp-qty-plus:hover {
     background: rgba(234,179,8,0.1); color: var(--gold-400);
