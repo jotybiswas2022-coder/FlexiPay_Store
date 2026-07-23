@@ -185,7 +185,7 @@
                 <a href="{{ url('/product/'.$product->slug) }}" class="fp-wl-link" style="display:block;text-decoration:none;">
                     <div class="fp-wl-img-wrap">
                         @if($product->primaryImage)
-                            <img src="{{ asset('storage/'.$product->primaryImage->image_path) }}" alt="{{ $product->name }}">
+                            <img src="{{ asset('storage/'.$product->primaryImage->image_path) }}" alt="{{ $product->name }}" loading="lazy" decoding="async">
                         @else
                             <div class="fp-wl-no-img"><i class="bi bi-image"></i></div>
                         @endif

@@ -432,7 +432,7 @@
                             @foreach($cart as $item)
                             <div class="fp-chk-item">
                                 @if($item['thumbnail'])
-                                <img src="{{ asset('storage/'.$item['thumbnail']) }}" alt="" class="fp-chk-item-img">
+                                <img src="{{ asset('storage/'.$item['thumbnail']) }}" alt="" class="fp-chk-item-img" loading="lazy" decoding="async">
                                 @else
                                 <div class="fp-chk-item-img-placeholder"><i class="bi bi-image"></i></div>
                                 @endif

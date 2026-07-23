@@ -28,7 +28,7 @@
                 <div class="fp-prod-gallery reveal-left">
                     <div class="fp-prod-main-img" id="fpMainImgWrap">
                         @if($product->primaryImage)
-                            <img src="{{ asset('storage/'.$product->primaryImage->image_path) }}" alt="{{ $product->name }}" id="mainProductImg">
+                            <img src="{{ asset('storage/'.$product->primaryImage->image_path) }}" alt="{{ $product->name }}" id="mainProductImg" fetchpriority="high" decoding="async">
                             <div class="fp-prod-img-zoom" id="imgZoomLens">
                                 <i class="bi bi-arrows-fullscreen"></i>
                             </div>
@@ -49,7 +49,7 @@
                     <div class="fp-prod-thumbs">
                         @foreach($product->images as $img)
                         <div class="fp-prod-thumb {{ $img->is_primary ? 'active' : '' }}" onclick="changeImage(this, '{{ asset('storage/'.$img->image_path) }}')">
-                            <img src="{{ asset('storage/'.$img->image_path) }}" alt="">
+                            <img src="{{ asset('storage/'.$img->image_path) }}" alt="" loading="lazy" decoding="async">
                         </div>
                         @endforeach
                     </div>
