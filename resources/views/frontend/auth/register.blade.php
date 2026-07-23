@@ -92,7 +92,7 @@
     border: 1px solid var(--card-border);
     border-radius: 24px;
     box-shadow: 0 16px 60px rgba(0,0,0,0.4);
-    overflow: hidden;
+    overflow: hidden; contain: layout style; min-width: 0;
     animation: fadeUp 0.8s cubic-bezier(.22,.68,0,1.2) 0.1s both;
     transform-style: preserve-3d;
     perspective: 800px;

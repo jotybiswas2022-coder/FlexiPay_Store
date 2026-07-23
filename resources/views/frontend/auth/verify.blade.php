@@ -23,6 +23,7 @@
     background:var(--card-dark); border:1px solid var(--card-border);
     border-radius:16px; padding:40px 32px; text-align:center;
     transition:transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+    contain:layout style; min-width:0;
 }
 .fp-verify-card:hover{transform:translateY(-3px);border-color:rgba(234,179,8,0.2);box-shadow:var(--shadow-card-hover)}
 .fp-verify-icon {
