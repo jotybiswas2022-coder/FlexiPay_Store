@@ -58,7 +58,7 @@
 .fp-oi-row img { width:52px;height:52px;border-radius:6px;object-fit:cover;background:var(--dark-900); }
 .fp-oi-no-img-sm { width:52px;height:52px;border-radius:6px;background:var(--dark-900);display:flex;align-items:center;justify-content:center;color:var(--card-border); }
 .fp-oi-detail { flex:1; }
-.fp-oi-name { display:block;color:var(--text-primary);font-size:13px;font-weight:500; }
+.fp-oi-name { display:block;color:var(--text-primary);font-size:13px;font-weight:500;overflow-wrap:break-word; }
 .fp-oi-meta { font-size:11px;color:var(--text-dim); }
 .fp-oi-total { font-weight:600;color:var(--gold-400);font-size:14px; }
 
