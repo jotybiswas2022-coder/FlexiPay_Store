@@ -370,7 +370,7 @@
     overflow: hidden;
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     height: 100%;
-    will-change: transform;
+    will-change: transform; transform: translateZ(0);
 }
 .fp-shop-card:hover {
     border-color: rgba(234,179,8,0.3);
