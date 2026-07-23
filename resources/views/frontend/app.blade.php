@@ -235,7 +235,7 @@
     </style>
 </head>
 <body>
-    <div class="grain-overlay"></div>
+    <div class="grain-overlay" aria-hidden="true"></div>
 
     <div id="cursorGlow"></div>
 
