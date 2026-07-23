@@ -4,7 +4,7 @@
 @push('styles')
 <style>
 .fp-gw-hero {
-    position: relative; padding: 50px 0 30px; overflow: hidden;
+    position: relative; padding: 50px 0 30px; overflow: hidden; isolation: isolate;
     background: linear-gradient(180deg, rgba(234,179,8,0.03) 0%, transparent 100%);
 }
 .fp-gw-orb {
@@ -20,6 +20,7 @@
 .fp-pay-card {
     background: var(--card-dark); border: 1px solid var(--card-border);
     border-radius: var(--radius-lg); padding: 32px; max-width: 500px; margin: 0 auto;
+    transform: translateZ(0);
 }
 .fp-pay-header { text-align: center; margin-bottom: 24px; }
 .fp-pay-header i {
@@ -42,6 +43,7 @@
     display: flex; align-items: center; gap: 14px;
     padding: 14px 16px; border: 2px solid var(--card-border);
     border-radius: var(--radius-sm); transition: all 0.2s; background: var(--surface-dark);
+    transform: translateZ(0);
 }
 .fp-pm-option input[type="radio"]:checked + .fp-pm-content {
     border-color: var(--gold-500); background: rgba(234,179,8,0.05);
@@ -55,7 +57,7 @@
     color: var(--near-black); border: none; border-radius: var(--radius-sm);
     font-size: 16px; font-weight: 700; font-family: 'Syne', sans-serif;
     cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
-    transition: all 0.3s;
+    transition: all 0.3s; transform: translateZ(0);
 }
 .fp-pay-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-gold); }
 .fp-pay-secure { display: flex; justify-content: center; gap: 24px; }
