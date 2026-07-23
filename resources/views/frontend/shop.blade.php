@@ -116,8 +116,8 @@
             </div>
             <div class="fp-toolbar-right">
                 <div class="fp-view-toggle">
-                    <button type="button" class="fp-view-btn fp-view-btn--active" data-view="grid" title="Grid View"><i class="bi bi-grid-3x3-gap-fill"></i></button>
-                    <button type="button" class="fp-view-btn" data-view="list" title="List View"><i class="bi bi-list-ul"></i></button>
+                    <button type="button" class="fp-view-btn fp-view-btn--active" data-view="grid" title="Grid View" aria-label="Grid View"><i class="bi bi-grid-3x3-gap-fill"></i></button>
+                    <button type="button" class="fp-view-btn" data-view="list" title="List View" aria-label="List View"><i class="bi bi-list-ul"></i></button>
                 </div>
             </div>
         </div>
