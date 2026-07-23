@@ -288,7 +288,7 @@
 .fp-select-input option { background: var(--card-dark); color: var(--text-primary); }
 
 .fp-filter-apply {
-    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px; touch-action: manipulation;
     background: linear-gradient(135deg, var(--gold-500), var(--gold-600));
     color: var(--near-black); border: none;
     padding: 10px 20px; border-radius: var(--radius-sm);
@@ -356,6 +356,7 @@
     width: 34px; height: 34px; border-radius: 6px;
     display: flex; align-items: center; justify-content: center;
     font-size: 16px; cursor: pointer; transition: all 0.3s;
+    touch-action: manipulation;
 }
 .fp-view-btn--active { background: rgba(234,179,8,0.1); color: var(--gold-400); }
 .fp-view-btn:not(.fp-view-btn--active):hover { color: var(--text-muted); }
