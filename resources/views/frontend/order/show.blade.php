@@ -24,7 +24,7 @@
 .fp-detail-card {
     background:var(--card-dark);border:1px solid var(--card-border);
     border-radius:var(--radius);overflow:hidden;
-    transition: all 0.3s;
+    transition: all 0.3s; contain:layout style;
 }
 .fp-detail-card:hover { border-color: rgba(234,179,8,0.15); }
 

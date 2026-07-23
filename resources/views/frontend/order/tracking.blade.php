@@ -18,9 +18,9 @@
 .fp-trk-section { padding-bottom: 80px; min-height: 60vh; }
 
 .fp-track-card {
-    background: var(--card-dark); border: 1px solid var(--card-border);
-    border-radius: var(--radius-lg); overflow: hidden;
-    transition: all 0.3s;
+    background:var(--card-dark);border:1px solid var(--card-border);
+    border-radius:var(--radius);overflow:hidden;
+    transition: border-color 0.3s; contain:layout style;
 }
 .fp-track-card:hover { border-color: rgba(234,179,8,0.15); }
 
