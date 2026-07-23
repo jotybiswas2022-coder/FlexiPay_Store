@@ -24,6 +24,7 @@
 .fp-txn-table td { padding:14px 20px;border-bottom:1px solid var(--card-border);font-size:13px; }
 .fp-txn-table tr:last-child td { border-bottom:none; }
 .fp-txn-table tr:hover td { background:rgba(234,179,8,0.02); }
+.fp-txn-table td { transition:background 0.2s; }
 .fp-txn-type { padding:3px 10px;border-radius:6px;font-size:11px;font-weight:600; }
 .fp-txn-type.credit { background:rgba(34,197,94,0.15);color:#4ade80; }
 .fp-txn-type.debit { background:rgba(239,68,68,0.15);color:#ef4444; }
