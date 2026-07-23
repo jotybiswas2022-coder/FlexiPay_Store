@@ -1,19 +1,58 @@
 @extends('frontend.app')
 @section('title', 'Wallet History — FlexiPay Store')
 
+@push('styles')
+<style>
+.fp-wh-hero {
+    position: relative; padding: 30px 0 20px; overflow: hidden;
+    background: linear-gradient(180deg, rgba(234,179,8,0.03) 0%, transparent 100%);
+}
+.fp-wh-orb {
+    position: absolute; width: 400px; height: 400px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(234,179,8,0.04) 0%, transparent 60%);
+    top: -150px; right: -80px; pointer-events: none;
+    animation: whPulse 4s ease-in-out infinite;
+}
+@keyframes whPulse { 0%,100%{transform:scale(1);opacity:0.5} 50%{transform:scale(1.1);opacity:1} }
+
+.fp-wh-section { padding-bottom: 80px; min-height: 60vh; }
+
+.fp-txn-table-wrap { background:var(--card-dark);border:1px solid var(--card-border);border-radius:var(--radius);overflow:hidden;transition:all 0.3s; }
+.fp-txn-table-wrap:hover { border-color:rgba(234,179,8,0.15); }
+.fp-txn-table { width:100%;border-collapse:collapse; }
+.fp-txn-table th { padding:14px 20px;text-align:left;font-size:12px;font-weight:600;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.5px;border-bottom:1px solid var(--card-border);background:var(--surface-dark); }
+.fp-txn-table td { padding:14px 20px;border-bottom:1px solid var(--card-border);font-size:13px; }
+.fp-txn-table tr:last-child td { border-bottom:none; }
+.fp-txn-table tr:hover td { background:rgba(234,179,8,0.02); }
+.fp-txn-type { padding:3px 10px;border-radius:6px;font-size:11px;font-weight:600; }
+.fp-txn-type.credit { background:rgba(34,197,94,0.15);color:#4ade80; }
+.fp-txn-type.debit { background:rgba(239,68,68,0.15);color:#ef4444; }
+.fp-txn-val { font-weight:700;font-size:14px; }
+.fp-txn-val.credit { color:#4ade80; }
+.fp-txn-val.debit { color:#ef4444; }
+</style>
+@endpush
+
 @section('content')
-<section class="fp-section">
+<section class="fp-wh-hero">
+    <div class="fp-wh-orb"></div>
     <div class="container">
-        <div class="d-flex align-items-center justify-content-between mb-4">
-            <div>
-                <div class="section-badge"><i class="bi bi-clock-history"></i> Transaction History</div>
-                <h2 style="font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:var(--text-primary);">Wallet History</h2>
-            </div>
+        <div class="section-head reveal-up" style="text-align:left;">
+            <div class="section-badge" style="display:inline-flex;"><i class="bi bi-clock-history"></i> Transaction History</div>
+            <h2>Wallet History</h2>
+            <p>View all your wallet transactions</p>
+        </div>
+    </div>
+</section>
+
+<section class="fp-wh-section">
+    <div class="container">
+        <div class="d-flex justify-content-end mb-4 reveal-up">
             <a href="{{ route('wallet.index') }}" class="btn-primary-gold"><i class="bi bi-wallet2"></i> Wallet</a>
         </div>
 
         @if(isset($transactions) && $transactions->count() > 0)
-        <div class="fp-txn-table-wrap">
+        <div class="fp-txn-table-wrap reveal-up">
             <table class="fp-txn-table">
                 <thead>
                     <tr>
@@ -40,7 +79,7 @@
             </table>
         </div>
         @else
-        <div class="text-center py-5">
+        <div class="text-center py-5 reveal-up">
             <i class="bi bi-clock-history" style="font-size:48px;color:var(--text-dim);display:block;margin-bottom:12px;"></i>
             <p style="color:var(--text-muted);">No transaction history yet.</p>
         </div>
@@ -48,19 +87,5 @@
     </div>
 </section>
 @include('frontend.partials.footer')
-<style>
-.fp-section { background: linear-gradient(135deg,var(--near-black),var(--surface-dark)); padding: 60px 0; min-height: 100vh; }
-.fp-txn-table-wrap { background: var(--card-dark); border: 1px solid var(--card-border); border-radius: var(--radius); overflow: hidden; }
-.fp-txn-table { width: 100%; border-collapse: collapse; }
-.fp-txn-table th { padding: 14px 20px; text-align: left; font-size: 12px; font-weight: 600; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid var(--card-border); background: var(--surface-dark); }
-.fp-txn-table td { padding: 14px 20px; border-bottom: 1px solid var(--card-border); font-size: 13px; }
-.fp-txn-table tr:last-child td { border-bottom: none; }
-.fp-txn-table tr:hover td { background: rgba(234,179,8,0.02); }
-.fp-txn-type { padding: 3px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; }
-.fp-txn-type.credit { background: rgba(34,197,94,0.15); color: #4ade80; }
-.fp-txn-type.debit { background: rgba(239,68,68,0.15); color: #ef4444; }
-.fp-txn-val { font-weight: 700; font-size: 14px; }
-.fp-txn-val.credit { color: #4ade80; }
-.fp-txn-val.debit { color: #ef4444; }
-</style>
+@stop
 @endsection
