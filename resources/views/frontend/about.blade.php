@@ -60,7 +60,7 @@
 .fp-ab-value-card {
     background: var(--card-dark); border: 1px solid var(--card-border);
     border-radius: var(--radius); padding: 32px 24px; text-align: center;
-    transition: all 0.4s; height: 100%;
+    transition: all 0.4s; height: 100%; touch-action: manipulation;
 }
 .fp-ab-value-card:hover {
     border-color: rgba(234,179,8,0.2); transform: translateY(-4px);
