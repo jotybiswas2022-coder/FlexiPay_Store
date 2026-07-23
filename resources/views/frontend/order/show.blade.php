@@ -123,7 +123,7 @@
                                 <span style="color:var(--text-muted);font-size:13px;">Payment Progress</span>
                                 <span style="color:var(--gold-400);font-size:13px;font-weight:600;">{{ $pct }}%</span>
                             </div>
-                            <div class="fp-progress-bar-lg"><div class="fp-progress-fill-lg" style="width:{{ $pct }}%"></div></div>
+                            <div class="fp-progress-bar-lg" role="progressbar" aria-label="Payment progress" aria-valuenow="{{ $pct }}" aria-valuemin="0" aria-valuemax="100"><div class="fp-progress-fill-lg" style="width:{{ $pct }}%"></div></div>
                             @if($pct >= 70)
                             <div class="fp-eligible-badge mt-2"><i class="bi bi-check-circle-fill"></i> Eligible for shipping!</div>
                             @else
