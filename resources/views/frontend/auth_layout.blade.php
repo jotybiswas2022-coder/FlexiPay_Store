@@ -48,6 +48,8 @@
         ::-webkit-scrollbar-track { background: var(--near-black); }
         ::-webkit-scrollbar-thumb { background: #27272A; border-radius: 99px; }
         ::-webkit-scrollbar-thumb:hover { background: #52525B; }
+        img { max-width: 100%; height: auto; }
+        hr { border: none; height: 1px; background: var(--card-border); margin: 24px 0; }
 
         .fp-auth-nav {
             width: 100%;

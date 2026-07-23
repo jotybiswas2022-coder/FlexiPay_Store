@@ -86,6 +86,8 @@
         ::-webkit-scrollbar-track { background: var(--near-black); }
         ::-webkit-scrollbar-thumb { background: var(--dark-800); border-radius: 99px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--dark-600); }
+        img { max-width: 100%; height: auto; }
+        hr { border: none; height: 1px; background: var(--card-border); margin: 24px 0; }
 
         #pageLoader {
             position: fixed; inset: 0; background: var(--near-black);
