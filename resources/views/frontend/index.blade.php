@@ -199,7 +199,7 @@
                     <a href="{{ url('/product/'.$product->slug) }}" class="fp-product-link">
                         <div class="fp-product-img-wrap">
                             @if($product->primaryImage)
-                                <img src="{{ asset('storage/'.$product->primaryImage->image_path) }}" alt="{{ $product->name }}">
+                                <img src="{{ asset('storage/'.$product->primaryImage->image_path) }}" alt="{{ $product->name }}" loading="lazy">
                             @else
                                 <div class="fp-product-no-img">
                                     <i class="bi bi-image"></i>
@@ -458,7 +458,7 @@
                     <a href="{{ url('/product/'.$product->slug) }}" class="fp-product-link">
                         <div class="fp-product-img-wrap">
                             @if($product->primaryImage)
-                                <img src="{{ asset('storage/'.$product->primaryImage->image_path) }}" alt="{{ $product->name }}">
+                                <img src="{{ asset('storage/'.$product->primaryImage->image_path) }}" alt="{{ $product->name }}" loading="lazy">
                             @else
                                 <div class="fp-product-no-img"><i class="bi bi-image"></i></div>
                             @endif
