@@ -84,7 +84,9 @@
 }
 .fp-ab-tl-item {
     position: relative; padding-bottom: 32px;
+    transition: transform 0.3s;
 }
+.fp-ab-tl-item:hover { transform: translateX(6px); }
 .fp-ab-tl-item:last-child { padding-bottom: 0; }
 .fp-ab-tl-dot {
     position: absolute; left: -28px; top: 4px;
