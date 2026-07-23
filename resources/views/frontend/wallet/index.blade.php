@@ -22,7 +22,7 @@
     background:linear-gradient(135deg,var(--gold-500),var(--gold-600),var(--gold-700));
     border-radius:var(--radius-lg);padding:32px;text-align:center;
     position:relative;overflow:hidden;transition:transform 0.3s;
-    transform:translateZ(0);
+    transform:translateZ(0);contain:layout style;
 }
 .fp-wallet-balance-card:hover { transform:translateY(-3px); }
 .fp-wallet-balance-card::before {

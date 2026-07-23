@@ -27,6 +27,7 @@
     border-radius: var(--radius-lg); padding: 56px 40px;
     animation: fadeUp 0.6s ease both;
     position: relative; overflow: hidden;
+    contain: layout style;
 }
 .fp-confirm-card::before {
     content: ''; position: absolute; top: 0; left: 0; right: 0;

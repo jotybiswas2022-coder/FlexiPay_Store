@@ -20,7 +20,7 @@
 .fp-pay-card {
     background: var(--card-dark); border: 1px solid var(--card-border);
     border-radius: var(--radius-lg); padding: 32px; max-width: 500px; margin: 0 auto;
-    transform: translateZ(0);
+    transform: translateZ(0); contain: layout style;
 }
 .fp-pay-header { text-align: center; margin-bottom: 24px; }
 .fp-pay-header i {

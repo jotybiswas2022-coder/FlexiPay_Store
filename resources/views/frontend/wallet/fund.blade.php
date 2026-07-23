@@ -17,7 +17,7 @@
 
 .fp-fw-section { padding-bottom: 80px; min-height: 60vh; }
 
-.fp-fund-card { background:var(--card-dark);border:1px solid var(--card-border);border-radius:var(--radius-lg);padding:32px;max-width:520px;margin:0 auto;transition:all 0.3s;transform:translateZ(0); }
+.fp-fund-card { background:var(--card-dark);border:1px solid var(--card-border);border-radius:var(--radius-lg);padding:32px;max-width:520px;margin:0 auto;transition:all 0.3s;transform:translateZ(0);contain:layout style; }
 .fp-fund-card:hover { border-color:rgba(234,179,8,0.15); }
 .fp-fund-balance { text-align:center;padding:20px;background:var(--surface-dark);border-radius:var(--radius-sm); }
 .fp-fund-balance span { display:block;color:var(--text-dim);font-size:13px;margin-bottom:4px; }
