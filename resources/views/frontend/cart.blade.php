@@ -49,9 +49,9 @@
                         </div>
                         <div class="fp-ci-qty">
                             <div class="fp-qty-control" data-product-id="{{ $item['id'] }}">
-                                <button type="button" class="fp-qty-minus" data-action="decrease"><i class="bi bi-dash"></i></button>
-                                <input type="number" name="quantity" value="{{ $item['quantity'] ?? 1 }}" min="1" max="99" class="fp-qty-input" readonly>
-                                <button type="button" class="fp-qty-plus" data-action="increase"><i class="bi bi-plus"></i></button>
+                                <button type="button" class="fp-qty-minus" data-action="decrease" aria-label="Decrease quantity"><i class="bi bi-dash"></i></button>
+                                <input type="number" name="quantity" value="{{ $item['quantity'] ?? 1 }}" min="1" max="99" class="fp-qty-input" readonly aria-label="Quantity">
+                                <button type="button" class="fp-qty-plus" data-action="increase" aria-label="Increase quantity"><i class="bi bi-plus"></i></button>
                             </div>
                         </div>
                         <div class="fp-ci-total" id="item-total-{{ $item['id'] }}">₦{{ number_format($subtotal, 0) }}</div>
