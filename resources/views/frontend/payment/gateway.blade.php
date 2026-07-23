@@ -36,7 +36,7 @@
 .fp-ps-total { font-size: 18px; font-weight: 700; color: var(--text-primary); }
 .fp-ps-total span:last-child { color: var(--gold-400); }
 .fp-pay-methods { display: flex; flex-direction: column; gap: 10px; }
-.fp-pm-option { cursor: pointer; }
+.fp-pm-option { cursor: pointer; touch-action: manipulation; }
 .fp-pm-option input[type="radio"] { display: none; }
 .fp-pm-content {
     display: flex; align-items: center; gap: 14px;
