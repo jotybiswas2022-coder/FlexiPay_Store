@@ -1,166 +1,523 @@
 @extends('frontend.app')
 @section('title', 'Checkout — FlexiPay Store')
 
+@push('styles')
+<style>
+.fp-chk-hero {
+    position: relative; padding: 40px 0 60px; overflow: hidden;
+    background: linear-gradient(180deg, rgba(234,179,8,0.04) 0%, transparent 100%);
+}
+.fp-chk-orb {
+    position: absolute; width: 500px; height: 500px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(234,179,8,0.06) 0%, transparent 60%);
+    top: -200px; right: -100px; pointer-events: none;
+    animation: chkOrbPulse 4s ease-in-out infinite;
+}
+.fp-chk-orb2 {
+    position: absolute; width: 400px; height: 400px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(234,179,8,0.04) 0%, transparent 60%);
+    bottom: -150px; left: -100px; pointer-events: none;
+    animation: chkOrbPulse 5s ease-in-out infinite reverse;
+}
+@keyframes chkOrbPulse { 0%,100%{transform:scale(1);opacity:0.5} 50%{transform:scale(1.1);opacity:1} }
+
+.fp-chk-steps {
+    display: flex; align-items: center; justify-content: center; gap: 0;
+    margin-bottom: 40px; position: relative; z-index: 1;
+}
+.fp-chk-step {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 20px; font-size: 13px; font-weight: 600;
+    color: var(--text-dim); position: relative;
+}
+.fp-chk-step .step-num {
+    width: 32px; height: 32px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700;
+    background: var(--card-dark); border: 2px solid var(--card-border);
+    color: var(--text-dim); transition: all 0.3s;
+}
+.fp-chk-step.active { color: var(--gold-400); }
+.fp-chk-step.active .step-num {
+    background: var(--gold-500); border-color: var(--gold-500);
+    color: var(--near-black); box-shadow: 0 0 20px rgba(234,179,8,0.3);
+}
+.fp-chk-step.done { color: var(--text-muted); }
+.fp-chk-step.done .step-num {
+    background: rgba(234,179,8,0.15); border-color: var(--gold-500);
+    color: var(--gold-500);
+}
+.fp-chk-step-line {
+    width: 40px; height: 2px; background: var(--card-border);
+}
+.fp-chk-step-line.done { background: var(--gold-500); }
+
+.fp-chk-card {
+    background: var(--card-dark);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius);
+    padding: 28px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative; overflow: hidden;
+}
+.fp-chk-card:hover {
+    border-color: rgba(234,179,8,0.15);
+    box-shadow: var(--shadow-card-hover);
+}
+.fp-chk-card-title {
+    font-family: 'Syne', sans-serif;
+    color: var(--text-primary); font-size: 15px;
+    margin-bottom: 20px; display: flex; align-items: center; gap: 10px;
+}
+.fp-chk-card-title i { color: var(--gold-500); font-size: 18px; }
+
+.fp-chk-radio-card {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 16px; border: 2px solid var(--card-border);
+    border-radius: var(--radius-sm); cursor: pointer;
+    transition: all 0.3s; position: relative;
+    background: var(--surface-dark);
+}
+.fp-chk-radio-card:hover {
+    border-color: rgba(234,179,8,0.3);
+    background: rgba(234,179,8,0.02);
+}
+.fp-chk-radio-card.active {
+    border-color: var(--gold-500);
+    background: rgba(234,179,8,0.05);
+    box-shadow: 0 0 20px rgba(234,179,8,0.08);
+}
+.fp-chk-radio-card input[type="radio"] {
+    position: absolute; opacity: 0; pointer-events: none;
+}
+.fp-chk-radio-dot {
+    width: 20px; height: 20px; border-radius: 50%;
+    border: 2px solid var(--card-border);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 1px; transition: all 0.3s;
+}
+.fp-chk-radio-card.active .fp-chk-radio-dot {
+    border-color: var(--gold-500);
+    background: var(--gold-500);
+}
+.fp-chk-radio-dot::after {
+    content: ''; width: 8px; height: 8px; border-radius: 50%;
+    background: var(--near-black); transform: scale(0);
+    transition: transform 0.3s;
+}
+.fp-chk-radio-card.active .fp-chk-radio-dot::after { transform: scale(1); }
+
+.fp-chk-pm-card {
+    flex: 1; padding: 20px; border: 2px solid var(--card-border);
+    border-radius: var(--radius-sm); text-align: center; cursor: pointer;
+    transition: all 0.3s; background: var(--surface-dark);
+    position: relative;
+}
+.fp-chk-pm-card:hover {
+    border-color: rgba(234,179,8,0.3);
+    transform: translateY(-2px);
+}
+.fp-chk-pm-card.active {
+    border-color: var(--gold-500);
+    background: rgba(234,179,8,0.05);
+    box-shadow: 0 0 20px rgba(234,179,8,0.08);
+    transform: translateY(-2px);
+}
+.fp-chk-pm-card input[type="radio"] {
+    position: absolute; opacity: 0; pointer-events: none;
+}
+.fp-chk-pm-card i {
+    font-size: 28px; color: var(--gold-500); display: block; margin-bottom: 8px;
+}
+.fp-chk-pm-card strong {
+    color: var(--text-primary); font-size: 14px; display: block;
+}
+.fp-chk-pm-card small {
+    color: var(--text-dim); display: block; margin-top: 4px; font-size: 12px;
+}
+
+.fp-chk-checkbox {
+    display: flex; align-items: center; gap: 10px; cursor: pointer;
+}
+.fp-chk-checkbox input[type="checkbox"] {
+    width: 20px; height: 20px; accent-color: var(--gold-500);
+    cursor: pointer; flex-shrink: 0;
+}
+
+.fp-chk-select {
+    width: 100%; padding: 12px 14px;
+    background: var(--surface-dark); border: 2px solid var(--card-border);
+    border-radius: var(--radius-sm); color: var(--text-primary);
+    font-size: 14px; font-family: inherit; cursor: pointer;
+    transition: border-color 0.3s;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23A1A1AA' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 12px center;
+    padding-right: 36px;
+}
+.fp-chk-select:focus { outline: none; border-color: var(--gold-500); box-shadow: 0 0 0 3px rgba(234,179,8,0.1); }
+.fp-chk-select option { background: var(--near-black); color: var(--text-primary); }
+
+.fp-chk-summary-card {
+    background: linear-gradient(135deg, var(--card-dark), var(--surface-dark));
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius);
+    padding: 28px; position: sticky; top: 100px;
+    transition: all 0.3s;
+}
+.fp-chk-summary-card:hover {
+    border-color: rgba(234,179,8,0.15);
+    box-shadow: var(--shadow-card-hover);
+}
+.fp-chk-summary-title {
+    font-family: 'Syne', sans-serif;
+    color: var(--text-primary); font-size: 16px;
+    margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between;
+}
+.fp-chk-summary-title span {
+    font-size: 12px; color: var(--text-dim); font-weight: 400;
+}
+
+.fp-chk-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 0; border-bottom: 1px solid var(--card-border);
+}
+.fp-chk-item:last-child { border-bottom: none; }
+.fp-chk-item-img {
+    width: 52px; height: 52px; border-radius: 8px; object-fit: cover;
+    background: var(--surface-dark); flex-shrink: 0;
+}
+.fp-chk-item-img-placeholder {
+    width: 52px; height: 52px; border-radius: 8px;
+    background: var(--surface-dark); display: flex; align-items: center;
+    justify-content: center; color: var(--card-border); font-size: 18px;
+    flex-shrink: 0;
+}
+.fp-chk-item-info { flex: 1; min-width: 0; }
+.fp-chk-item-name {
+    color: var(--text-primary); font-size: 13px; font-weight: 600;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.fp-chk-item-qty { color: var(--text-dim); font-size: 12px; margin-top: 2px; }
+.fp-chk-item-price { color: var(--gold-400); font-weight: 700; font-size: 14px; white-space: nowrap; }
+
+.fp-chk-total-line {
+    display: flex; justify-content: space-between;
+    font-size: 14px; color: var(--text-muted); margin-bottom: 10px;
+}
+.fp-chk-total-line.final {
+    font-size: 20px; font-weight: 700; color: var(--text-primary);
+    margin-top: 16px; padding-top: 16px;
+    border-top: 2px solid var(--card-border);
+}
+.fp-chk-total-line.final span:last-child { color: var(--gold-400); }
+
+.fp-chk-place-btn {
+    width: 100%; margin-top: 24px;
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    background: linear-gradient(135deg, var(--gold-500), var(--gold-600));
+    color: var(--near-black); padding: 16px 28px; border-radius: var(--radius-sm);
+    font-weight: 700; font-size: 15px; border: none; cursor: pointer;
+    transition: all 0.3s; font-family: inherit; position: relative; overflow: hidden;
+}
+.fp-chk-place-btn::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, transparent 20%, rgba(255,255,255,0.15) 50%, transparent 80%);
+    transform: translateX(-100%); transition: transform 0.6s;
+}
+.fp-chk-place-btn:hover::before { transform: translateX(100%); }
+.fp-chk-place-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(234,179,8,0.25);
+    color: var(--near-black);
+}
+
+.fp-chk-trust {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+    margin-top: 20px;
+}
+.fp-chk-trust-item {
+    display: flex; align-items: center; gap: 8px;
+    padding: 10px; border-radius: var(--radius-sm);
+    background: var(--surface-dark); border: 1px solid var(--card-border);
+    font-size: 11px; color: var(--text-dim); font-weight: 500;
+}
+.fp-chk-trust-item i { color: var(--gold-500); font-size: 14px; }
+
+.fp-chk-error {
+    display: flex; align-items: center; gap: 8px;
+    background: rgba(239,68,68,0.1);
+    border: 1px solid rgba(239,68,68,0.2);
+    color: #ef4444; padding: 14px 18px;
+    border-radius: var(--radius-sm); font-weight: 500; font-size: 13px;
+    margin-bottom: 24px; animation: chkShake 0.4s ease-out;
+}
+@keyframes chkShake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 50%{transform:translateX(6px)} 75%{transform:translateX(-3px)} }
+
+.fp-chk-field-error {
+    color: #ef4444; font-size: 12px; margin-top: 6px; display: block;
+}
+
+@media (max-width: 768px) {
+    .fp-chk-steps { gap: 4px; }
+    .fp-chk-step { padding: 8px 10px; font-size: 11px; }
+    .fp-chk-step .step-num { width: 26px; height: 26px; font-size: 11px; }
+    .fp-chk-step-line { width: 20px; }
+    .fp-chk-card { padding: 20px; }
+    .fp-chk-pm-card { padding: 14px; }
+    .fp-chk-trust { grid-template-columns: 1fr; }
+}
+</style>
+@endpush
+
 @section('content')
-<section style="background:var(--near-black);padding:60px 0;min-height:100vh;">
+<section class="fp-chk-hero">
+    <div class="fp-chk-orb"></div>
+    <div class="fp-chk-orb2"></div>
     <div class="container">
-        <div class="section-head">
-            <div class="section-badge"><i class="bi bi-credit-card-fill"></i> Checkout</div>
+        <div class="section-head reveal-up">
+            <div class="section-badge"><i class="bi bi-credit-card-fill"></i> Secure Checkout</div>
             <h2>Complete Your Purchase</h2>
+            <p>You're just a few steps away from owning your items</p>
         </div>
 
+        <div class="fp-chk-steps reveal-up">
+            <div class="fp-chk-step active">
+                <span class="step-num">1</span>
+                <span>Delivery</span>
+            </div>
+            <div class="fp-chk-step-line"></div>
+            <div class="fp-chk-step">
+                <span class="step-num">2</span>
+                <span>Payment</span>
+            </div>
+            <div class="fp-chk-step-line"></div>
+            <div class="fp-chk-step">
+                <span class="step-num">3</span>
+                <span>Confirm</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section style="padding-bottom:80px;">
+    <div class="container">
         @if(session('error'))
-        <div style="display:flex;align-items:center;gap:8px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25);color:#ef4444;padding:12px 16px;border-radius:var(--radius-sm);font-weight:500;font-size:13px;margin-bottom:24px;">
+        <div class="fp-chk-error reveal-up">
             <i class="bi bi-exclamation-circle-fill"></i> {{ session('error') }}
         </div>
         @endif
 
-        <form action="{{ route('checkout.process') }}" method="POST">
+        <form action="{{ route('checkout.process') }}" method="POST" id="checkoutForm">
             @csrf
             <div class="row g-4">
                 <div class="col-lg-7">
-                    <div style="background:var(--card-dark);border:1px solid var(--card-border);border-radius:var(--radius);padding:24px;margin-bottom:20px;">
-                        <h5 style="font-family:'Syne',sans-serif;color:var(--text-primary);margin-bottom:16px;"><i class="bi bi-geo-alt-fill" style="color:var(--gold-500);"></i> Delivery Address</h5>
+                    <div class="fp-chk-card reveal-left" style="transition-delay:0.1s;">
+                        <h5 class="fp-chk-card-title"><i class="bi bi-geo-alt-fill"></i> Delivery Address</h5>
                         @if($addresses && $addresses->count() > 0)
                             @foreach($addresses as $addr)
-                            <label class="addr-label" style="display:flex;align-items:flex-start;gap:12px;padding:12px;border:2px solid {{ old('delivery_address_id') == $addr->id ? 'var(--gold-500)' : 'var(--card-border)' }};border-radius:var(--radius-sm);margin-bottom:8px;cursor:pointer;transition:border-color 0.2s;">
-                                <input type="radio" name="delivery_address_id" value="{{ $addr->id }}" {{ old('delivery_address_id') == $addr->id ? 'checked' : '' }} required style="margin-top:3px;accent-color:var(--gold-500);" onchange="var p=this.closest('.addr-label');p.style.borderColor='var(--gold-500)';document.querySelectorAll('.addr-label').forEach(function(l){if(l!=p)l.style.borderColor='var(--card-border)'})">
-                                <div>
-                                    <strong style="color:var(--text-primary);display:block;">{{ $addr->label ?? 'Address' }}</strong>
+                            <div class="fp-chk-radio-card mb-2 addr-card {{ old('delivery_address_id') == $addr->id ? 'active' : '' }}" onclick="selectAddr(this, {{ $addr->id }})">
+                                <input type="radio" name="delivery_address_id" value="{{ $addr->id }}" {{ old('delivery_address_id') == $addr->id ? 'checked' : '' }} required>
+                                <div class="fp-chk-radio-dot"></div>
+                                <div style="flex:1;">
+                                    <strong style="color:var(--text-primary);display:block;font-size:14px;">{{ $addr->label ?? 'Address' }}</strong>
                                     <span style="color:var(--text-muted);font-size:13px;">{{ $addr->address_line1 }}, {{ $addr->city }}, {{ $addr->state }}</span>
+                                    @if($addr->phone)
+                                    <span style="color:var(--text-dim);font-size:12px;display:block;margin-top:4px;"><i class="bi bi-telephone-fill" style="font-size:11px;"></i> {{ $addr->phone }}</span>
+                                    @endif
                                 </div>
-                            </label>
+                                @if($addr->is_default)
+                                <span style="font-size:10px;font-weight:700;color:var(--gold-500);background:rgba(234,179,8,0.1);padding:3px 10px;border-radius:99px;white-space:nowrap;">Default</span>
+                                @endif
+                            </div>
                             @endforeach
                         @else
-                            <p style="color:var(--text-dim);font-size:14px;">No saved addresses. <a href="{{ route('profile.addresses') }}" style="color:var(--gold-500);">Add one here</a></p>
+                            <div style="text-align:center;padding:20px;">
+                                <i class="bi bi-geo-alt" style="font-size:40px;color:var(--card-border);display:block;margin-bottom:12px;"></i>
+                                <p style="color:var(--text-dim);font-size:14px;margin-bottom:12px;">No saved addresses found.</p>
+                                <a href="{{ route('profile.addresses') }}" class="btn-primary-gold" style="display:inline-flex;"><i class="bi bi-plus-lg"></i> Add Address</a>
+                            </div>
                         @endif
-                        @error('delivery_address_id')<small style="color:#ef4444;">{{ $message }}</small>@enderror
+                        @error('delivery_address_id')<small class="fp-chk-field-error">{{ $message }}</small>@enderror
                     </div>
 
-                    <div style="background:var(--card-dark);border:1px solid var(--card-border);border-radius:var(--radius);padding:24px;margin-bottom:20px;">
-                        <h5 style="font-family:'Syne',sans-serif;color:var(--text-primary);margin-bottom:16px;"><i class="bi bi-coin" style="color:var(--gold-500);"></i> Payment Method</h5>
+                    <div class="fp-chk-card reveal-left" style="transition-delay:0.2s;">
+                        <h5 class="fp-chk-card-title"><i class="bi bi-coin"></i> Payment Method</h5>
                         <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;">
-                            <label class="pm-label" style="flex:1;padding:16px;border:2px solid {{ old('payment_type') == 'full' ? 'var(--gold-500)' : 'var(--card-border)' }};border-radius:var(--radius-sm);text-align:center;cursor:pointer;transition:all 0.2s;">
-                                <input type="radio" name="payment_type" value="full" {{ old('payment_type') == 'full' ? 'checked' : '' }} required style="position:absolute;opacity:0;pointer-events:none;" onchange="this.parentElement.style.borderColor='var(--gold-500)';document.getElementById('planSelect').style.display='none';document.querySelectorAll('.pm-label').forEach(l=>{if(l!=this.parentElement)l.style.borderColor='var(--card-border)'})">
-                                <i class="bi bi-cash-stack" style="font-size:24px;color:var(--gold-500);display:block;margin-bottom:6px;"></i>
-                                <strong style="color:var(--text-primary);font-size:14px;">Pay in Full</strong>
-                            </label>
-                            <label class="pm-label" style="flex:1;padding:16px;border:2px solid {{ old('payment_type') == 'installment' ? 'var(--gold-500)' : 'var(--card-border)' }};border-radius:var(--radius-sm);text-align:center;cursor:pointer;transition:all 0.2s;">
-                                <input type="radio" name="payment_type" value="installment" {{ old('payment_type') == 'installment' ? 'checked' : '' }} required style="position:absolute;opacity:0;pointer-events:none;" onchange="this.parentElement.style.borderColor='var(--gold-500)';document.getElementById('planSelect').style.display='block';document.querySelectorAll('.pm-label').forEach(l=>{if(l!=this.parentElement)l.style.borderColor='var(--card-border)'})">
-                                <i class="bi bi-calendar-check" style="font-size:24px;color:var(--gold-500);display:block;margin-bottom:6px;"></i>
-                                <strong style="color:var(--text-primary);font-size:14px;">Pay in Installments</strong>
-                            </label>
+                            <div class="fp-chk-pm-card {{ old('payment_type') == 'full' ? 'active' : '' }}" onclick="selectPM(this, 'full')">
+                                <input type="radio" name="payment_type" value="full" {{ old('payment_type') == 'full' ? 'checked' : '' }} required>
+                                <i class="bi bi-cash-stack"></i>
+                                <strong>Pay in Full</strong>
+                                <small>One-time payment</small>
+                            </div>
+                            <div class="fp-chk-pm-card {{ old('payment_type') == 'installment' ? 'active' : '' }}" onclick="selectPM(this, 'installment')">
+                                <input type="radio" name="payment_type" value="installment" {{ old('payment_type') == 'installment' ? 'checked' : '' }} required>
+                                <i class="bi bi-calendar-check"></i>
+                                <strong>Pay in Installments</strong>
+                                <small>Flexible plans</small>
+                            </div>
                         </div>
-                        @error('payment_type')<small style="color:#ef4444;display:block;margin-bottom:8px;">{{ $message }}</small>@enderror
+                        @error('payment_type')<small class="fp-chk-field-error">{{ $message }}</small>@enderror
 
                         <div id="planSelect" style="display:{{ old('payment_type') == 'installment' ? 'block' : 'none' }};">
-                            <label style="display:block;font-size:12px;color:var(--text-dim);margin-bottom:6px;">Select Installment Plan</label>
-                            <select name="installment_plan_id" class="fp-form-control">
+                            <label style="display:block;font-size:12px;color:var(--text-dim);margin-bottom:8px;font-weight:600;">Select Installment Plan</label>
+                            <select name="installment_plan_id" class="fp-chk-select">
                                 <option value="">Choose a plan</option>
                                 @foreach($installmentPlans as $plan)
                                 <option value="{{ $plan->id }}" {{ old('installment_plan_id') == $plan->id ? 'selected' : '' }}>{{ $plan->name }} ({{ $plan->interest_rate }}% interest)</option>
                                 @endforeach
                             </select>
-                            @error('installment_plan_id')<small style="color:#ef4444;">{{ $message }}</small>@enderror
+                            @error('installment_plan_id')<small class="fp-chk-field-error">{{ $message }}</small>@enderror
                         </div>
                     </div>
 
-                    <div style="background:var(--card-dark);border:1px solid var(--card-border);border-radius:var(--radius);padding:24px;margin-bottom:20px;">
-                        <h5 style="font-family:'Syne',sans-serif;color:var(--text-primary);margin-bottom:16px;"><i class="bi bi-shield-fill-check" style="color:var(--gold-500);"></i> Extras</h5>
+                    <div class="fp-chk-card reveal-left" style="transition-delay:0.3s;">
+                        <h5 class="fp-chk-card-title"><i class="bi bi-shield-fill-check"></i> Extras</h5>
                         @if($insurance && $insurance->is_enabled)
-                        <label style="display:flex;align-items:center;gap:10px;cursor:pointer;">
-                            <input type="checkbox" name="has_insurance" value="1" {{ old('has_insurance') ? 'checked' : '' }} style="width:18px;height:18px;accent-color:var(--gold-500);">
-                            <span style="color:var(--text-muted);font-size:14px;">Add Insurance ({{ $insurance->rate }}% of total)</span>
+                        <label class="fp-chk-checkbox">
+                            <input type="checkbox" name="has_insurance" value="1" {{ old('has_insurance') ? 'checked' : '' }}>
+                            <span style="color:var(--text-muted);font-size:14px;">Add Insurance <span style="color:var(--gold-400);font-weight:600;">({{ $insurance->rate }}% of total)</span></span>
                         </label>
+                        <p style="color:var(--text-dim);font-size:12px;margin:8px 0 0 30px;">Protect your purchase against damage, loss, or theft.</p>
+                        @else
+                        <div style="display:flex;align-items:center;gap:10px;">
+                            <i class="bi bi-shield-check" style="color:var(--text-dim);font-size:20px;"></i>
+                            <span style="color:var(--text-dim);font-size:14px;">Insurance not available for this order.</span>
+                        </div>
                         @endif
                     </div>
 
-                    <div style="background:var(--card-dark);border:1px solid var(--card-border);border-radius:var(--radius);padding:24px;margin-bottom:20px;">
-                        <h5 style="font-family:'Syne',sans-serif;color:var(--text-primary);margin-bottom:16px;"><i class="bi bi-credit-card-2-front" style="color:var(--gold-500);"></i> Pay Using</h5>
+                    <div class="fp-chk-card reveal-left" style="transition-delay:0.4s;">
+                        <h5 class="fp-chk-card-title"><i class="bi bi-credit-card-2-front"></i> Pay Using</h5>
                         <div style="display:flex;gap:12px;flex-wrap:wrap;">
-                            <label class="gw-label" style="flex:1;padding:16px;border:2px solid {{ old('payment_method') == 'wallet' ? 'var(--gold-500)' : 'var(--card-border)' }};border-radius:var(--radius-sm);text-align:center;cursor:pointer;transition:all 0.2s;">
-                                <input type="radio" name="payment_method" value="wallet" {{ old('payment_method') == 'wallet' ? 'checked' : '' }} required style="position:absolute;opacity:0;pointer-events:none;" onchange="this.parentElement.style.borderColor='var(--gold-500)';document.querySelectorAll('.gw-label').forEach(l=>{if(l!=this.parentElement)l.style.borderColor='var(--card-border)'})">
-                                <i class="bi bi-wallet2" style="font-size:24px;color:var(--gold-500);display:block;margin-bottom:6px;"></i>
-                                <strong style="color:var(--text-primary);font-size:14px;">Wallet</strong>
-                                <small style="color:var(--text-dim);display:block;">₦{{ number_format($wallet->balance ?? 0, 0) }}</small>
-                            </label>
-                            <label class="gw-label" style="flex:1;padding:16px;border:2px solid {{ old('payment_method') == 'gateway' ? 'var(--gold-500)' : 'var(--card-border)' }};border-radius:var(--radius-sm);text-align:center;cursor:pointer;transition:all 0.2s;">
-                                <input type="radio" name="payment_method" value="gateway" {{ old('payment_method') == 'gateway' ? 'checked' : '' }} required style="position:absolute;opacity:0;pointer-events:none;" onchange="this.parentElement.style.borderColor='var(--gold-500)';document.querySelectorAll('.gw-label').forEach(l=>{if(l!=this.parentElement)l.style.borderColor='var(--card-border)'})">
-                                <i class="bi bi-bank" style="font-size:24px;color:var(--gold-500);display:block;margin-bottom:6px;"></i>
-                                <strong style="color:var(--text-primary);font-size:14px;">Card / Bank</strong>
-                                <small style="color:var(--text-dim);display:block;">Paystack, Flutterwave</small>
-                            </label>
+                            <div class="fp-chk-pm-card {{ old('payment_method') == 'wallet' ? 'active' : '' }}" onclick="selectGW(this, 'wallet')" style="flex:1;">
+                                <input type="radio" name="payment_method" value="wallet" {{ old('payment_method') == 'wallet' ? 'checked' : '' }} required>
+                                <i class="bi bi-wallet2"></i>
+                                <strong>Wallet</strong>
+                                <small>₦{{ number_format($wallet->balance ?? 0, 0) }}</small>
+                            </div>
+                            <div class="fp-chk-pm-card {{ old('payment_method') == 'gateway' ? 'active' : '' }}" onclick="selectGW(this, 'gateway')" style="flex:1;">
+                                <input type="radio" name="payment_method" value="gateway" {{ old('payment_method') == 'gateway' ? 'checked' : '' }} required>
+                                <i class="bi bi-bank"></i>
+                                <strong>Card / Bank</strong>
+                                <small>Paystack, Flutterwave</small>
+                            </div>
                         </div>
-                        @error('payment_method')<small style="color:#ef4444;display:block;margin-top:8px;">{{ $message }}</small>@enderror
+                        @error('payment_method')<small class="fp-chk-field-error">{{ $message }}</small>@enderror
                     </div>
 
-                    <label style="display:flex;align-items:center;gap:10px;cursor:pointer;padding:12px 0;">
-                        <input type="checkbox" name="agree_terms" value="1" required style="width:18px;height:18px;accent-color:var(--gold-500);">
-                        <span style="color:var(--text-muted);font-size:13px;">I agree to the <a href="{{ url('/terms') }}" target="_blank" style="color:var(--gold-500);">Terms & Conditions</a></span>
-                    </label>
-                    @error('agree_terms')<small style="color:#ef4444;">{{ $message }}</small>@enderror
+                    <div class="reveal-left" style="transition-delay:0.5s;">
+                        <label class="fp-chk-checkbox" style="padding:8px 0;">
+                            <input type="checkbox" name="agree_terms" value="1" required>
+                            <span style="color:var(--text-muted);font-size:13px;">I agree to the <a href="{{ url('/terms') }}" target="_blank" style="color:var(--gold-500);text-decoration:underline;">Terms & Conditions</a> and <a href="{{ url('/terms/privacy') }}" target="_blank" style="color:var(--gold-500);text-decoration:underline;">Privacy Policy</a></span>
+                        </label>
+                        @error('agree_terms')<small class="fp-chk-field-error">{{ $message }}</small>@enderror
+                    </div>
                 </div>
 
                 <div class="col-lg-5">
-                    <div style="background:var(--card-dark);border:1px solid var(--card-border);border-radius:var(--radius);padding:24px;position:sticky;top:100px;">
-                        <h5 style="font-family:'Syne',sans-serif;color:var(--text-primary);margin-bottom:16px;">Order Summary</h5>
-                        @foreach($cart as $item)
-                        <div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--card-border);">
-                            @if($item['thumbnail'])
-                            <img src="{{ asset('storage/'.$item['thumbnail']) }}" alt="" style="width:50px;height:50px;border-radius:6px;object-fit:cover;background:var(--surface-dark);">
-                            @else
-                            <div style="width:50px;height:50px;border-radius:6px;background:var(--surface-dark);display:flex;align-items:center;justify-content:center;color:var(--card-border);"><i class="bi bi-image"></i></div>
-                            @endif
-                            <div style="flex:1;min-width:0;">
-                                <div style="color:var(--text-primary);font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ $item['name'] }}</div>
-                                <div style="color:var(--text-dim);font-size:12px;">Qty: {{ $item['quantity'] }}</div>
-                            </div>
-                            <div style="color:var(--gold-400);font-weight:700;font-size:14px;">₦{{ number_format($item['price'] * $item['quantity'], 0) }}</div>
+                    <div class="fp-chk-summary-card reveal-right" style="transition-delay:0.2s;">
+                        <div class="fp-chk-summary-title">
+                            Order Summary
+                            <span>{{ count($cart) }} {{ count($cart) === 1 ? 'item' : 'items' }}</span>
                         </div>
-                        @endforeach
+
+                        <div style="max-height:320px;overflow-y:auto;">
+                            @foreach($cart as $item)
+                            <div class="fp-chk-item">
+                                @if($item['thumbnail'])
+                                <img src="{{ asset('storage/'.$item['thumbnail']) }}" alt="" class="fp-chk-item-img">
+                                @else
+                                <div class="fp-chk-item-img-placeholder"><i class="bi bi-image"></i></div>
+                                @endif
+                                <div class="fp-chk-item-info">
+                                    <div class="fp-chk-item-name">{{ $item['name'] }}</div>
+                                    <div class="fp-chk-item-qty">Qty: {{ $item['quantity'] }}</div>
+                                </div>
+                                <div class="fp-chk-item-price">₦{{ number_format($item['price'] * $item['quantity'], 0) }}</div>
+                            </div>
+                            @endforeach
+                        </div>
 
                         <div style="margin-top:16px;">
-                            <div style="display:flex;justify-content:space-between;font-size:14px;color:var(--text-muted);margin-bottom:8px;">
+                            <div class="fp-chk-total-line">
                                 <span>Subtotal</span>
                                 <span>₦{{ number_format($total, 0) }}</span>
                             </div>
-                            <div style="display:flex;justify-content:space-between;font-size:14px;color:var(--text-muted);margin-bottom:8px;">
+                            <div class="fp-chk-total-line">
                                 <span>Shipping</span>
                                 <span style="color:var(--gold-400);">Calculated at checkout</span>
                             </div>
-                            <div style="height:1px;background:var(--card-border);margin:12px 0;"></div>
-                            <div style="display:flex;justify-content:space-between;font-size:18px;font-weight:700;color:var(--text-primary);">
+                            <div class="fp-chk-total-line final">
                                 <span>Total</span>
-                                <span style="color:var(--gold-400);">₦{{ number_format($total, 0) }}</span>
+                                <span>₦{{ number_format($total, 0) }}</span>
                             </div>
                         </div>
 
-                        <button type="submit" class="btn-primary-gold btn-lg" style="width:100%;margin-top:20px;padding:14px;">
+                        <button type="submit" class="fp-chk-place-btn" id="placeOrderBtn">
                             <i class="bi bi-shield-lock-fill"></i> Place Order
                         </button>
+
+                        <div class="fp-chk-trust">
+                            <div class="fp-chk-trust-item">
+                                <i class="bi bi-lock-fill"></i> Secure SSL
+                            </div>
+                            <div class="fp-chk-trust-item">
+                                <i class="bi bi-shield-fill-check"></i> Encrypted
+                            </div>
+                            <div class="fp-chk-trust-item">
+                                <i class="bi bi-arrow-repeat"></i> Easy Returns
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </form>
     </div>
 </section>
+
 @include('frontend.partials.footer')
 
-<style>
-.fp-form-control {
-    width:100%;padding:10px 12px;
-    background:var(--surface-dark);border:1px solid var(--card-border);
-    border-radius:6px;color:var(--text-primary);font-size:14px;font-family:inherit;
+@section('scripts')
+@parent
+<script>
+function selectAddr(el, id) {
+    document.querySelectorAll('.addr-card').forEach(c => c.classList.remove('active'));
+    el.classList.add('active');
+    el.querySelector('input[type="radio"]').checked = true;
 }
-.fp-form-control:focus { outline:none;border-color:var(--gold-500); }
-.btn-primary-gold {
-    display:inline-flex;align-items:center;justify-content:center;gap:8px;
-    background:linear-gradient(135deg,var(--gold-500),var(--gold-600));
-    color:var(--near-black);padding:10px 24px;border-radius:var(--radius-sm);
-    font-weight:700;font-size:14px;border:none;cursor:pointer;transition:all 0.3s;
-    text-decoration:none;
+
+function selectPM(el, type) {
+    document.querySelectorAll('.fp-chk-pm-card[name="payment_type"]').forEach(c => c.classList.remove('active'));
+    document.querySelectorAll('.fp-chk-pm-card').forEach(c => {
+        const input = c.querySelector('input[name="payment_type"]');
+        if (input) c.classList.remove('active');
+    });
+    el.classList.add('active');
+    el.querySelector('input[type="radio"]').checked = true;
+    const planSelect = document.getElementById('planSelect');
+    if (type === 'installment') {
+        planSelect.style.display = 'block';
+        planSelect.style.animation = 'fadeIn 0.3s ease';
+    } else {
+        planSelect.style.display = 'none';
+    }
 }
-.btn-primary-gold:hover { transform:translateY(-2px);box-shadow:var(--shadow-gold);color:var(--near-black); }
-.btn-lg { padding:14px 32px;font-size:16px; }
-</style>
+
+function selectGW(el, value) {
+    document.querySelectorAll('.fp-chk-pm-card').forEach(c => {
+        const input = c.querySelector('input[name="payment_method"]');
+        if (input) c.classList.remove('active');
+    });
+    el.classList.add('active');
+    el.querySelector('input[type="radio"]').checked = true;
+}
+
+document.getElementById('checkoutForm')?.addEventListener('submit', function(e) {
+    const btn = document.getElementById('placeOrderBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner-border spinner-border-sm" style="width:16px;height:16px;"></span> Processing...';
+});
+</script>
+@stop
 @endsection
