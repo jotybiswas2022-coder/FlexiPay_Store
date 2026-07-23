@@ -147,6 +147,7 @@
             padding: 12px 28px; border-radius: var(--radius-sm);
             font-weight: 600; font-size: 14px; border: 2px solid var(--gold-500);
             cursor: pointer; transition: all 0.3s; font-family: inherit;
+            touch-action: manipulation;
         }
         .btn-outline-gold:hover { background: rgba(234,179,8,0.1); color: var(--gold-300); }
 
