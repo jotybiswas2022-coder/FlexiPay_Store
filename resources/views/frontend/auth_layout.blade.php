@@ -66,6 +66,8 @@
             transition: color 0.2s;
         }
         .fp-auth-home:hover { color: var(--gold-400); }
+        :focus-visible { outline: 2px solid var(--gold-500); outline-offset: 2px; border-radius: 4px; }
+        a, button, input, select, textarea, [tabindex] { -webkit-tap-highlight-color: transparent; }
     </style>
 </head>
 <body>

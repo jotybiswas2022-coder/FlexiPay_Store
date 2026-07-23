@@ -66,6 +66,7 @@
 
         a { text-decoration: none; color: inherit; }
         :focus-visible { outline: 2px solid var(--gold-500); outline-offset: 2px; border-radius: 4px; }
+        a, button, input, select, textarea, [tabindex] { -webkit-tap-highlight-color: transparent; }
         ::selection { background: var(--gold-500); color: var(--near-black); }
 
         #pageLoader {
