@@ -237,7 +237,7 @@
 <body>
     <div class="grain-overlay" aria-hidden="true"></div>
 
-    <div id="cursorGlow"></div>
+    <div id="cursorGlow" aria-hidden="true"></div>
 
     <div id="pageLoader">
         <div class="loader-logo">Flexi<span>Pay</span><span class="loader-logo-dot"></span></div>
