@@ -55,6 +55,7 @@
     background: var(--surface-dark); border: 1px solid var(--card-border);
     border-radius: var(--radius-sm); padding: 20px; margin-bottom: 28px;
     max-width: 360px; margin-left: auto; margin-right: auto;
+    contain: layout style;
 }
 .fp-confirm-details div { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--card-border); }
 .fp-confirm-details div:last-child { border-bottom: none; }
