@@ -798,7 +798,7 @@
     position: absolute; bottom: 8px; left: 8px; z-index: 1;
     background: linear-gradient(135deg, var(--gold-500), var(--gold-600));
     color: var(--near-black); font-size: 11px; font-weight: 700;
-    padding: 4px 10px; border-radius: 6px;
+    padding: 4px 10px; border-radius: 6px; white-space: nowrap;
 }
 .fp-product-badge-new { background: var(--gold-500); }
 .fp-product-body { padding: 14px 16px 16px; }
