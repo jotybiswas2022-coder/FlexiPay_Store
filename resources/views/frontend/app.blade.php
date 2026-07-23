@@ -54,6 +54,7 @@
             text-rendering: optimizeLegibility;
             -webkit-font-smoothing: antialiased;
             overscroll-behavior: none;
+            font-variant-numeric: tabular-nums;
         }
 
         body::before {
