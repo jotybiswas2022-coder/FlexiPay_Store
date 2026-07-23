@@ -168,9 +168,9 @@
                     <div class="fp-progress-bar"><div class="fp-progress-fill" style="width:{{ $pct }}%"></div></div>
                 </div>
                 <div class="fp-of-actions">
-                    <a href="{{ route('orders.show', $order) }}" class="fp-btn-sm"><i class="bi bi-eye"></i> View Details</a>
+                    <a href="{{ route('orders.show', $order) }}" class="fp-btn-sm" aria-label="View details for order #{{ $order->id }}"><i class="bi bi-eye"></i> View Details</a>
                     @if($order->status == 'processing' || $order->status == 'partial_paid')
-                    <a href="{{ route('payment.gateway', $order) }}" class="fp-btn-sm gold"><i class="bi bi-credit-card"></i> Pay Now</a>
+                    <a href="{{ route('payment.gateway', $order) }}" class="fp-btn-sm gold" aria-label="Pay now for order #{{ $order->id }}"><i class="bi bi-credit-card"></i> Pay Now</a>
                     @endif
                 </div>
             </div>
