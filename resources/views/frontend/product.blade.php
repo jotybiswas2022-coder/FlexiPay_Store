@@ -443,10 +443,11 @@
 .fp-prod-current-price {
     font-family: 'Syne', sans-serif;
     font-size: 34px; font-weight: 800; color: var(--gold-400);
-    line-height: 1;
+    line-height: 1; white-space: nowrap;
 }
 .fp-prod-old-price {
     font-size: 18px; color: var(--text-dim); text-decoration: line-through;
+    white-space: nowrap;
 }
 .fp-prod-save-badge {
     background: linear-gradient(135deg, #059669, #10b981);
