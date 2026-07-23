@@ -333,7 +333,7 @@
         <div class="fp-card-body">
             <div class="fp-section-label">Create Your Account</div>
 
-            <form method="POST" action="{{ route('register') }}" id="registerForm" autocomplete="off">
+            <form method="POST" action="{{ route('register') }}" id="registerForm">
                 @csrf
 
                 <div class="fp-field">
@@ -341,7 +341,7 @@
                     <div class="fp-input-wrap">
                         <input id="name" type="text" name="name" value="{{ old('name') }}"
                                class="fp-input @error('name') is-invalid @enderror"
-                               placeholder="Enter your full name" required autofocus>
+                               placeholder="Enter your full name" required autofocus autocomplete="name">
                         <i class="bi bi-person fp-input-icon"></i>
                         <div class="fp-input-focus-glow"></div>
                     </div>
@@ -355,7 +355,7 @@
                     <div class="fp-input-wrap">
                         <input id="regEmail" type="email" name="email" value="{{ old('email') }}"
                                class="fp-input @error('email') is-invalid @enderror"
-                               placeholder="you@flexipay.store" required>
+                               placeholder="you@flexipay.store" required autocomplete="email">
                         <i class="bi bi-envelope fp-input-icon"></i>
                         <div class="fp-input-focus-glow"></div>
                     </div>
@@ -369,7 +369,7 @@
                     <div class="fp-input-wrap">
                         <input id="regPassword" type="password" name="password"
                                class="fp-input @error('password') is-invalid @enderror"
-                               placeholder="Create a strong password" required>
+                               placeholder="Create a strong password" required autocomplete="new-password">
                         <button type="button" class="fp-toggle-btn" id="togglePassword">
                             <i class="bi bi-eye" id="toggleIcon"></i>
                         </button>
