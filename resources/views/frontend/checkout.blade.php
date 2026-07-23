@@ -161,11 +161,12 @@
 .fp-chk-select option { background: var(--near-black); color: var(--text-primary); }
 
 .fp-chk-summary-card {
-    background: linear-gradient(135deg, var(--card-dark), var(--surface-dark));
+    background: var(--card-dark);
     border: 1px solid var(--card-border);
     border-radius: var(--radius);
-    padding: 28px; position: sticky; top: 100px;
-    transition: all 0.3s;
+    padding: 24px;
+    transition: border-color 0.3s;
+    position: relative; transform: translateZ(0);
 }
 .fp-chk-summary-card:hover {
     border-color: rgba(234,179,8,0.15);
