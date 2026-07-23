@@ -382,7 +382,7 @@
     position: relative; height: 200px;
     background: var(--dark-900);
     display: flex; align-items: center; justify-content: center;
-    overflow: hidden;
+    overflow: hidden; flex-shrink: 0;
 }
 .fp-shop-card-img::after {
     content: ''; position: absolute; inset: 0;
