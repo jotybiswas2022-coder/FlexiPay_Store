@@ -90,7 +90,7 @@
 
 @section('content')
 <section class="fp-trk-hero">
-    <div class="fp-trk-orb"></div>
+    <div class="fp-trk-orb" aria-hidden="true"></div>
     <div class="container">
         <div class="section-head reveal-up">
             <div class="section-badge"><i class="bi bi-truck-front-fill"></i> Delivery Tracking</div>
