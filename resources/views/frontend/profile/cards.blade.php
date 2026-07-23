@@ -55,7 +55,7 @@
                         <strong>•••• {{ $card->last_four }}</strong>
                         <span>Expires {{ $card->expiry_month }}/{{ $card->expiry_year }}</span>
                     </div>
-                    <a href="{{ route('profile.cards.delete', $card) }}" class="fp-card-delete" onclick="return confirm('Remove this card?')">
+                    <a href="{{ route('profile.cards.delete', $card) }}" class="fp-card-delete" onclick="return confirm('Remove this card?')" aria-label="Remove card ending in {{ $card->last_four }}">
                         <i class="bi bi-trash-fill"></i>
                     </a>
                 </div>
