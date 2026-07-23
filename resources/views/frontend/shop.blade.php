@@ -35,7 +35,7 @@
                             <label><i class="bi bi-search"></i> Search</label>
                             <div class="fp-filter-input-wrap">
                                 <i class="bi bi-search"></i>
-                                <input type="text" name="search" class="fp-filter-input" placeholder="Search products..." value="{{ request('search') }}">
+                                <input type="text" name="search" class="fp-filter-input" placeholder="Search products..." value="{{ request('search') }}" aria-label="Search products">
                             </div>
                         </div>
                     </div>
