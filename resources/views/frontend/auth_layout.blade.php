@@ -39,6 +39,8 @@
             align-items: center;
             overscroll-behavior: none;
             -webkit-text-size-adjust: 100%;
+            scrollbar-gutter: stable;
+            print-color-adjust: exact;
         }
         a { text-decoration: none; }
         ::selection { background: var(--gold-500); color: var(--near-black); }

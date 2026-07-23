@@ -61,6 +61,8 @@
             overscroll-behavior: none;
             font-variant-numeric: tabular-nums;
             -webkit-text-size-adjust: 100%;
+            scrollbar-gutter: stable;
+            print-color-adjust: exact;
         }
 
         body::before {
