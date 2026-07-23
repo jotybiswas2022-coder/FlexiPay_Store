@@ -143,8 +143,8 @@
                         <h5>{{ auth()->user()->name ?? 'User' }}</h5>
                         <span class="fp-avatar-email">{{ auth()->user()->email }}</span>
                     </div>
-                    <nav class="fp-profile-nav">
-                        <a href="{{ route('profile.index') }}" class="active"><i class="bi bi-person-fill"></i> Profile</a>
+                    <nav class="fp-profile-nav" aria-label="Profile navigation">
+                        <a href="{{ route('profile.index') }}" class="active" aria-current="page"><i class="bi bi-person-fill"></i> Profile</a>
                         <a href="{{ route('profile.edit') }}"><i class="bi bi-gear-fill"></i> Settings</a>
                         <a href="{{ route('orders.index') }}"><i class="bi bi-box-seam-fill"></i> My Orders</a>
                         <a href="{{ route('wallet.index') }}"><i class="bi bi-wallet2"></i> Wallet</a>
