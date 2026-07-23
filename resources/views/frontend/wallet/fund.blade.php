@@ -32,7 +32,7 @@
 .fp-input option { background:var(--card-dark);color:var(--text-primary); }
 .fp-fund-submit { width:100%;padding:14px;background:linear-gradient(135deg,var(--gold-500),var(--gold-600));color:var(--near-black);border:none;border-radius:var(--radius-sm);font-weight:700;font-size:15px;font-family:'Syne',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:all 0.3s; }
 .fp-fund-submit:hover { transform:translateY(-2px);box-shadow:0 8px 24px rgba(234,179,8,0.3); }
-.fp-fund-note { display:flex;align-items:center;gap:8px;padding:12px 16px;background:rgba(234,179,8,0.05);border:1px solid rgba(234,179,8,0.15);border-radius:var(--radius-sm);font-size:12px;color:var(--text-dim); }
+.fp-fund-note { display:flex;align-items:center;gap:8px;padding:12px 16px;background:rgba(234,179,8,0.05);border:1px solid rgba(234,179,8,0.15);border-radius:var(--radius-sm);font-size:12px;color:var(--text-dim);contain:layout style; }
 .fp-fund-note i { color:var(--gold-500);font-size:14px; }
 </style>
 @endpush

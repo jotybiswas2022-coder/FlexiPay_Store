@@ -31,7 +31,7 @@
 }
 .fp-pay-header h4 { font-family:'Syne',sans-serif; color: var(--text-primary); font-size: 20px; font-weight: 700; }
 .fp-pay-header p { color: var(--text-muted); font-size: 13px; }
-.fp-pay-summary { background: var(--surface-dark); border-radius: var(--radius-sm); padding: 20px; }
+.fp-pay-summary { background: var(--surface-dark); border-radius: var(--radius-sm); padding: 20px; contain: layout style; }
 .fp-ps-row { display: flex; justify-content: space-between; font-size: 14px; color: var(--text-muted); margin-bottom: 8px; }
 .fp-ps-divider { height: 1px; background: var(--card-border); margin: 12px 0; }
 .fp-ps-total { font-size: 18px; font-weight: 700; color: var(--text-primary); }
