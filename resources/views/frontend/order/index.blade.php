@@ -136,7 +136,7 @@
                     <span class="fp-order-date">{{ $order->created_at->format('M d, Y') }}</span>
                 </div>
                 <div class="fp-oh-right">
-                    <span class="fp-order-status {{ $order->status }}">{{ ucfirst($order->status) }}</span>
+                    <span class="fp-order-status {{ $order->status }}" aria-label="Status: {{ $order->status }}">{{ ucfirst($order->status) }}</span>
                     <span class="fp-order-amount">₦{{ number_format($order->total, 0) }}</span>
                 </div>
             </div>
