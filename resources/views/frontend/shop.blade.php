@@ -129,7 +129,7 @@
                     <a href="{{ url('/product/'.$product->slug) }}" class="fp-shop-card-link">
                         <div class="fp-shop-card-img">
                             @if($product->primaryImage)
-                                <img src="{{ asset('storage/'.$product->primaryImage->image_path) }}" alt="{{ $product->name }}">
+                                <img src="{{ asset('storage/'.$product->primaryImage->image_path) }}" alt="{{ $product->name }}" loading="lazy">
                             @else
                                 <div class="fp-shop-card-no-img"><i class="bi bi-image"></i></div>
                             @endif
