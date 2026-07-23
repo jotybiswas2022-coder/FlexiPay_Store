@@ -425,7 +425,7 @@
 }
 .fp-shop-card:hover .fp-shop-card-quickview { transform: translateY(0); }
 
-.fp-shop-card-body { padding: 14px 16px 16px; }
+.fp-shop-card-body { padding: 14px 16px 16px; overflow-wrap: break-word; }
 .fp-shop-card-brand {
     font-size: 11px; color: var(--gold-400); font-weight: 600;
     display: block; margin-bottom: 4px;
