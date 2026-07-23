@@ -494,7 +494,7 @@
     cursor: pointer;
 }
 
-.fp-prod-desc { color: var(--text-muted); font-size: 15px; line-height: 1.7; margin-bottom: 20px; }
+.fp-prod-desc { color: var(--text-muted); font-size: 15px; line-height: 1.7; margin-bottom: 20px; overflow-wrap: break-word; }
 .fp-prod-readmore {
     color: var(--gold-500); font-size: 13px; font-weight: 600;
     display: inline-flex; align-items: center; gap: 4px;
