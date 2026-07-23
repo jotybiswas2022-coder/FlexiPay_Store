@@ -809,7 +809,7 @@
     overflow: hidden; line-height: 1.4;
 }
 .fp-product-price { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
-.fp-current-price { font-size: 16px; font-weight: 700; color: var(--gold-400); font-family: 'Syne', sans-serif; }
+.fp-current-price { font-size: 16px; font-weight: 700; color: var(--gold-400); font-family: 'Syne', sans-serif; white-space: nowrap; }
 .fp-old-price { font-size: 13px; color: var(--text-dim); text-decoration: line-through; }
 .fp-product-meta { font-size: 12px; color: var(--text-dim); display: flex; align-items: center; gap: 4px; }
 .fp-product-meta i { color: var(--gold-400); font-size: 11px; }
