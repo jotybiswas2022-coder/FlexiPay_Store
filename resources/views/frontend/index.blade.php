@@ -51,7 +51,7 @@
                 </p>
 
                 <div class="fp-hero-search">
-                    <form action="{{ url('/shop') }}" method="GET" class="fp-hero-search-box">
+                    <form action="{{ url('/shop') }}" method="GET" class="fp-hero-search-box" role="search">
                         <div class="fp-hs-field">
                             <i class="bi bi-search"></i>
                             <input type="text" name="search" placeholder="Search for products, brands, categories..." required>
