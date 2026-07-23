@@ -73,6 +73,7 @@
 }
 .fp-accordion .accordion-item:hover {
     border-color: rgba(234,179,8,0.2);
+    transform: translateX(4px);
 }
 
 .fp-accordion .accordion-button {
