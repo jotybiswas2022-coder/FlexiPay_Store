@@ -905,6 +905,7 @@
     padding: 16px 18px;
     transition: all 0.3s; height: 100%;
     text-decoration: none; position: relative;
+    touch-action: manipulation;
 }
 .fp-cat-card:hover {
     border-color: rgba(234,179,8,0.3);
