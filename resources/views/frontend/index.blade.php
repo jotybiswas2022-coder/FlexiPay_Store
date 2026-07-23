@@ -16,7 +16,7 @@
 
 <!-- ===== HERO SECTION ===== -->
 <section class="fp-hero" id="fpHero">
-    <div id="particles-canvas"></div>
+    <div id="particles-canvas" aria-hidden="true"></div>
     <div class="fp-hero-bg">
         <div class="fp-grid-lines"></div>
         <div class="fp-glow-orb orbl"></div>
