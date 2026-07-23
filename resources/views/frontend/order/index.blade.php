@@ -81,6 +81,7 @@
     padding: 8px 16px; border-radius: 6px; font-size: 12px; font-weight: 600;
     border: 1px solid var(--card-border); color: var(--text-muted);
     transition: all 0.2s; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
+    touch-action: manipulation;
 }
 .fp-btn-sm:hover { border-color: var(--gold-400); color: var(--gold-400); }
 .fp-btn-sm.gold { background: linear-gradient(135deg, var(--gold-500), var(--gold-600)); color: var(--near-black); border-color: var(--gold-500); }
