@@ -385,7 +385,7 @@
                     <label for="password-confirm" class="fp-label"><i class="bi bi-shield-check"></i> Confirm Password</label>
                     <div class="fp-input-wrap">
                         <input id="password-confirm" type="password" name="password_confirmation"
-                               class="fp-input" placeholder="Re-enter password" required>
+                               class="fp-input" placeholder="Re-enter password" required autocomplete="new-password">
                         <div class="fp-input-focus-glow"></div>
                     </div>
                 </div>
