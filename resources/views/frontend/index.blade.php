@@ -19,9 +19,9 @@
     <div id="particles-canvas" aria-hidden="true"></div>
     <div class="fp-hero-bg">
         <div class="fp-grid-lines"></div>
-        <div class="fp-glow-orb orbl"></div>
-        <div class="fp-glow-orb orb2"></div>
-        <div class="fp-glow-orb orb3"></div>
+        <div class="fp-glow-orb orbl" aria-hidden="true"></div>
+        <div class="fp-glow-orb orb2" aria-hidden="true"></div>
+        <div class="fp-glow-orb orb3" aria-hidden="true"></div>
         <div class="fp-float-icon" style="top:12%;left:6%;animation-delay:0s;"><i class="bi bi-phone-fill"></i></div>
         <div class="fp-float-icon" style="top:30%;right:8%;animation-delay:1.2s;"><i class="bi bi-laptop-fill"></i></div>
         <div class="fp-float-icon" style="top:55%;left:4%;animation-delay:2.1s;"><i class="bi bi-watch-fill"></i></div>
