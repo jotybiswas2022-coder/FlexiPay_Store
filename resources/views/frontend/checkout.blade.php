@@ -168,6 +168,7 @@
     padding: 24px;
     transition: border-color 0.3s;
     position: relative; transform: translateZ(0);
+    overflow-wrap: break-word;
 }
 .fp-chk-summary-card:hover {
     border-color: rgba(234,179,8,0.15);
