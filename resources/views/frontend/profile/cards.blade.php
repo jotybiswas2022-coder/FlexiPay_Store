@@ -30,7 +30,7 @@
 
 @section('content')
 <section class="fp-cr-hero">
-    <div class="fp-cr-orb"></div>
+    <div class="fp-cr-orb" aria-hidden="true"></div>
     <div class="container">
         <div class="section-head reveal-up">
             <div class="section-badge"><i class="bi bi-credit-card-fill"></i> Payment Cards</div>

@@ -39,7 +39,7 @@
 
 @section('content')
 <section class="fp-vr-hero">
-    <div class="fp-vr-orb"></div>
+    <div class="fp-vr-orb" aria-hidden="true"></div>
     <div class="container">
         <div class="section-head reveal-up">
             <div class="section-badge"><i class="bi bi-patch-check-fill"></i> Account Verification</div>

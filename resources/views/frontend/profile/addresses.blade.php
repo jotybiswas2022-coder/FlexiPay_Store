@@ -42,7 +42,7 @@
 
 @section('content')
 <section class="fp-ad-hero">
-    <div class="fp-ad-orb"></div>
+    <div class="fp-ad-orb" aria-hidden="true"></div>
     <div class="container">
         <div class="section-head reveal-up" style="text-align:left;">
             <div class="section-badge" style="display:inline-flex;"><i class="bi bi-geo-alt-fill"></i> Delivery Addresses</div>
