@@ -372,7 +372,7 @@
                     <div class="fp-input-wrap">
                         <input id="password" type="password" name="password"
                                class="fp-input @error('password') is-invalid @enderror"
-                               placeholder="••••••••" required autocomplete="current-password">
+                               placeholder="••••••••" required autocomplete="current-password" spellcheck="false">
                         <button type="button" class="fp-toggle-btn" id="togglePassword">
                             <i class="bi bi-eye" id="toggleIcon"></i>
                         </button>
