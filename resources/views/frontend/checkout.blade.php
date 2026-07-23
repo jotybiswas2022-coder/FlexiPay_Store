@@ -282,7 +282,7 @@
         </div>
 
         <div class="fp-chk-steps reveal-up">
-            <div class="fp-chk-step active">
+            <div class="fp-chk-step active" aria-current="step">
                 <span class="step-num">1</span>
                 <span>Delivery</span>
             </div>
