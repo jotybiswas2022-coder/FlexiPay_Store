@@ -46,7 +46,7 @@
     background: var(--card-dark); border: 1px solid var(--card-border);
     color: var(--text-muted); font-size: 13px; font-weight: 500; cursor: pointer;
     transition: all 0.3s; display: flex; align-items: center; gap: 6px;
-    font-family: inherit;
+    font-family: inherit; touch-action: manipulation;
 }
 .fp-faq-pill:hover { border-color: rgba(234,179,8,0.3); color: var(--gold-400); }
 .fp-faq-pill.active { background: rgba(234,179,8,0.1); border-color: var(--gold-500); color: var(--gold-400); }
