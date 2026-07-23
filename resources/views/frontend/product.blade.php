@@ -581,6 +581,7 @@
     text-decoration: none; white-space: nowrap;
     border-bottom: 2px solid transparent;
     transition: all 0.3s; cursor: pointer;
+    touch-action: manipulation;
 }
 .fp-prod-tab-link i { font-size: 15px; }
 .fp-prod-tab-link:hover { color: var(--text-primary); }
