@@ -4,12 +4,12 @@
 @section('content')
 
 @if(session('success'))
-<div class="alert-success-custom">
+<div class="alert-success-custom" role="status">
     <i class="bi bi-check-circle-fill me-2"></i>{{ session('success') }}
 </div>
 @endif
 @if(session('error'))
-<div class="alert-danger-custom">
+<div class="alert-danger-custom" role="status">
     <i class="bi bi-exclamation-triangle-fill me-2"></i>{{ session('error') }}
 </div>
 @endif
