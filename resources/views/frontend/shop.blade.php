@@ -400,13 +400,13 @@
     position: absolute; bottom: 8px; left: 8px; z-index: 2;
     background: linear-gradient(135deg, var(--gold-500), var(--gold-600));
     color: var(--near-black); font-size: 11px; font-weight: 700;
-    padding: 4px 10px; border-radius: 6px;
+    padding: 4px 10px; border-radius: 6px; white-space: nowrap;
 }
 .fp-shop-card-discount {
     position: absolute; top: 8px; right: 8px; z-index: 2;
     background: #ef4444; color: white;
     font-size: 11px; font-weight: 700;
-    padding: 3px 8px; border-radius: 6px;
+    padding: 3px 8px; border-radius: 6px; white-space: nowrap;
 }
 
 .fp-shop-card-overlay {
