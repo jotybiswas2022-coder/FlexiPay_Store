@@ -189,6 +189,7 @@
     border-radius: 12px;
     padding: 16px 20px;
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    contain: layout style;
 }
 .fp-cart-item:hover {
     border-color: rgba(234,179,8,0.2);
