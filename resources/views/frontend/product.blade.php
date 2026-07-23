@@ -274,7 +274,7 @@
                         <a href="{{ url('/product/'.$rp->slug) }}" class="fp-prod-related-link">
                             <div class="fp-prod-related-img">
                                 @if($rp->primaryImage)
-                                    <img src="{{ asset('storage/'.$rp->primaryImage->image_path) }}" alt="{{ $rp->name }}">
+                                    <img src="{{ asset('storage/'.$rp->primaryImage->image_path) }}" alt="{{ $rp->name }}" loading="lazy">
                                 @else
                                     <div class="fp-prod-related-no-img"><i class="bi bi-image"></i></div>
                                 @endif
