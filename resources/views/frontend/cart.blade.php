@@ -55,7 +55,7 @@
                             </div>
                         </div>
                         <div class="fp-ci-total" id="item-total-{{ $item['id'] }}">₦{{ number_format($subtotal, 0) }}</div>
-                        <a href="{{ route('cart.remove', $item['id']) }}" class="fp-ci-remove" title="Remove item"><i class="bi bi-trash-fill"></i></a>
+                        <a href="{{ route('cart.remove', $item['id']) }}" class="fp-ci-remove" title="Remove item" aria-label="Remove {{ $item['name'] }} from cart"><i class="bi bi-trash-fill"></i></a>
                     </div>
                     @endforeach
                 </div>
