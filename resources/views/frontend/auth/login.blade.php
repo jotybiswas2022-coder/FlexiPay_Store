@@ -239,7 +239,7 @@
     background: var(--surface-dark); border: 1px solid var(--card-border);
     color: var(--text-muted); font-size: 13px; font-weight: 600;
     cursor: pointer; transition: all 0.2s; font-family: inherit;
-    text-decoration: none;
+    text-decoration: none; touch-action: manipulation;
 }
 .fp-social-btn i { font-size: 18px; }
 .fp-social-btn:hover { border-color: rgba(234,179,8,0.2); background: rgba(234,179,8,0.04); }
