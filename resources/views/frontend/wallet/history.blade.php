@@ -35,7 +35,7 @@
 
 @section('content')
 <section class="fp-wh-hero">
-    <div class="fp-wh-orb"></div>
+    <div class="fp-wh-orb" aria-hidden="true"></div>
     <div class="container">
         <div class="section-head reveal-up" style="text-align:left;">
             <div class="section-badge" style="display:inline-flex;"><i class="bi bi-clock-history"></i> Transaction History</div>

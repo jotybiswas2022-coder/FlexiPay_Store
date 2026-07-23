@@ -39,7 +39,7 @@
 
 @section('content')
 <section class="fp-fw-hero">
-    <div class="fp-fw-orb"></div>
+    <div class="fp-fw-orb" aria-hidden="true"></div>
     <div class="container">
         <div class="section-head reveal-up">
             <div class="section-badge"><i class="bi bi-plus-circle-fill"></i> Fund Wallet</div>
