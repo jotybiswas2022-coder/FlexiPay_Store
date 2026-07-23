@@ -66,7 +66,7 @@
                     <h5>{{ $bank->bank_name }}</h5>
                     <p class="fp-bank-account">{{ $bank->account_number }}</p>
                     <span class="fp-bank-name">{{ $bank->account_name }}</span>
-                    <a href="{{ route('profile.banks.delete', $bank) }}" class="fp-bank-delete" onclick="return confirm('Remove this bank account?')">
+                    <a href="{{ route('profile.banks.delete', $bank) }}" class="fp-bank-delete" onclick="return confirm('Remove this bank account?')" aria-label="Remove bank account {{ $bank->account_number }}">
                         <i class="bi bi-trash-fill"></i>
                     </a>
                 </div>
