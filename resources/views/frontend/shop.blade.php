@@ -437,7 +437,7 @@
     overflow: hidden; line-height: 1.4;
 }
 .fp-shop-card-price { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
-.fp-shop-current-price { font-size: 16px; font-weight: 700; color: var(--gold-400); font-family: 'Syne', sans-serif; }
+.fp-shop-current-price { font-size: 16px; font-weight: 700; color: var(--gold-400); font-family: 'Syne', sans-serif; white-space: nowrap; }
 .fp-shop-old-price { font-size: 13px; color: var(--text-dim); text-decoration: line-through; }
 .fp-shop-card-meta { font-size: 12px; color: var(--text-dim); display: flex; align-items: center; gap: 4px; }
 .fp-shop-card-meta i { color: var(--gold-400); font-size: 11px; }
