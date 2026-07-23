@@ -195,7 +195,7 @@
     padding: 70px 0 40px;
     position: relative; overflow: hidden;
     border-bottom: 1px solid var(--card-border);
-    scroll-margin-top: 80px;
+    scroll-margin-top: 80px; contain: layout style;
 }
 .fp-shop-hero-bg { position: absolute; inset: 0; pointer-events: none; }
 .fp-shop-grid {
@@ -229,6 +229,7 @@
     border-radius: var(--radius);
     overflow: hidden;
     transition: all 0.3s;
+    contain: layout style;
 }
 .fp-shop-filters-wrap:focus-within { border-color: rgba(234,179,8,0.2); }
 .fp-shop-filters-header {

@@ -38,7 +38,7 @@
 .fp-fund-btn { display:inline-flex;align-items:center;gap:8px;background:var(--near-black);color:var(--gold-400);padding:12px 28px;border-radius:var(--radius-sm);font-weight:700;font-size:14px;transition:all 0.3s;position:relative;z-index:1; }
 .fp-fund-btn:hover { transform:translateY(-2px);color:var(--gold-300);box-shadow:0 4px 16px rgba(0,0,0,0.3); }
 
-.fp-ws-item { display:flex;align-items:center;gap:12px;background:var(--card-dark);border:1px solid var(--card-border);border-radius:var(--radius-sm);padding:14px 16px;transition:all 0.3s;cursor:pointer; }
+.fp-ws-item { display:flex;align-items:center;gap:12px;background:var(--card-dark);border:1px solid var(--card-border);border-radius:var(--radius-sm);padding:14px 16px;transition:all 0.3s;cursor:pointer;contain:layout style; }
 .fp-ws-item:hover { border-color:rgba(234,179,8,0.2);transform:translateY(-2px); }
 .fp-ws-item i { font-size:24px; }
 .fp-ws-item strong { display:block;color:var(--text-primary);font-size:15px; }
