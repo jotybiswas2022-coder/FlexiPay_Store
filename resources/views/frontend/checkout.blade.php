@@ -29,6 +29,7 @@
     display: flex; align-items: center; gap: 10px;
     padding: 10px 20px; font-size: 13px; font-weight: 600;
     color: var(--text-dim); position: relative;
+    touch-action: manipulation;
 }
 .fp-chk-step .step-num {
     width: 32px; height: 32px; border-radius: 50%;
