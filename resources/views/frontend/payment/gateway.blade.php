@@ -96,7 +96,7 @@
 
                     <form action="{{ route('payment.process', $order->id) }}" method="POST" class="mt-4">
                         @csrf
-                        <div class="fp-pay-methods">
+                        <div class="fp-pay-methods" role="radiogroup" aria-label="Payment gateway selection">
                             <label class="fp-pm-option">
                                 <input type="radio" name="gateway" value="paystack" checked>
                                 <div class="fp-pm-content">
