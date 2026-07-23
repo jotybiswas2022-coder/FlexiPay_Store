@@ -70,6 +70,7 @@
     border: 1px solid rgba(255,255,255,0.1); color: white;
     display: flex; align-items: center; justify-content: center;
     cursor: pointer; transition: all 0.3s; font-size: 13px; z-index: 2;
+    touch-action: manipulation;
 }
 .fp-wl-remove:hover { background: #ef4444; transform: scale(1.1); border-color: #ef4444; }
 
