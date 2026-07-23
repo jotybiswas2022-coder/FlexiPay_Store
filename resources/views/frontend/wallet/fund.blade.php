@@ -25,7 +25,7 @@
 .fp-form-group label { display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:8px; }
 .fp-form-group label i { color:var(--gold-500); }
 .fp-amount-presets { display:flex;gap:8px;flex-wrap:wrap; }
-.fp-preset { padding:8px 16px;border-radius:8px;background:var(--surface-dark);border:1px solid var(--card-border);color:var(--text-muted);font-size:13px;font-weight:500;cursor:pointer;transition:all 0.2s;font-family:inherit; }
+.fp-preset { padding:8px 16px;border-radius:8px;background:var(--surface-dark);border:1px solid var(--card-border);color:var(--text-muted);font-size:13px;font-weight:500;cursor:pointer;transition:all 0.2s;font-family:inherit;touch-action:manipulation; }
 .fp-preset:hover, .fp-preset.active { background:rgba(234,179,8,0.1);border-color:rgba(234,179,8,0.3);color:var(--gold-400); }
 .fp-input { width:100%;padding:12px 16px;background:var(--surface-dark);border:1.5px solid var(--card-border);border-radius:var(--radius-sm);color:var(--text-primary);font-size:14px;font-family:inherit;outline:none;transition:all 0.2s; }
 .fp-input:focus { border-color:var(--gold-500);box-shadow:0 0 0 3px rgba(234,179,8,0.08); }
