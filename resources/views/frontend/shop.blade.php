@@ -195,6 +195,7 @@
     padding: 70px 0 40px;
     position: relative; overflow: hidden;
     border-bottom: 1px solid var(--card-border);
+    scroll-margin-top: 80px;
 }
 .fp-shop-hero-bg { position: absolute; inset: 0; pointer-events: none; }
 .fp-shop-grid {
