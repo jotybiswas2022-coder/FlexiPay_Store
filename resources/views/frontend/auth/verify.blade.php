@@ -22,9 +22,9 @@
     position:relative; z-index:1; width:100%; max-width:440px;
     background:var(--card-dark); border:1px solid var(--card-border);
     border-radius:16px; padding:40px 32px; text-align:center;
-    transition:transform 0.3s;
+    transition:transform 0.3s, border-color 0.3s, box-shadow 0.3s;
 }
-.fp-verify-card:hover{transform:translateY(-2px)}
+.fp-verify-card:hover{transform:translateY(-3px);border-color:rgba(234,179,8,0.2);box-shadow:var(--shadow-card-hover)}
 .fp-verify-icon {
     width:72px; height:72px; border-radius:50%; margin:0 auto 20px;
     background:rgba(234,179,8,0.1); display:flex; align-items:center; justify-content:center;
