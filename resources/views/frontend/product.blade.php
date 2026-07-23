@@ -567,7 +567,7 @@
     background: var(--card-dark);
     border: 1px solid var(--card-border);
     border-radius: var(--radius);
-    overflow: hidden;
+    overflow: hidden; contain: layout style;
 }
 .fp-prod-tab-nav {
     display: flex; list-style: none; padding: 0; margin: 0;
