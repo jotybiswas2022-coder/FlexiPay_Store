@@ -126,7 +126,7 @@
         @keyframes slideDownAlert { from { transform: translateY(-100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
         .btn-primary-gold {
-            display: inline-flex; align-items: center; gap: 8px;
+            display: inline-flex; align-items: center; gap: 8px; touch-action: manipulation;
             background: linear-gradient(135deg, var(--gold-500), var(--gold-600));
             color: var(--near-black); padding: 12px 28px; border-radius: var(--radius-sm);
             font-weight: 700; font-size: 14px; border: none; cursor: pointer;
