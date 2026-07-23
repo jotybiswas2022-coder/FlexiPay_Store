@@ -47,6 +47,7 @@
     padding: 10px 12px; border-radius: 6px;
     color: var(--text-muted); font-size: 13px; font-weight: 500;
     transition: all 0.2s; text-decoration: none;
+    touch-action: manipulation;
 }
 .fp-profile-nav a:hover, .fp-profile-nav a.active { background: rgba(234,179,8,0.08); color: var(--gold-400); }
 .fp-profile-nav a i { width: 18px; font-size: 14px; }
