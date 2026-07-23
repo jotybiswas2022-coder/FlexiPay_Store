@@ -118,8 +118,8 @@
 
 @section('content')
 <section class="fp-ab-hero">
-    <div class="fp-ab-orb"></div>
-    <div class="fp-ab-orb2"></div>
+    <div class="fp-ab-orb" aria-hidden="true"></div>
+    <div class="fp-ab-orb2" aria-hidden="true"></div>
     <div class="container">
         <div class="section-head reveal-up">
             <div class="section-badge"><i class="bi bi-info-circle-fill"></i> About Us</div>

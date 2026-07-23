@@ -162,8 +162,8 @@
 
 @section('content')
 <section class="fp-contact-hero">
-    <div class="fp-contact-orb"></div>
-    <div class="fp-contact-orb2"></div>
+    <div class="fp-contact-orb" aria-hidden="true"></div>
+    <div class="fp-contact-orb2" aria-hidden="true"></div>
     <div class="container">
         <div class="row align-items-center g-5">
             <div class="col-lg-6">

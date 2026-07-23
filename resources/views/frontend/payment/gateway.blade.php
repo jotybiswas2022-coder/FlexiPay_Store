@@ -66,7 +66,7 @@
 
 @section('content')
 <section class="fp-gw-hero">
-    <div class="fp-gw-orb"></div>
+    <div class="fp-gw-orb" aria-hidden="true"></div>
     <div class="container">
         <div class="section-head reveal-up">
             <div class="section-badge"><i class="bi bi-lock-fill"></i> Secure Payment</div>

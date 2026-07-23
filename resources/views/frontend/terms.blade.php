@@ -32,7 +32,7 @@
 
 @section('content')
 <section class="fp-tr-hero">
-    <div class="fp-tr-orb"></div>
+    <div class="fp-tr-orb" aria-hidden="true"></div>
     <div class="container">
         <div class="section-head reveal-up">
             <div class="section-badge"><i class="bi bi-file-earmark-text-fill"></i> Legal</div>
