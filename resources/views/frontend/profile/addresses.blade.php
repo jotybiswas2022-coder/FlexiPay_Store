@@ -17,7 +17,7 @@
 
 .fp-ad-section { padding-bottom: 80px; min-height: 60vh; }
 .fp-alert { display:flex;align-items:center;gap:8px;background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.2);color:#4ade80;padding:14px 18px;border-radius:var(--radius-sm);font-weight:500;font-size:13px;margin-bottom:24px; }
-.fp-address-card { background:var(--card-dark);border:1px solid var(--card-border);border-radius:var(--radius);padding:24px;position:relative;transition:all 0.3s;height:100%; }
+.fp-address-card { background:var(--card-dark);border:1px solid var(--card-border);border-radius:var(--radius);padding:24px;position:relative;isolation:isolate;transition:all 0.3s;height:100%; }
 .fp-address-card.default { border-color:rgba(234,179,8,0.3); }
 .fp-address-card:hover { border-color:rgba(234,179,8,0.2);transform:translateY(-3px);box-shadow:var(--shadow-card-hover); }
 .fp-addr-default-badge { position:absolute;top:10px;right:10px;background:var(--gold-500);color:var(--near-black);padding:3px 10px;border-radius:6px;font-size:11px;font-weight:600;display:flex;align-items:center;gap:4px; }

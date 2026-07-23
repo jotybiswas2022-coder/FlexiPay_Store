@@ -17,7 +17,7 @@
 
 .fp-bk-section { padding-bottom: 80px; min-height: 60vh; }
 .fp-alert { display:flex;align-items:center;gap:8px;background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.2);color:#4ade80;padding:14px 18px;border-radius:var(--radius-sm);font-weight:500;font-size:13px;margin-bottom:24px; }
-.fp-bank-card { background:var(--card-dark);border:1px solid var(--card-border);border-radius:var(--radius);padding:24px;position:relative;transition:all 0.3s;height:100%; }
+.fp-bank-card { background:var(--card-dark);border:1px solid var(--card-border);border-radius:var(--radius);padding:24px;position:relative;isolation:isolate;transition:all 0.3s;height:100%; }
 .fp-bank-card:hover { border-color:rgba(234,179,8,0.2);transform:translateY(-3px);box-shadow:var(--shadow-card-hover); }
 .fp-bank-icon { width:44px;height:44px;border-radius:10px;background:rgba(234,179,8,0.1);display:flex;align-items:center;justify-content:center;color:var(--gold-500);font-size:20px;margin-bottom:12px; }
 .fp-bank-card h5 { color:var(--text-primary);font-size:16px;font-weight:600; }
