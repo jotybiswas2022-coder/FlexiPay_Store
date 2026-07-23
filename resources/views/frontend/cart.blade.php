@@ -37,7 +37,7 @@
                     <div class="fp-cart-item reveal-up" data-item-id="{{ $item['id'] }}">
                         <a href="{{ url('/product/'.$item['slug']) }}" class="fp-ci-image">
                             @if($item['thumbnail'])
-                                <img src="{{ asset('storage/'.$item['thumbnail']) }}" alt="{{ $item['name'] }}">
+                                <img src="{{ asset('storage/'.$item['thumbnail']) }}" alt="{{ $item['name'] }}" loading="lazy">
                             @else
                                 <div class="fp-ci-no-img"><i class="bi bi-image"></i></div>
                             @endif
