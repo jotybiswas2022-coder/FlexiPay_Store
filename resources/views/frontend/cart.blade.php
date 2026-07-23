@@ -204,7 +204,7 @@
 .fp-ci-image:hover { border-color: var(--gold-500); }
 .fp-ci-image img { width: 100%; height: 100%; object-fit: cover; }
 .fp-ci-no-img { color: var(--card-border); font-size: 24px; }
-.fp-ci-info { flex: 1; min-width: 0; }
+.fp-ci-info { flex: 1; min-width: 0; overflow-wrap: break-word; }
 .fp-ci-name {
     color: var(--text-primary); font-weight: 600; font-size: 14px;
     display: block; margin-bottom: 4px;
