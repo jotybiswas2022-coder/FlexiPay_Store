@@ -4,7 +4,7 @@
 @push('styles')
 <style>
 .fp-bk-hero {
-    position: relative; padding: 30px 0 20px; overflow: hidden;
+    position: relative; padding: 30px 0 20px; overflow: hidden; isolation: isolate;
     background: linear-gradient(180deg, rgba(234,179,8,0.03) 0%, transparent 100%);
 }
 .fp-bk-orb {
