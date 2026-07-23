@@ -144,7 +144,7 @@
                 @foreach($order->items->take(3) as $item)
                 <div class="fp-order-item">
                     @if($item->product && $item->product->primaryImage)
-                        <img src="{{ asset('storage/'.$item->product->primaryImage->image_path) }}" alt="">
+                        <img src="{{ asset('storage/'.$item->product->primaryImage->image_path) }}" alt="{{ $item->product->name }}">
                     @else
                         <div class="fp-oi-no-img"><i class="bi bi-image"></i></div>
                     @endif
