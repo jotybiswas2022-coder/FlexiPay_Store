@@ -21,7 +21,9 @@
     background: var(--card-dark); border: 1px solid var(--card-border);
     border-radius: var(--radius); padding: 36px;
     color: var(--text-muted); line-height: 1.8; font-size: 15px;
+    transition: all 0.3s;
 }
+.fp-tr-content:hover { border-color: rgba(234,179,8,0.2); }
 .fp-tr-content h4 { color: var(--text-primary); font-family: 'Syne', sans-serif; margin-bottom: 16px; font-size: 18px; }
 .fp-tr-content h5 { color: var(--text-primary); margin-top: 28px; margin-bottom: 10px; font-size: 15px; }
 .fp-tr-content p { margin-bottom: 12px; }
