@@ -17,7 +17,7 @@
 
 .fp-wh-section { padding-bottom: 80px; min-height: 60vh; }
 
-.fp-txn-table-wrap { background:var(--card-dark);border:1px solid var(--card-border);border-radius:var(--radius);overflow:hidden;transition:all 0.3s; }
+.fp-txn-table-wrap { background:var(--card-dark);border:1px solid var(--card-border);border-radius:var(--radius);overflow:hidden;transition:all 0.3s;contain:layout style; }
 .fp-txn-table-wrap:hover { border-color:rgba(234,179,8,0.15); }
 .fp-txn-table { width:100%;border-collapse:collapse; }
 .fp-txn-table th { padding:14px 20px;text-align:left;font-size:12px;font-weight:600;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.5px;border-bottom:1px solid var(--card-border);background:var(--surface-dark); }

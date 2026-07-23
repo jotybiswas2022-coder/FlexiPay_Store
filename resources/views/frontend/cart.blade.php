@@ -285,6 +285,7 @@
     border-radius: var(--radius);
     padding: 24px;
     position: sticky; top: 100px;
+    contain: layout style;
 }
 .fp-cs-icon {
     width: 44px; height: 44px; border-radius: 12px;

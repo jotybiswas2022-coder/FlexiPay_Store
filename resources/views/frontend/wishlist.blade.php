@@ -34,7 +34,7 @@
     background: var(--card-dark); border: 1px solid var(--card-border);
     border-radius: var(--radius); overflow: hidden;
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    position: relative;
+    position: relative; contain: layout style; min-width: 0;
 }
 .fp-wl-card:hover {
     border-color: rgba(234,179,8,0.25);

@@ -44,7 +44,7 @@
 .fp-ws-item strong { display:block;color:var(--text-primary);font-size:15px; }
 .fp-ws-item span { color:var(--text-dim);font-size:12px; }
 
-.fp-wallet-transactions { background:var(--card-dark);border:1px solid var(--card-border);border-radius:var(--radius);overflow:hidden;transition:all 0.3s; }
+.fp-wallet-transactions { background:var(--card-dark);border:1px solid var(--card-border);border-radius:var(--radius);overflow:hidden;transition:all 0.3s;contain:layout style; }
 .fp-wallet-transactions:hover { border-color:rgba(234,179,8,0.15); }
 .fp-wt-header { display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--card-border); }
 .fp-wt-header h4 { font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--text-primary);display:flex;align-items:center;gap:8px;margin:0; }
