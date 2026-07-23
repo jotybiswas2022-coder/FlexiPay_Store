@@ -222,7 +222,7 @@
 
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: var(--near-black); }
-        ::-webkit-scrollbar-thumb { background: var(--card-border); border-radius: 99px; }
+        ::-webkit-scrollbar-thumb { background: var(--card-border); border-radius: 99px; transition: background 0.3s; }
         ::-webkit-scrollbar-thumb:hover { background: var(--gold-600); }
 
         @media (max-width: 768px) {
