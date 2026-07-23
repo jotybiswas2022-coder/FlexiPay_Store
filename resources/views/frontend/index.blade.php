@@ -801,7 +801,7 @@
     padding: 4px 10px; border-radius: 6px; white-space: nowrap;
 }
 .fp-product-badge-new { background: var(--gold-500); }
-.fp-product-body { padding: 14px 16px 16px; }
+.fp-product-body { padding: 14px 16px 16px; overflow-wrap: break-word; }
 .fp-product-body h6 {
     font-size: 14px; font-weight: 600; color: var(--text-primary);
     margin-bottom: 8px;
