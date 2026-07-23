@@ -3,6 +3,12 @@
 
 @section('content')
 <style>
+/* ===== CANVAS ===== */
+#authParticles {
+    position: fixed; inset: 0; z-index: 0;
+    pointer-events: none; opacity: 0.4;
+}
+
 /* ===== BACKGROUND ===== */
 .fp-bg {
     position: fixed; inset: 0; z-index: 0; overflow: hidden;
@@ -11,8 +17,8 @@
 .fp-grid {
     position: absolute; inset: 0;
     background-image:
-        linear-gradient(rgba(234,179,8,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(234,179,8,0.04) 1px, transparent 1px);
+        linear-gradient(rgba(234,179,8,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(234,179,8,0.03) 1px, transparent 1px);
     background-size: 48px 48px;
     animation: gridDrift 20s linear infinite;
 }
@@ -21,7 +27,7 @@
     100% { transform: translate(48px, 48px); }
 }
 .fp-blob {
-    position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.35;
+    position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.3;
     animation: blobFloat 8s ease-in-out infinite alternate;
 }
 .fp-blob-1 { width: 560px; height: 560px; background: radial-gradient(circle, #EAB30833, transparent); top: -120px; left: -120px; }
@@ -34,12 +40,12 @@
 .fp-ring {
     position: absolute; top: 50%; left: 50%;
     transform: translate(-50%,-50%); border-radius: 50%;
-    border: 1.5px solid rgba(234,179,8,0.1);
+    border: 1px solid rgba(234,179,8,0.08);
     animation: radarPulse 4s ease-out infinite;
 }
-.fp-ring:nth-child(4) { width: 300px; height: 300px; animation-delay: 0s; }
-.fp-ring:nth-child(5) { width: 500px; height: 500px; animation-delay: 1.3s; }
-.fp-ring:nth-child(6) { width: 700px; height: 700px; animation-delay: 2.6s; }
+.fp-ring:nth-child(5) { width: 300px; height: 300px; animation-delay: 0s; }
+.fp-ring:nth-child(6) { width: 500px; height: 500px; animation-delay: 1.3s; }
+.fp-ring:nth-child(7) { width: 700px; height: 700px; animation-delay: 2.6s; }
 @keyframes radarPulse {
     0%   { transform: translate(-50%,-50%) scale(0.6); opacity: 0.4; }
     80%  { opacity: 0.05; }
@@ -53,12 +59,12 @@
     font-size: 18px; color: var(--gold-400); box-shadow: 0 4px 20px rgba(0,0,0,0.3);
     animation: iconFloat 6s ease-in-out infinite alternate;
 }
-.fp-float-icon:nth-child(7)  { top: 12%; left: 6%;  animation-delay: 0s;    animation-duration: 7s; }
-.fp-float-icon:nth-child(8)  { top: 22%; right: 7%; animation-delay: -2s;   animation-duration: 8s; }
-.fp-float-icon:nth-child(9)  { bottom: 30%; left: 5%; animation-delay: -1s; animation-duration: 6s; }
-.fp-float-icon:nth-child(10) { top: 60%; right: 6%; animation-delay: -3.5s; animation-duration: 9s; }
-.fp-float-icon:nth-child(11) { bottom: 12%; left: 18%; animation-delay: -4s; animation-duration: 7s; }
-.fp-float-icon:nth-child(12) { top: 8%; right: 22%;  animation-delay: -0.5s; animation-duration: 8s; }
+.fp-float-icon:nth-child(8)  { top: 12%; left: 6%;  animation-delay: 0s;    animation-duration: 7s; }
+.fp-float-icon:nth-child(9)  { top: 22%; right: 7%; animation-delay: -2s;   animation-duration: 8s; }
+.fp-float-icon:nth-child(10) { bottom: 30%; left: 5%; animation-delay: -1s; animation-duration: 6s; }
+.fp-float-icon:nth-child(11) { top: 60%; right: 6%; animation-delay: -3.5s; animation-duration: 9s; }
+.fp-float-icon:nth-child(12) { bottom: 12%; left: 18%; animation-delay: -4s; animation-duration: 7s; }
+.fp-float-icon:nth-child(13) { top: 8%; right: 22%;  animation-delay: -0.5s; animation-duration: 8s; }
 @keyframes iconFloat {
     0%   { transform: translateY(0px) rotate(-4deg); }
     100% { transform: translateY(-20px) rotate(4deg); }
@@ -78,7 +84,7 @@
     animation: fadeDown 0.7s ease both;
 }
 @keyframes fadeDown { from { opacity: 0; transform: translateY(-24px); } to { opacity: 1; transform: translateY(0); } }
-.fp-logo-wrap { display: flex; align-items: center; gap: 12px; }
+.fp-logo-wrap { display: flex; align-items: center; gap: 12px; text-decoration: none; }
 .fp-logo-icon {
     width: 54px; height: 54px; border-radius: 16px;
     background: linear-gradient(135deg, var(--gold-500), var(--gold-600));
@@ -105,6 +111,8 @@
     box-shadow: 0 16px 60px rgba(0,0,0,0.4);
     overflow: hidden;
     animation: fadeUp 0.8s cubic-bezier(.22,.68,0,1.2) 0.1s both;
+    transform-style: preserve-3d;
+    perspective: 800px;
 }
 @keyframes fadeUp { from { opacity: 0; transform: translateY(40px) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
 
@@ -134,6 +142,13 @@
     font-size: 12px; color: rgba(0,0,0,0.8); font-weight: 500;
     backdrop-filter: blur(4px);
 }
+.fp-strip-shine {
+    position: absolute; inset: 0;
+    background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.08) 50%, transparent 70%);
+    transform: translateX(-100%);
+    animation: stripShine 6s ease-in-out infinite;
+}
+@keyframes stripShine { 0%,100%{transform:translateX(-100%)} 50%{transform:translateX(100%)} }
 .fp-live-dot { width: 8px; height: 8px; background: #000; border-radius: 50%; box-shadow: 0 0 0 0 rgba(0,0,0,0.4); animation: livePing 1.5s ease-in-out infinite; }
 @keyframes livePing { 0%,100% { box-shadow: 0 0 0 0 rgba(0,0,0,0.4); } 50% { box-shadow: 0 0 0 6px rgba(0,0,0,0); } }
 
@@ -155,15 +170,23 @@
     width: 100%; height: 48px;
     padding: 0 46px 0 16px;
     border: 1.5px solid var(--card-border);
-    border-radius: var(--radius-sm);
+    border-radius: 10px;
     background: var(--surface-dark);
     font-family: 'Space Grotesk', sans-serif;
     font-size: 14px; color: var(--text-primary);
-    outline: none; transition: all 0.2s;
+    outline: none; transition: all 0.25s;
 }
 .fp-input::placeholder { color: var(--text-dim); }
-.fp-input:focus { border-color: var(--gold-500); background: rgba(234,179,8,0.04); box-shadow: 0 0 0 4px rgba(234,179,8,0.08); }
-.fp-input.is-invalid { border-color: #ef4444; }
+.fp-input:focus { border-color: var(--gold-500); background: rgba(234,179,8,0.04); box-shadow: 0 0 0 4px rgba(234,179,8,0.08), 0 0 20px rgba(234,179,8,0.05); }
+.fp-input.is-invalid { border-color: #ef4444; box-shadow: 0 0 0 4px rgba(239,68,68,0.08); }
+.fp-input-focus-glow {
+    position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 0; height: 2px;
+    background: linear-gradient(90deg, var(--gold-500), var(--gold-400));
+    border-radius: 2px;
+    transition: width 0.3s;
+}
+.fp-input:focus ~ .fp-input-focus-glow { width: 80%; }
 .fp-input-icon { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: var(--text-dim); font-size: 16px; pointer-events: none; }
 .fp-toggle-btn {
     position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
@@ -182,16 +205,22 @@
 
 .fp-submit-btn {
     width: 100%; height: 50px; border: none;
-    border-radius: var(--radius-sm);
+    border-radius: 10px;
     background: linear-gradient(105deg, var(--gold-500), var(--gold-600));
     color: var(--near-black);
     font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700;
     cursor: pointer; display: flex; align-items: center;
     justify-content: center; gap: 10px;
     box-shadow: 0 6px 24px rgba(234,179,8,0.3);
-    transition: all 0.18s; position: relative; overflow: hidden;
+    transition: all 0.2s; position: relative; overflow: hidden;
     letter-spacing: 0.3px;
 }
+.fp-submit-btn::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(105deg, transparent 20%, rgba(255,255,255,0.15) 50%, transparent 80%);
+    transform: translateX(-100%); transition: transform 0.6s;
+}
+.fp-submit-btn:hover::before { transform: translateX(100%); }
 .fp-submit-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(234,179,8,0.4); }
 .fp-submit-btn:active { transform: translateY(0); }
 
@@ -200,13 +229,29 @@
 .fp-submit-btn.loading .btn-spinner { display: inline-block; }
 @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-.fp-divider { display: flex; align-items: center; gap: 10px; font-size: 12px; color: var(--text-dim); margin: 22px 0; font-weight: 500; }
-.fp-divider::before, .fp-divider::after { content: ''; flex: 1; height: 1px; background: var(--card-border); }
+/* Social Login */
+.fp-social-login {
+    display: flex; gap: 10px; margin-bottom: 20px;
+}
+.fp-social-btn {
+    flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 10px; border-radius: 10px;
+    background: var(--surface-dark); border: 1px solid var(--card-border);
+    color: var(--text-muted); font-size: 13px; font-weight: 600;
+    cursor: pointer; transition: all 0.2s; font-family: inherit;
+    text-decoration: none;
+}
+.fp-social-btn i { font-size: 18px; }
+.fp-social-btn:hover { border-color: rgba(234,179,8,0.2); background: rgba(234,179,8,0.04); }
+.fp-social-btn.google:hover { border-color: rgba(234,67,53,0.3); color: #ea4335; }
+.fp-social-btn.apple:hover { border-color: rgba(255,255,255,0.3); color: white; }
+.fp-social-divider { display: flex; align-items: center; gap: 10px; font-size: 12px; color: var(--text-dim); margin: 20px 0; font-weight: 500; }
+.fp-social-divider::before, .fp-social-divider::after { content: ''; flex: 1; height: 1px; background: var(--card-border); }
 
 .fp-register-box {
     background: rgba(234,179,8,0.04);
     border: 1px solid rgba(234,179,8,0.15);
-    border-radius: var(--radius-sm);
+    border-radius: 12px;
     padding: 18px 20px; text-align: center; margin-bottom: 20px;
 }
 .fp-register-box p { font-size: 13px; color: var(--text-muted); margin-bottom: 12px; display: flex; align-items: center; justify-content: center; gap: 6px; }
@@ -256,8 +301,11 @@
     .fp-card-footer { padding: 12px 20px; }
     .fp-card-strip { padding: 18px 20px 16px; }
     .fp-stats-row { gap: 20px; }
+    .fp-social-login { flex-direction: column; }
 }
 </style>
+
+<canvas id="authParticles"></canvas>
 
 <div class="fp-bg">
     <div class="fp-grid"></div>
@@ -284,8 +332,9 @@
         <div class="fp-tagline"><i class="bi bi-lightning-charge-fill"></i> Buy Now, Pay in Installments <i class="bi bi-lightning-charge-fill"></i></div>
     </div>
 
-    <div class="fp-card">
+    <div class="fp-card" id="loginCard">
         <div class="fp-card-strip">
+            <div class="fp-strip-shine"></div>
             <div class="fp-strip-inner">
                 <div class="fp-strip-left">
                     <h2>Welcome Back!</h2>
@@ -311,6 +360,7 @@
                                class="fp-input @error('email') is-invalid @enderror"
                                placeholder="you@example.com" required autocomplete="email" autofocus>
                         <i class="bi bi-envelope fp-input-icon"></i>
+                        <div class="fp-input-focus-glow"></div>
                     </div>
                     @error('email')
                         <div class="invalid-feedback"><i class="bi bi-exclamation-circle-fill"></i> <strong>{{ $message }}</strong></div>
@@ -326,6 +376,7 @@
                         <button type="button" class="fp-toggle-btn" id="togglePassword">
                             <i class="bi bi-eye" id="toggleIcon"></i>
                         </button>
+                        <div class="fp-input-focus-glow"></div>
                     </div>
                     @error('password')
                         <div class="invalid-feedback"><i class="bi bi-exclamation-circle-fill"></i> <strong>{{ $message }}</strong></div>
@@ -351,7 +402,16 @@
                 </button>
             </form>
 
-            <div class="fp-divider">New to FlexiPay?</div>
+            <div class="fp-social-divider">Sign in faster</div>
+
+            <div class="fp-social-login">
+                <a href="{{ url('/auth/google') }}" class="fp-social-btn google" onclick="event.preventDefault()">
+                    <i class="bi bi-google"></i> Google
+                </a>
+                <a href="#" class="fp-social-btn apple" onclick="event.preventDefault()">
+                    <i class="bi bi-apple"></i> Apple
+                </a>
+            </div>
 
             <div class="fp-register-box">
                 <p><i class="bi bi-people-fill"></i> Join thousands paying flexibly across Nigeria</p>
@@ -378,9 +438,9 @@
     </div>
 
     <div class="fp-stats-row">
-        <div class="fp-stat"><div class="fp-stat-num">5K<span>+</span></div><div class="fp-stat-label">Products</div></div>
-        <div class="fp-stat"><div class="fp-stat-num">15K<span>+</span></div><div class="fp-stat-label">Happy Customers</div></div>
-        <div class="fp-stat"><div class="fp-stat-num">36<span>+</span></div><div class="fp-stat-label">Payment Plans</div></div>
+        <div class="fp-stat"><div class="fp-stat-num" data-count="5000">0<span>+</span></div><div class="fp-stat-label">Products</div></div>
+        <div class="fp-stat"><div class="fp-stat-num" data-count="15000">0<span>+</span></div><div class="fp-stat-label">Happy Customers</div></div>
+        <div class="fp-stat"><div class="fp-stat-num" data-count="36">0<span>+</span></div><div class="fp-stat-label">Payment Plans</div></div>
     </div>
 
     <div class="fp-location-tag">
@@ -389,6 +449,7 @@
 </div>
 
 <script>
+// Toggle password visibility
 document.getElementById('togglePassword')?.addEventListener('click', function() {
     const input = document.getElementById('password');
     const icon = document.getElementById('toggleIcon');
@@ -397,10 +458,93 @@ document.getElementById('togglePassword')?.addEventListener('click', function() 
     icon.className = isText ? 'bi bi-eye' : 'bi bi-eye-slash';
 });
 
+// Form loading state
 document.getElementById('loginForm')?.addEventListener('submit', function() {
     const btn = document.getElementById('loginBtn');
     btn.classList.add('loading');
     btn.disabled = true;
 });
+
+// Card 3D tilt
+const card = document.getElementById('loginCard');
+card?.addEventListener('mousemove', (e) => {
+    const rect = card.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    card.style.transform =
+        `perspective(800px) rotateY(${x * 4}deg) rotateX(${-y * 4}deg)`;
+    card.style.transition = 'transform 0.1s';
+});
+card?.addEventListener('mouseleave', () => {
+    card.style.transform = 'perspective(800px) rotateY(0deg) rotateX(0deg)';
+    card.style.transition = 'transform 0.5s ease';
+});
+
+// Particle canvas
+(function() {
+    const canvas = document.getElementById('authParticles');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let W, H;
+
+    function resize() {
+        W = canvas.width = window.innerWidth;
+        H = canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    const particles = [];
+    for (let i = 0; i < 50; i++) {
+        particles.push({
+            x: Math.random() * W,
+            y: Math.random() * H,
+            size: Math.random() * 2 + 0.5,
+            speedX: (Math.random() - 0.5) * 0.2,
+            speedY: (Math.random() - 0.5) * 0.2,
+            opacity: Math.random() * 0.4 + 0.1
+        });
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, W, H);
+        particles.forEach(p => {
+            p.x += p.speedX;
+            p.y += p.speedY;
+            if (p.x < 0 || p.x > W) p.speedX *= -1;
+            if (p.y < 0 || p.y > H) p.speedY *= -1;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(234, 179, 8, ${p.opacity})`;
+            ctx.fill();
+        });
+        requestAnimationFrame(animate);
+    }
+    animate();
+})();
+
+// Counter animation for stats
+const counterObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+        if (e.isIntersecting) {
+            const el = e.target;
+            const text = el.textContent;
+            const match = text.match(/^(\d+)/);
+            if (!match) return;
+            const target = parseInt(match[1]);
+            const suffix = text.replace(/^[\d,]+/, '');
+            const dur = 1500;
+            const step = target / (dur / 16);
+            let cur = 0;
+            const t = setInterval(() => {
+                cur += step;
+                if (cur >= target) { cur = target; clearInterval(t); }
+                el.innerHTML = Math.floor(cur).toLocaleString() + suffix;
+            }, 16);
+            counterObs.unobserve(el);
+        }
+    });
+}, { threshold: 0.3 });
+document.querySelectorAll('.fp-stat-num[data-count]').forEach(el => counterObs.observe(el));
 </script>
 @endsection

@@ -3,262 +3,527 @@
 
 @section('content')
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Space Grotesk',sans-serif;background:linear-gradient(135deg,#0A0A0B,#121214,#0A0A0B);min-height:100vh;overflow-x:hidden;overflow-y:auto}
-
-.fp-page{position:relative;min-height:calc(100vh - 68px);padding:2rem 1rem 3rem;overflow:hidden}
-
-/* Floating product icons */
-.fp-product-float{
-    position:fixed;background:var(--card-dark);border:1px solid var(--card-border);
-    border-radius:12px;padding:8px 14px;font-size:12px;color:var(--gold-400);
-    font-weight:500;white-space:nowrap;animation:floatAnim linear infinite;
-    opacity:0.7;display:flex;align-items:center;gap:6px;
-    pointer-events:none;box-shadow:0 4px 16px rgba(0,0,0,0.3);z-index:0;
+#authParticles {
+    position: fixed; inset: 0; z-index: 0;
+    pointer-events: none; opacity: 0.4;
 }
-.fp-product-float i{color:var(--gold-500);font-size:13px}
-@keyframes floatAnim{
-    0%{transform:translateY(0) translateX(0) rotate(-2deg)}
-    25%{transform:translateY(-18px) translateX(8px) rotate(1deg)}
-    50%{transform:translateY(-8px) translateX(-5px) rotate(-1deg)}
-    75%{transform:translateY(-22px) translateX(4px) rotate(2deg)}
-    100%{transform:translateY(0) translateX(0) rotate(-2deg)}
+
+.fp-bg {
+    position: fixed; inset: 0; z-index: 0; overflow: hidden;
+    background: linear-gradient(135deg, #0A0A0B 0%, #121214 50%, #0A0A0B 100%);
 }
-.f1{top:6%;left:2%;animation-duration:7s}
-.f2{top:12%;right:2%;animation-duration:9s;animation-delay:-2s}
-.f3{top:38%;left:1%;animation-duration:8s;animation-delay:-4s}
-.f4{top:55%;right:2%;animation-duration:10s;animation-delay:-1s}
-.f5{top:72%;left:3%;animation-duration:6.5s;animation-delay:-3s}
-.f6{top:82%;right:3%;animation-duration:8.5s;animation-delay:-5s}
-
-.fp-wrapper{max-width:500px;margin:0 auto;position:relative;z-index:10}
-
-/* Card */
-.fp-card{background:var(--card-dark);border-radius:20px;border:1px solid var(--card-border);overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,0.4)}
-
-.fp-header{
-    background:linear-gradient(135deg,var(--gold-500),var(--gold-600),var(--gold-700));
-    padding:2rem 2rem 1.5rem;text-align:center;position:relative;overflow:hidden;
+.fp-grid {
+    position: absolute; inset: 0;
+    background-image:
+        linear-gradient(rgba(234,179,8,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(234,179,8,0.03) 1px, transparent 1px);
+    background-size: 48px 48px;
+    animation: gridDrift 20s linear infinite;
 }
-.fp-header::before{content:'';position:absolute;top:-30px;right:-30px;width:120px;height:120px;border-radius:50%;background:rgba(0,0,0,0.07)}
-.fp-header::after{content:'';position:absolute;bottom:-20px;left:-20px;width:80px;height:80px;border-radius:50%;background:rgba(0,0,0,0.1)}
-
-.fp-edition{
-    display:flex;align-items:center;justify-content:space-between;
-    background:rgba(0,0,0,0.1);border-radius:8px;padding:6px 12px;
-    margin-bottom:1rem;font-size:11px;color:rgba(0,0,0,0.7);position:relative;z-index:1;
+@keyframes gridDrift { 0% { transform: translate(0,0); } 100% { transform: translate(48px, 48px); } }
+.fp-blob {
+    position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.3;
+    animation: blobFloat 8s ease-in-out infinite alternate;
 }
-.fp-edition i{color:rgba(0,0,0,0.5)}
-
-.fp-logo-wrap{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:0.75rem;position:relative;z-index:1}
-.fp-logo-icon{width:48px;height:48px;background:rgba(0,0,0,0.1);border-radius:14px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(0,0,0,0.1)}
-.fp-logo-icon i{font-size:24px;color:rgba(0,0,0,0.8)}
-.fp-brand{font-family:'Syne',sans-serif;font-size:22px;font-weight:700;color:rgba(0,0,0,0.9);letter-spacing:-0.5px}
-.fp-brand span{color:rgba(0,0,0,0.6)}
-
-.fp-separator{display:flex;align-items:center;gap:8px;margin-bottom:1rem;position:relative;z-index:1}
-.fp-sep-line{flex:1;height:1px;background:rgba(0,0,0,0.15)}
-.fp-sep-icons{display:flex;gap:6px;color:rgba(0,0,0,0.4);font-size:10px}
-
-.fp-plan-badges{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:1rem;position:relative;z-index:1}
-.fp-pb{display:flex;align-items:center;gap:4px;background:rgba(0,0,0,0.08);border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:4px 10px;font-size:11px;color:rgba(0,0,0,0.7);font-weight:500}
-.fp-pb i{color:rgba(0,0,0,0.5);font-size:11px}
-
-.fp-tagline{font-size:14px;color:rgba(0,0,0,0.8);font-weight:500;position:relative;z-index:1}
-.fp-tagline strong{color:rgba(0,0,0,0.9)}
-
-/* Body */
-.fp-body{padding:1.75rem}
-.fp-section-title{display:flex;align-items:center;justify-content:center;gap:8px;font-size:13px;font-weight:600;color:var(--gold-500);letter-spacing:0.5px;text-transform:uppercase;margin-bottom:1.25rem}
-.fp-section-title i{color:var(--gold-400);font-size:14px}
-
-.fp-field{margin-bottom:1rem}
-.fp-label{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:500;color:var(--text-primary);margin-bottom:6px}
-.fp-label i{color:var(--gold-500);font-size:13px}
-
-.fp-input-wrap{position:relative}
-.fp-input-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--gold-500);font-size:14px;pointer-events:none}
-.fp-input{
-    width:100%;padding:11px 40px 11px 38px;
-    border:1.5px solid var(--card-border);border-radius:10px;
-    font-size:14px;color:var(--text-primary);
-    background:var(--surface-dark);outline:none;
-    font-family:'Space Grotesk',sans-serif;transition:all 0.2s;
+.fp-blob-1 { width: 560px; height: 560px; background: radial-gradient(circle, #EAB30833, transparent); top: -120px; left: -120px; }
+.fp-blob-2 { width: 420px; height: 420px; background: radial-gradient(circle, #CA8A0422, transparent); bottom: -100px; right: -80px; animation-delay: -3s; }
+.fp-blob-3 { width: 300px; height: 300px; background: radial-gradient(circle, #EAB30822, transparent); top: 50%; right: 15%; animation-delay: -5s; }
+@keyframes blobFloat { 0% { transform: translate(0,0) scale(1); } 100% { transform: translate(30px,40px) scale(1.08); } }
+.fp-ring {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%,-50%); border-radius: 50%;
+    border: 1px solid rgba(234,179,8,0.08);
+    animation: radarPulse 4s ease-out infinite;
 }
-.fp-input:focus{border-color:var(--gold-500);background:rgba(234,179,8,0.04);box-shadow:0 0 0 3px rgba(234,179,8,0.08)}
-.fp-input::placeholder{color:var(--text-dim)}
-.is-invalid{border-color:#ef4444 !important}
-
-.fp-toggle{
-    position:absolute;right:10px;top:50%;transform:translateY(-50%);
-    background:none;border:none;cursor:pointer;color:var(--text-dim);
-    padding:4px;font-size:14px;display:flex;align-items:center;
+.fp-ring:nth-child(5) { width: 300px; height: 300px; animation-delay: 0s; }
+.fp-ring:nth-child(6) { width: 500px; height: 500px; animation-delay: 1.3s; }
+.fp-ring:nth-child(7) { width: 700px; height: 700px; animation-delay: 2.6s; }
+@keyframes radarPulse {
+    0%   { transform: translate(-50%,-50%) scale(0.6); opacity: 0.4; }
+    80%  { opacity: 0.05; }
+    100% { transform: translate(-50%,-50%) scale(1.4); opacity: 0; }
 }
-.fp-toggle:hover{color:var(--gold-500)}
-
-.fp-divider{display:flex;align-items:center;gap:10px;margin:1.25rem 0}
-.fp-div-line{flex:1;height:1px;background:var(--card-border)}
-.fp-div-text{font-size:12px;color:var(--text-dim);display:flex;align-items:center;gap:5px;white-space:nowrap}
-.fp-div-text i{color:var(--gold-500);font-size:11px}
-
-.fp-btn{
-    width:100%;padding:12px;
-    background:linear-gradient(135deg,var(--gold-500),var(--gold-600));
-    color:var(--near-black);border:none;border-radius:12px;
-    font-size:15px;font-weight:700;cursor:pointer;
-    display:flex;align-items:center;justify-content:center;gap:8px;
-    font-family:'Syne',sans-serif;transition:all 0.2s;
-    box-shadow:0 4px 16px rgba(234,179,8,0.3);
+.fp-float-icon {
+    position: absolute; width: 44px; height: 44px; border-radius: 12px;
+    background: var(--card-dark); backdrop-filter: blur(8px);
+    border: 1px solid var(--card-border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; color: var(--gold-400); box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    animation: iconFloat 6s ease-in-out infinite alternate;
 }
-.fp-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(234,179,8,0.4)}
-.fp-btn:active{transform:scale(0.98)}
-.fp-btn i{font-size:16px}
+.fp-float-icon:nth-child(8)  { top: 12%; left: 6%;  animation-delay: 0s;    animation-duration: 7s; }
+.fp-float-icon:nth-child(9)  { top: 22%; right: 7%; animation-delay: -2s;   animation-duration: 8s; }
+.fp-float-icon:nth-child(10) { bottom: 30%; left: 5%; animation-delay: -1s; animation-duration: 6s; }
+.fp-float-icon:nth-child(11) { top: 60%; right: 6%; animation-delay: -3.5s; animation-duration: 9s; }
+.fp-float-icon:nth-child(12) { bottom: 12%; left: 18%; animation-delay: -4s; animation-duration: 7s; }
+.fp-float-icon:nth-child(13) { top: 8%; right: 22%;  animation-delay: -0.5s; animation-duration: 8s; }
+@keyframes iconFloat { 0% { transform: translateY(0px) rotate(-4deg); } 100% { transform: translateY(-20px) rotate(4deg); } }
 
-.fp-link-wrap{text-align:center;margin-top:1rem}
-.fp-link{color:var(--gold-400);text-decoration:none;font-size:13px;display:inline-flex;align-items:center;gap:5px;font-weight:500}
-.fp-link:hover{color:var(--gold-300);text-decoration:underline}
-
-.fp-error{display:block;font-size:12px;color:#ef4444;margin-top:4px;display:flex;align-items:center;gap:4px}
-
-.fp-footer-bar{
-    background:var(--surface-dark);border-top:1px solid var(--card-border);
-    padding:12px 1.75rem;text-align:center;font-size:12px;color:var(--text-dim);
-    display:flex;align-items:center;justify-content:center;gap:6px;
+.fp-wrapper {
+    position: relative; z-index: 1;
+    min-height: calc(100vh - 68px);
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; padding: 40px 16px;
 }
-.fp-footer-bar i{color:var(--gold-500);font-size:11px}
-.fp-footer-bar strong{color:var(--gold-400);font-weight:700}
 
-.fp-pulse-dot{width:8px;height:8px;background:var(--gold-500);border-radius:50%;display:inline-block;animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(1.4)}}
+.fp-brand-top {
+    display: flex; flex-direction: column; align-items: center; gap: 8px; margin-bottom: 28px;
+    animation: fadeDown 0.7s ease both;
+}
+@keyframes fadeDown { from { opacity: 0; transform: translateY(-24px); } to { opacity: 1; transform: translateY(0); } }
+.fp-logo-wrap { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.fp-logo-icon {
+    width: 54px; height: 54px; border-radius: 16px;
+    background: linear-gradient(135deg, var(--gold-500), var(--gold-600));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; color: var(--near-black);
+    box-shadow: var(--shadow-gold);
+    animation: logoPulse 3s ease-in-out infinite;
+}
+@keyframes logoPulse { 0%,100% { box-shadow: 0 8px 28px rgba(234,179,8,0.3); } 50% { box-shadow: 0 8px 40px rgba(234,179,8,0.5); } }
+.fp-logo-text { font-family: 'Syne', sans-serif; font-size: 30px; font-weight: 800; color: var(--text-primary); }
+.fp-logo-text span { color: var(--gold-500); }
+.fp-tagline { font-size: 12.5px; font-weight: 500; color: var(--text-dim); letter-spacing: 0.3px; display: flex; align-items: center; gap: 6px; }
+.fp-tagline i { color: var(--gold-500); font-size: 11px; }
 
-@media(max-width:520px){
-    .fp-body{padding:1.25rem}
-    .fp-header{padding:1.5rem 1.25rem 1.25rem}
+.fp-card {
+    width: 100%; max-width: 480px;
+    background: var(--card-dark);
+    border: 1px solid var(--card-border);
+    border-radius: 24px;
+    box-shadow: 0 16px 60px rgba(0,0,0,0.4);
+    overflow: hidden;
+    animation: fadeUp 0.8s cubic-bezier(.22,.68,0,1.2) 0.1s both;
+    transform-style: preserve-3d;
+    perspective: 800px;
+}
+@keyframes fadeUp { from { opacity: 0; transform: translateY(40px) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+.fp-card-strip {
+    background: linear-gradient(105deg, var(--gold-500) 0%, var(--gold-600) 60%, var(--gold-700) 100%);
+    padding: 22px 28px 20px;
+    position: relative; overflow: hidden;
+}
+.fp-card-strip::before {
+    content: ''; position: absolute;
+    top: -40px; right: -40px; width: 140px; height: 140px;
+    border-radius: 50%; background: rgba(0,0,0,0.08);
+}
+.fp-card-strip::after {
+    content: ''; position: absolute;
+    bottom: -50px; left: 30%; width: 180px; height: 180px;
+    border-radius: 50%; background: rgba(0,0,0,0.04);
+}
+.fp-strip-inner { position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; }
+.fp-strip-left h2 { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700; color: var(--near-black); margin-bottom: 3px; }
+.fp-strip-left p { font-size: 13px; color: rgba(0,0,0,0.6); }
+.fp-strip-badge {
+    display: flex; align-items: center; gap: 7px;
+    background: rgba(0,0,0,0.12);
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 30px; padding: 6px 14px;
+    font-size: 12px; color: rgba(0,0,0,0.8); font-weight: 500;
+    backdrop-filter: blur(4px);
+}
+.fp-strip-shine {
+    position: absolute; inset: 0;
+    background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.08) 50%, transparent 70%);
+    transform: translateX(-100%);
+    animation: stripShine 6s ease-in-out infinite;
+}
+@keyframes stripShine { 0%,100%{transform:translateX(-100%)} 50%{transform:translateX(100%)} }
+.fp-live-dot { width: 8px; height: 8px; background: #000; border-radius: 50%; box-shadow: 0 0 0 0 rgba(0,0,0,0.4); animation: livePing 1.5s ease-in-out infinite; }
+@keyframes livePing { 0%,100% { box-shadow: 0 0 0 0 rgba(0,0,0,0.4); } 50% { box-shadow: 0 0 0 6px rgba(0,0,0,0); } }
+
+.fp-card-body { padding: 28px 32px 24px; }
+
+.fp-section-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--gold-500);
+    margin-bottom: 20px; display: flex; align-items: center; gap: 8px;
+}
+.fp-section-label::after { content: ''; flex: 1; height: 1px; background: var(--card-border); }
+
+.fp-field { margin-bottom: 18px; }
+.fp-label { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 8px; }
+.fp-label i { color: var(--gold-500); font-size: 14px; }
+.fp-input-wrap { position: relative; }
+.fp-input {
+    width: 100%; height: 48px;
+    padding: 0 46px 0 16px;
+    border: 1.5px solid var(--card-border);
+    border-radius: 10px;
+    background: var(--surface-dark);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px; color: var(--text-primary);
+    outline: none; transition: all 0.25s;
+}
+.fp-input::placeholder { color: var(--text-dim); }
+.fp-input:focus { border-color: var(--gold-500); background: rgba(234,179,8,0.04); box-shadow: 0 0 0 4px rgba(234,179,8,0.08), 0 0 20px rgba(234,179,8,0.05); }
+.fp-input.is-invalid { border-color: #ef4444; box-shadow: 0 0 0 4px rgba(239,68,68,0.08); }
+.fp-input-focus-glow {
+    position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 0; height: 2px;
+    background: linear-gradient(90deg, var(--gold-500), var(--gold-400));
+    border-radius: 2px;
+    transition: width 0.3s;
+}
+.fp-input:focus ~ .fp-input-focus-glow { width: 80%; }
+.fp-input-icon { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: var(--text-dim); font-size: 16px; pointer-events: none; }
+.fp-toggle-btn {
+    position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+    background: none; border: none; cursor: pointer;
+    color: var(--text-dim); font-size: 16px;
+    display: flex; align-items: center; padding: 4px; border-radius: 6px;
+}
+.fp-toggle-btn:hover { color: var(--gold-500); }
+.invalid-feedback { display: flex; align-items: center; gap: 5px; font-size: 12px; color: #ef4444; margin-top: 6px; font-weight: 500; }
+
+.fp-terms-row {
+    display: flex; align-items: center; gap: 8px; margin-bottom: 22px;
+}
+.fp-terms-row input[type=checkbox] { width: 16px; height: 16px; accent-color: var(--gold-500); cursor: pointer; flex-shrink: 0; }
+.fp-terms-row label { font-size: 13px; color: var(--text-muted); cursor: pointer; }
+.fp-terms-row label a { color: var(--gold-500); text-decoration: underline; }
+
+.fp-submit-btn {
+    width: 100%; height: 50px; border: none;
+    border-radius: 10px;
+    background: linear-gradient(105deg, var(--gold-500), var(--gold-600));
+    color: var(--near-black);
+    font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700;
+    cursor: pointer; display: flex; align-items: center;
+    justify-content: center; gap: 10px;
+    box-shadow: 0 6px 24px rgba(234,179,8,0.3);
+    transition: all 0.2s; position: relative; overflow: hidden;
+    letter-spacing: 0.3px;
+}
+.fp-submit-btn::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(105deg, transparent 20%, rgba(255,255,255,0.15) 50%, transparent 80%);
+    transform: translateX(-100%); transition: transform 0.6s;
+}
+.fp-submit-btn:hover::before { transform: translateX(100%); }
+.fp-submit-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(234,179,8,0.4); }
+.fp-submit-btn:active { transform: translateY(0); }
+
+.btn-spinner { display: none; animation: spin 0.7s linear infinite; }
+.fp-submit-btn.loading .btn-main-icon { display: none; }
+.fp-submit-btn.loading .btn-spinner { display: inline-block; }
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+.fp-social-register {
+    display: flex; gap: 10px; margin-bottom: 20px;
+}
+.fp-social-btn {
+    flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 10px; border-radius: 10px;
+    background: var(--surface-dark); border: 1px solid var(--card-border);
+    color: var(--text-muted); font-size: 13px; font-weight: 600;
+    cursor: pointer; transition: all 0.2s; font-family: inherit;
+    text-decoration: none;
+}
+.fp-social-btn i { font-size: 18px; }
+.fp-social-btn:hover { border-color: rgba(234,179,8,0.2); background: rgba(234,179,8,0.04); }
+.fp-social-divider { display: flex; align-items: center; gap: 10px; font-size: 12px; color: var(--text-dim); margin: 20px 0; font-weight: 500; }
+.fp-social-divider::before, .fp-social-divider::after { content: ''; flex: 1; height: 1px; background: var(--card-border); }
+
+.fp-login-box {
+    background: rgba(234,179,8,0.04);
+    border: 1px solid rgba(234,179,8,0.15);
+    border-radius: 12px;
+    padding: 18px 20px; text-align: center; margin-bottom: 20px;
+}
+.fp-login-box p { font-size: 13px; color: var(--text-muted); margin-bottom: 12px; display: flex; align-items: center; justify-content: center; gap: 6px; }
+.fp-login-box p i { color: var(--gold-500); }
+.fp-login-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 11px 24px; border-radius: 10px;
+    background: linear-gradient(105deg, var(--gold-500), var(--gold-600));
+    color: var(--near-black);
+    font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700;
+    box-shadow: var(--shadow-gold); transition: all 0.18s;
+}
+.fp-login-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-gold-lg); color: var(--near-black); }
+
+.fp-trust-row { display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; }
+.fp-trust-item {
+    display: flex; align-items: center; gap: 5px;
+    font-size: 11.5px; font-weight: 500; color: var(--text-dim);
+    background: var(--surface-dark); border: 1px solid var(--card-border);
+    border-radius: 20px; padding: 5px 12px;
+}
+.fp-trust-item i { color: var(--gold-500); font-size: 12px; }
+
+.fp-card-footer {
+    padding: 14px 28px; background: var(--surface-dark);
+    border-top: 1px solid var(--card-border);
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;
+}
+.fp-footer-branding { display: flex; align-items: center; gap: 7px; font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; color: var(--gold-500); }
+.fp-footer-links { display: flex; gap: 16px; }
+.fp-footer-links a { font-size: 12px; color: var(--text-dim); transition: color 0.2s; }
+.fp-footer-links a:hover { color: var(--gold-400); }
+
+.fp-stats-row {
+    display: flex; gap: 32px; margin-top: 28px;
+    animation: fadeUp 0.9s cubic-bezier(.22,.68,0,1.2) 0.35s both;
+}
+.fp-stat { text-align: center; }
+.fp-stat-num { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800; color: var(--gold-500); line-height: 1; }
+.fp-stat-num span { color: var(--gold-400); font-size: 18px; }
+.fp-stat-label { font-size: 11px; color: var(--text-muted); font-weight: 500; margin-top: 3px; }
+.fp-location-tag { margin-top: 14px; display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-dim); animation: fadeUp 1s cubic-bezier(.22,.68,0,1.2) 0.45s both; }
+.fp-location-tag i { color: var(--gold-500); }
+
+.fp-pw-hint { font-size: 12px; color: var(--text-dim); margin-top: 4px; display: flex; align-items: center; gap: 4px; }
+
+@media (max-width: 520px) {
+    .fp-card-body { padding: 22px 20px 20px; }
+    .fp-card-footer { padding: 12px 20px; }
+    .fp-card-strip { padding: 18px 20px 16px; }
+    .fp-stats-row { gap: 20px; }
+    .fp-social-register { flex-direction: column; }
 }
 </style>
 
-<div class="fp-page">
-    <div class="fp-product-float f1"><i class="bi bi-phone"></i> iPhone 15 Pro</div>
-    <div class="fp-product-float f2"><i class="bi bi-laptop"></i> MacBook Air M3</div>
-    <div class="fp-product-float f3"><i class="bi bi-tv"></i> Samsung 65" TV</div>
-    <div class="fp-product-float f4"><i class="bi bi-headphones"></i> AirPods Pro</div>
-    <div class="fp-product-float f5"><i class="bi bi-watch"></i> Apple Watch</div>
-    <div class="fp-product-float f6"><i class="bi bi-speaker"></i> JBL Speaker</div>
+<canvas id="authParticles"></canvas>
 
-    <div class="fp-wrapper">
-        <div class="fp-card">
-            <div class="fp-header">
-                <div class="fp-edition">
-                    <span><i class="bi bi-geo-alt-fill"></i> Nigeria</span>
-                    <span style="display:flex;align-items:center;gap:5px"><span class="fp-pulse-dot"></span> Secure</span>
-                    <span>Est. 2025</span>
+<div class="fp-bg">
+    <div class="fp-grid"></div>
+    <div class="fp-blob fp-blob-1"></div>
+    <div class="fp-blob fp-blob-2"></div>
+    <div class="fp-blob fp-blob-3"></div>
+    <div class="fp-ring"></div>
+    <div class="fp-ring"></div>
+    <div class="fp-ring"></div>
+    <div class="fp-float-icon"><i class="bi bi-phone"></i></div>
+    <div class="fp-float-icon"><i class="bi bi-laptop"></i></div>
+    <div class="fp-float-icon"><i class="bi bi-tv"></i></div>
+    <div class="fp-float-icon"><i class="bi bi-headphones"></i></div>
+    <div class="fp-float-icon"><i class="bi bi-watch"></i></div>
+    <div class="fp-float-icon"><i class="bi bi-camera"></i></div>
+</div>
+
+<div class="fp-wrapper">
+    <div class="fp-brand-top">
+        <a href="{{ url('/') }}" class="fp-logo-wrap">
+            <div class="fp-logo-icon"><i class="bi bi-currency-exchange"></i></div>
+            <div class="fp-logo-text"><span>Flexi</span>Pay</div>
+        </a>
+        <div class="fp-tagline"><i class="bi bi-lightning-charge-fill"></i> Buy Now, Pay in Installments <i class="bi bi-lightning-charge-fill"></i></div>
+    </div>
+
+    <div class="fp-card" id="registerCard">
+        <div class="fp-card-strip">
+            <div class="fp-strip-shine"></div>
+            <div class="fp-strip-inner">
+                <div class="fp-strip-left">
+                    <h2>Get Started Free!</h2>
+                    <p>Join thousands shopping on installments</p>
                 </div>
-                <div class="fp-logo-wrap">
-                    <div class="fp-logo-icon"><i class="bi bi-currency-exchange"></i></div>
-                    <div class="fp-brand">Flexi<span>Pay</span></div>
+                <div class="fp-strip-badge">
+                    <div class="fp-live-dot"></div>
+                    Free Sign Up
                 </div>
-                <div class="fp-separator">
-                    <div class="fp-sep-line"></div>
-                    <div class="fp-sep-icons">
-                        <i class="bi bi-diamond-fill"></i>
-                        <i class="bi bi-hexagon-fill"></i>
-                        <i class="bi bi-diamond-fill"></i>
-                    </div>
-                    <div class="fp-sep-line"></div>
-                </div>
-                <div class="fp-plan-badges">
-                    <span class="fp-pb"><i class="bi bi-coin"></i> Weekly Plans</span>
-                    <span class="fp-pb"><i class="bi bi-calendar-check"></i> Monthly Plans</span>
-                    <span class="fp-pb"><i class="bi bi-shield-check"></i> Insured</span>
-                </div>
-                <div class="fp-tagline"><strong>Create Your Account</strong> — Start Shopping on Installments</div>
-            </div>
-
-            <div class="fp-body">
-                <div class="fp-section-title">
-                    <i class="bi bi-person-plus-fill"></i>
-                    Customer Registration
-                    <i class="bi bi-person-plus-fill"></i>
-                </div>
-
-                <form method="POST" action="{{ route('register') }}" autocomplete="off">
-                    @csrf
-
-                    <div class="fp-field">
-                        <label for="name" class="fp-label"><i class="bi bi-person"></i> Full Name</label>
-                        <div class="fp-input-wrap">
-                            <i class="bi bi-person-fill fp-input-icon"></i>
-                            <input id="name" type="text" class="fp-input @error('name') is-invalid @enderror"
-                                   name="name" value="{{ old('name') }}" placeholder="Enter your full name" required autofocus>
-                        </div>
-                        @error('name')<span class="fp-error"><i class="bi bi-exclamation-circle"></i> {{ $message }}</span>@enderror
-                    </div>
-
-                    <div class="fp-field">
-                        <label for="email" class="fp-label"><i class="bi bi-envelope"></i> Email Address</label>
-                        <div class="fp-input-wrap">
-                            <i class="bi bi-envelope-fill fp-input-icon"></i>
-                            <input id="email" type="email" class="fp-input @error('email') is-invalid @enderror"
-                                   name="email" value="{{ old('email') }}" placeholder="you@flexipay.store" required>
-                        </div>
-                        @error('email')<span class="fp-error"><i class="bi bi-exclamation-circle"></i> {{ $message }}</span>@enderror
-                    </div>
-
-                    <div class="fp-field">
-                        <label for="password" class="fp-label"><i class="bi bi-shield-lock"></i> Password</label>
-                        <div class="fp-input-wrap">
-                            <i class="bi bi-lock-fill fp-input-icon"></i>
-                            <input id="password" type="password" class="fp-input @error('password') is-invalid @enderror"
-                                   name="password" placeholder="••••••••" required>
-                            <button type="button" class="fp-toggle" onclick="togglePW('password',this)"><i class="bi bi-eye-slash"></i></button>
-                        </div>
-                        @error('password')<span class="fp-error"><i class="bi bi-exclamation-circle"></i> {{ $message }}</span>@enderror
-                    </div>
-
-                    <div class="fp-field">
-                        <label for="password-confirm" class="fp-label"><i class="bi bi-shield-check"></i> Confirm Password</label>
-                        <div class="fp-input-wrap">
-                            <i class="bi bi-lock-fill fp-input-icon"></i>
-                            <input id="password-confirm" type="password" class="fp-input" name="password_confirmation" placeholder="••••••••" required>
-                            <button type="button" class="fp-toggle" onclick="togglePW('password-confirm',this)"><i class="bi bi-eye-slash"></i></button>
-                        </div>
-                    </div>
-
-                    <div class="fp-divider">
-                        <div class="fp-div-line"></div>
-                        <div class="fp-div-text"><i class="bi bi-currency-exchange"></i> Flexible Payments</div>
-                        <div class="fp-div-line"></div>
-                    </div>
-
-                    <button type="submit" class="fp-btn">
-                        <i class="bi bi-person-plus-fill"></i> Create Account
-                    </button>
-
-                    <div class="fp-link-wrap">
-                        <a href="{{ route('login') }}" class="fp-link">
-                            <i class="bi bi-box-arrow-in-right"></i>
-                            Already have an account? Sign In
-                        </a>
-                    </div>
-                </form>
-            </div>
-
-            <div class="fp-footer-bar">
-                <i class="bi bi-geo-alt-fill"></i>
-                <strong>FlexiPay Store</strong>
-                <i class="bi bi-heart-fill" style="color:#ef4444;"></i>
-                Buy Now, Pay in Installments &middot; Nigeria
             </div>
         </div>
+
+        <div class="fp-card-body">
+            <div class="fp-section-label">Create Your Account</div>
+
+            <form method="POST" action="{{ route('register') }}" id="registerForm" autocomplete="off">
+                @csrf
+
+                <div class="fp-field">
+                    <label for="name" class="fp-label"><i class="bi bi-person-fill"></i> Full Name</label>
+                    <div class="fp-input-wrap">
+                        <input id="name" type="text" name="name" value="{{ old('name') }}"
+                               class="fp-input @error('name') is-invalid @enderror"
+                               placeholder="Enter your full name" required autofocus>
+                        <i class="bi bi-person fp-input-icon"></i>
+                        <div class="fp-input-focus-glow"></div>
+                    </div>
+                    @error('name')
+                        <div class="invalid-feedback"><i class="bi bi-exclamation-circle-fill"></i> <strong>{{ $message }}</strong></div>
+                    @enderror
+                </div>
+
+                <div class="fp-field">
+                    <label for="regEmail" class="fp-label"><i class="bi bi-envelope-fill"></i> Email Address</label>
+                    <div class="fp-input-wrap">
+                        <input id="regEmail" type="email" name="email" value="{{ old('email') }}"
+                               class="fp-input @error('email') is-invalid @enderror"
+                               placeholder="you@flexipay.store" required>
+                        <i class="bi bi-envelope fp-input-icon"></i>
+                        <div class="fp-input-focus-glow"></div>
+                    </div>
+                    @error('email')
+                        <div class="invalid-feedback"><i class="bi bi-exclamation-circle-fill"></i> <strong>{{ $message }}</strong></div>
+                    @enderror
+                </div>
+
+                <div class="fp-field">
+                    <label for="regPassword" class="fp-label"><i class="bi bi-shield-lock-fill"></i> Password</label>
+                    <div class="fp-input-wrap">
+                        <input id="regPassword" type="password" name="password"
+                               class="fp-input @error('password') is-invalid @enderror"
+                               placeholder="Create a strong password" required>
+                        <button type="button" class="fp-toggle-btn" id="togglePassword">
+                            <i class="bi bi-eye" id="toggleIcon"></i>
+                        </button>
+                        <div class="fp-input-focus-glow"></div>
+                    </div>
+                    <div class="fp-pw-hint"><i class="bi bi-info-circle-fill"></i> At least 8 characters</div>
+                    @error('password')
+                        <div class="invalid-feedback"><i class="bi bi-exclamation-circle-fill"></i> <strong>{{ $message }}</strong></div>
+                    @enderror
+                </div>
+
+                <div class="fp-field">
+                    <label for="password-confirm" class="fp-label"><i class="bi bi-shield-check"></i> Confirm Password</label>
+                    <div class="fp-input-wrap">
+                        <input id="password-confirm" type="password" name="password_confirmation"
+                               class="fp-input" placeholder="Re-enter password" required>
+                        <div class="fp-input-focus-glow"></div>
+                    </div>
+                </div>
+
+                <div class="fp-terms-row">
+                    <input type="checkbox" name="agree_terms" id="agreeTerms" value="1" required>
+                    <label for="agreeTerms">I agree to the <a href="{{ url('/terms') }}" target="_blank">Terms & Conditions</a> and <a href="{{ url('/terms/privacy') }}" target="_blank">Privacy Policy</a></label>
+                </div>
+
+                <button type="submit" class="fp-submit-btn" id="registerBtn">
+                    <i class="bi bi-person-plus-fill btn-main-icon"></i>
+                    <i class="bi bi-arrow-repeat btn-spinner"></i>
+                    Create Free Account
+                </button>
+            </form>
+
+            <div class="fp-social-divider">Sign up faster</div>
+
+            <div class="fp-social-register">
+                <a href="{{ url('/auth/google') }}" class="fp-social-btn" onclick="event.preventDefault()">
+                    <i class="bi bi-google"></i> Google
+                </a>
+                <a href="#" class="fp-social-btn" onclick="event.preventDefault()">
+                    <i class="bi bi-apple"></i> Apple
+                </a>
+            </div>
+
+            <div class="fp-login-box">
+                <p><i class="bi bi-box-arrow-in-right"></i> Already have an account?</p>
+                <a href="{{ route('login') }}" class="fp-login-btn">
+                    <i class="bi bi-shield-lock-fill"></i> Sign In
+                </a>
+            </div>
+
+            <div class="fp-trust-row">
+                <div class="fp-trust-item"><i class="bi bi-shield-fill-check"></i> Secured</div>
+                <div class="fp-trust-item"><i class="bi bi-patch-check-fill"></i> Verified</div>
+                <div class="fp-trust-item"><i class="bi bi-lock-fill"></i> Encrypted</div>
+            </div>
+        </div>
+
+        <div class="fp-card-footer">
+            <div class="fp-footer-branding"><i class="bi bi-currency-exchange"></i> FlexiPay &copy; {{ date('Y') }}</div>
+            <div class="fp-footer-links">
+                <a href="{{ url('/terms/privacy') }}">Privacy</a>
+                <a href="{{ url('/terms') }}">Terms</a>
+                <a href="{{ url('/contact') }}">Support</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="fp-stats-row">
+        <div class="fp-stat"><div class="fp-stat-num" data-count="5000">0<span>+</span></div><div class="fp-stat-label">Products</div></div>
+        <div class="fp-stat"><div class="fp-stat-num" data-count="15000">0<span>+</span></div><div class="fp-stat-label">Happy Customers</div></div>
+        <div class="fp-stat"><div class="fp-stat-num" data-count="36">0<span>+</span></div><div class="fp-stat-label">Payment Plans</div></div>
+    </div>
+
+    <div class="fp-location-tag">
+        <i class="bi bi-geo-alt-fill"></i> Serving all across Nigeria — Lagos, Abuja, Port Harcourt &amp; more
     </div>
 </div>
 
 <script>
-function togglePW(id, btn) {
-    const input = document.getElementById(id);
-    const isPw = input.type === 'password';
-    input.type = isPw ? 'text' : 'password';
-    btn.querySelector('i').className = isPw ? 'bi bi-eye' : 'bi bi-eye-slash';
-}
+document.getElementById('togglePassword')?.addEventListener('click', function() {
+    const input = document.getElementById('regPassword');
+    const icon = document.getElementById('toggleIcon');
+    const isText = input.type === 'text';
+    input.type = isText ? 'password' : 'text';
+    icon.className = isText ? 'bi bi-eye' : 'bi bi-eye-slash';
+});
+
+document.getElementById('registerForm')?.addEventListener('submit', function() {
+    const btn = document.getElementById('registerBtn');
+    btn.classList.add('loading');
+    btn.disabled = true;
+});
+
+const card = document.getElementById('registerCard');
+card?.addEventListener('mousemove', (e) => {
+    const rect = card.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    card.style.transform = `perspective(800px) rotateY(${x * 4}deg) rotateX(${-y * 4}deg)`;
+    card.style.transition = 'transform 0.1s';
+});
+card?.addEventListener('mouseleave', () => {
+    card.style.transform = 'perspective(800px) rotateY(0deg) rotateX(0deg)';
+    card.style.transition = 'transform 0.5s ease';
+});
+
+(function() {
+    const canvas = document.getElementById('authParticles');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let W, H;
+    function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+    resize();
+    window.addEventListener('resize', resize);
+    const particles = [];
+    for (let i = 0; i < 50; i++) {
+        particles.push({ x: Math.random() * W, y: Math.random() * H, size: Math.random() * 2 + 0.5, speedX: (Math.random() - 0.5) * 0.2, speedY: (Math.random() - 0.5) * 0.2, opacity: Math.random() * 0.4 + 0.1 });
+    }
+    function animate() {
+        ctx.clearRect(0, 0, W, H);
+        particles.forEach(p => {
+            p.x += p.speedX; p.y += p.speedY;
+            if (p.x < 0 || p.x > W) p.speedX *= -1;
+            if (p.y < 0 || p.y > H) p.speedY *= -1;
+            ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(234, 179, 8, ${p.opacity})`;
+            ctx.fill();
+        });
+        requestAnimationFrame(animate);
+    }
+    animate();
+})();
+
+const counterObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+        if (e.isIntersecting) {
+            const el = e.target;
+            const text = el.textContent;
+            const match = text.match(/^(\d+)/);
+            if (!match) return;
+            const target = parseInt(match[1]);
+            const suffix = text.replace(/^[\d,]+/, '');
+            const dur = 1500;
+            const step = target / (dur / 16);
+            let cur = 0;
+            const t = setInterval(() => {
+                cur += step;
+                if (cur >= target) { cur = target; clearInterval(t); }
+                el.innerHTML = Math.floor(cur).toLocaleString() + suffix;
+            }, 16);
+            counterObs.unobserve(el);
+        }
+    });
+}, { threshold: 0.3 });
+document.querySelectorAll('.fp-stat-num[data-count]').forEach(el => counterObs.observe(el));
 </script>
 @endsection
