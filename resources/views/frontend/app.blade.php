@@ -51,6 +51,8 @@
             color: var(--text-primary);
             overflow-x: hidden;
             line-height: 1.6;
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
         }
 
         body::before {
