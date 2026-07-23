@@ -140,7 +140,7 @@
 .fp-ce-card {
     background: var(--card-dark); border: 1px solid var(--card-border);
     border-radius: var(--radius); padding: 32px; text-align: center;
-    transition: all 0.3s;
+    transition: all 0.3s; contain: layout style;
 }
 .fp-ce-card:hover {
     border-color: rgba(234,179,8,0.2); transform: translateY(-4px);
