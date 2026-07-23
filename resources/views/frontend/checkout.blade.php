@@ -77,7 +77,7 @@
     padding: 16px; border: 2px solid var(--card-border);
     border-radius: var(--radius-sm); cursor: pointer;
     transition: all 0.3s; position: relative;
-    background: var(--surface-dark);
+    background: var(--surface-dark); touch-action: manipulation;
 }
 .fp-chk-radio-card:hover {
     border-color: rgba(234,179,8,0.3);
