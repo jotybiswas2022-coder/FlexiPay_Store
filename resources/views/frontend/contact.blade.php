@@ -203,10 +203,10 @@
                     </div>
 
                     <div class="fp-ci-social">
-                        <a href="#" class="s-fb"><i class="bi bi-facebook"></i></a>
-                        <a href="#" class="s-tw"><i class="bi bi-twitter-x"></i></a>
-                        <a href="#" class="s-ig"><i class="bi bi-instagram"></i></a>
-                        <a href="#" class="s-wa"><i class="bi bi-whatsapp"></i></a>
+                        <a href="#" class="s-fb" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="s-tw" aria-label="X (Twitter)"><i class="bi bi-twitter-x"></i></a>
+                        <a href="#" class="s-ig" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="s-wa" aria-label="WhatsApp"><i class="bi bi-whatsapp"></i></a>
                     </div>
                 </div>
             </div>
