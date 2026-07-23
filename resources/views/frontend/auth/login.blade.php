@@ -239,7 +239,7 @@
     background: var(--surface-dark); border: 1px solid var(--card-border);
     color: var(--text-muted); font-size: 13px; font-weight: 600;
     cursor: pointer; transition: all 0.2s; font-family: inherit;
-    text-decoration: none; touch-action: manipulation;
+    text-decoration: none; touch-action: manipulation; contain: layout style;
 }
 .fp-social-btn i { font-size: 18px; }
 .fp-social-btn:hover { border-color: rgba(234,179,8,0.2); background: rgba(234,179,8,0.04); }
@@ -253,6 +253,7 @@
     border: 1px solid rgba(234,179,8,0.15);
     border-radius: 12px;
     padding: 18px 20px; text-align: center; margin-bottom: 20px;
+    contain: layout style;
 }
 .fp-register-box p { font-size: 13px; color: var(--text-muted); margin-bottom: 12px; display: flex; align-items: center; justify-content: center; gap: 6px; }
 .fp-register-box p i { color: var(--gold-500); }
