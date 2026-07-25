@@ -21,6 +21,7 @@ Route::prefix('admin')->middleware('admin')->group(function () {
 
     // ===== DASHBOARD =====
     Route::get('/', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+    Route::get('/refresh', [AdminDashboardController::class, 'refreshData'])->name('admin.dashboard.refresh');
 
     // ===== PRODUCTS =====
     Route::prefix('products')->controller(AdminProductController::class)->group(function () {

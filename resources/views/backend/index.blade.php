@@ -275,6 +275,16 @@
     color: var(--text-dim); font-size: 13px;
 }
 .db-empty-state i { font-size: 28px; color: var(--card-border); margin-bottom: 8px; display: block; }
+
+/* Refresh indicator */
+.db-welcome.db-refreshing {
+    opacity: 0.6;
+    transition: opacity 0.3s;
+}
+.db-welcome.db-refreshing .db-welcome-icon {
+    animation: spin 0.8s linear infinite;
+}
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 </style>
 
 <!-- WELCOME STRIP -->
@@ -500,6 +510,10 @@ Chart.defaults.color = '#A1A1AA';
 Chart.defaults.borderColor = 'rgba(42,42,46,0.5)';
 Chart.defaults.font.family = "'Space Grotesk', sans-serif";
 
+// Store chart instances for updating
+let sparklineRevenueChart, sparklineOrdersChart, sparklineUsersChart, sparklineProductsChart;
+let revenueChart, statusChart;
+
 // Helper: gradient fill
 function createGradient(ctx, color1, color2) {
     const g = ctx.createLinearGradient(0, 0, 0, 200);
@@ -511,8 +525,8 @@ function createGradient(ctx, color1, color2) {
 // Helper: sparkline on a canvas
 function makeSparkline(id, data, color) {
     const el = document.getElementById(id);
-    if (!el) return;
-    new Chart(el, {
+    if (!el) return null;
+    return new Chart(el, {
         type: 'line',
         data: {
             labels: ['','','','','','','','','','','',''],
@@ -529,10 +543,132 @@ function makeSparkline(id, data, color) {
         options: {
             responsive: true,
             maintainAspectRatio: false,
+            animation: { duration: 400 },
             plugins: { legend: { display: false }, tooltip: { enabled: false } },
             scales: { x: { display: false }, y: { display: false, beginAtZero: true } }
         }
     });
+}
+
+// Helper: animate a stat value
+function animateStat(el, newValue) {
+    const txt = el.textContent;
+    const m = txt.match(/[\d,]+/);
+    if (!m) { el.textContent = newValue; return; }
+    const current = parseInt(m[0].replace(/,/g, ''));
+    const target = parseInt(newValue.replace(/[^\d]/g, ''));
+    if (isNaN(target) || current === target) { el.textContent = newValue; return; }
+    const prefix = newValue.startsWith('\u20A6') ? '\u20A6' : '';
+    const steps = 30;
+    const inc = (target - current) / steps;
+    let cur = current;
+    clearInterval(el._counterInterval);
+    el._counterInterval = setInterval(() => {
+        cur += inc;
+        if ((inc > 0 && cur >= target) || (inc < 0 && cur <= target)) {
+            cur = target;
+            clearInterval(el._counterInterval);
+        }
+        el.textContent = prefix + Math.floor(cur).toLocaleString();
+    }, 30);
+}
+
+// Helper: update doughnut chart
+function updateDoughnutChart(chart, statusData) {
+    const labels = Object.keys(statusData).map(s => s.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()));
+    const values = Object.values(statusData);
+    const colors = ['#4ADE80', '#60A5FA', '#EAB308', '#EF4444', '#C084FC', '#F472B6'];
+
+    if (values.length === 0) {
+        chart.canvas.parentElement.innerHTML = '<div class="db-empty-state"><i class="bi bi-inbox"></i> No orders yet</div>';
+        return;
+    }
+
+    // Restore canvas if it was replaced by empty state
+    if (!chart.canvas || !document.contains(chart.canvas)) {
+        location.reload();
+        return;
+    }
+
+    chart.data.labels = labels;
+    chart.data.datasets[0].data = values;
+    chart.data.datasets[0].backgroundColor = colors.slice(0, labels.length);
+    chart.update();
+}
+
+// Helper: escape HTML to prevent XSS
+function esc(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+}
+
+// Helper: fetch and update dashboard data
+function refreshDashboard() {
+    // Show subtle refresh indicator
+    const welcome = document.querySelector('.db-welcome');
+    welcome && welcome.classList.add('db-refreshing');
+
+    fetch('{{ route('admin.dashboard.refresh') }}')
+        .then(r => r.json())
+        .then(d => {
+            welcome && welcome.classList.remove('db-refreshing');
+
+            // Stats
+            animateStat(document.querySelector('.db-stat-card:nth-child(1) .db-stat-value'), '₦' + Number(d.totalRevenue).toLocaleString());
+            animateStat(document.querySelector('.db-stat-card:nth-child(2) .db-stat-value'), Number(d.totalOrders).toLocaleString());
+            animateStat(document.querySelector('.db-stat-card:nth-child(3) .db-stat-value'), Number(d.totalUsers).toLocaleString());
+            animateStat(document.querySelector('.db-stat-card:nth-child(4) .db-stat-value'), Number(d.totalProducts).toLocaleString());
+
+            // Pending requests
+            document.querySelectorAll('.db-req-card')[0]?.querySelector('.req-count') && (document.querySelectorAll('.db-req-card')[0].querySelector('.req-count').textContent = d.pendingPlanChanges);
+            document.querySelectorAll('.db-req-card')[1]?.querySelector('.req-count') && (document.querySelectorAll('.db-req-card')[1].querySelector('.req-count').textContent = d.pendingProductRequests);
+            document.querySelectorAll('.db-req-card')[2]?.querySelector('.req-count') && (document.querySelectorAll('.db-req-card')[2].querySelector('.req-count').textContent = d.pendingExchanges);
+
+            // Sparklines
+            sparklineRevenueChart && (sparklineRevenueChart.data.datasets[0].data = d.revenueByMonth, sparklineRevenueChart.update());
+            sparklineOrdersChart && (sparklineOrdersChart.data.datasets[0].data = d.ordersByMonth, sparklineOrdersChart.update());
+            sparklineUsersChart && (sparklineUsersChart.data.datasets[0].data = d.usersByMonth, sparklineUsersChart.update());
+            // Products sparkline: regenerate random data since no real data source
+            const randData = Array.from({length:12}, () => Math.floor(Math.random() * 20) + 5);
+            sparklineProductsChart && (sparklineProductsChart.data.datasets[0].data = randData, sparklineProductsChart.update());
+
+            // Revenue bar chart
+            if (revenueChart) {
+                revenueChart.data.datasets[0].data = d.revenueByMonth;
+                revenueChart.update();
+            }
+
+            // Status doughnut
+            if (statusChart) {
+                updateDoughnutChart(statusChart, d.ordersByStatus || {});
+            }
+
+            // Recent orders table (XSS-safe: use esc() for user data)
+            const ordersTbody = document.querySelector('.db-section:has(.bi-clock-history) .db-table tbody');
+            if (ordersTbody && d.recentOrders.length > 0) {
+                const statusMap = {completed:'success',processing:'info',pending:'warning',cancelled:'danger',partial_paid:'info',fully_paid:'success'};
+                const avColors = ['av-gold','av-blue','av-green','av-purple','av-pink','av-orange'];
+                ordersTbody.innerHTML = d.recentOrders.map(o => {
+                    const avC = avColors[(o.customer || '').charCodeAt(0) % 6];
+                    const bc = statusMap[o.status] || 'neutral';
+                    return `<tr><td><span class="order-id">#${esc(o.id)}</span></td><td><div class="user-cell"><div class="user-avatar ${avC}">${esc(o.avatar)}</div><span class="user-name">${esc(o.customer)}</span></div></td><td><span class="amount-cell">${o.amount}</span></td><td><span class="db-badge db-badge-${bc}"><i class="bi bi-circle-fill"></i> ${esc(o.status_label)}</span></td><td class="time-cell">${esc(o.date)}</td></tr>`;
+                }).join('');
+            }
+
+            // Recent users list (XSS-safe)
+            const usersList = document.querySelector('.db-section:has(.bi-person-plus-fill) .db-user-list');
+            if (usersList && d.recentUsers.length > 0) {
+                const avColors = ['av-gold','av-blue','av-green','av-purple','av-pink','av-orange'];
+                usersList.innerHTML = d.recentUsers.map(u => {
+                    const avC = avColors[(u.name || '').charCodeAt(0) % 6];
+                    return `<div class="db-user-item"><div class="ui-avatar ${avC}">${esc(u.avatar)}</div><div class="ui-info"><div class="ui-name">${esc(u.name)}</div><div class="ui-email">${esc(u.email)}</div></div><div class="ui-time">${esc(u.time)}</div></div>`;
+                }).join('');
+            }
+        })
+        .catch(() => {
+            welcome && welcome.classList.remove('db-refreshing');
+        });
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -572,16 +708,16 @@ document.addEventListener('DOMContentLoaded', function() {
         $sparkPrdJson = json_encode($sparkPrd);
     @endphp
 
-    makeSparkline('sparklineRevenue', {{ $sparkRev }}, '#EAB308');
-    makeSparkline('sparklineOrders', {{ $sparkOrd }}, '#60A5FA');
-    makeSparkline('sparklineUsers', {{ $sparkUsr }}, '#4ADE80');
-    makeSparkline('sparklineProducts', {{ $sparkPrdJson }}, '#C084FC');
+    sparklineRevenueChart = makeSparkline('sparklineRevenue', {{ $sparkRev }}, '#EAB308');
+    sparklineOrdersChart = makeSparkline('sparklineOrders', {{ $sparkOrd }}, '#60A5FA');
+    sparklineUsersChart = makeSparkline('sparklineUsers', {{ $sparkUsr }}, '#4ADE80');
+    sparklineProductsChart = makeSparkline('sparklineProducts', {{ $sparkPrdJson }}, '#C084FC');
 
     // ---- Revenue Bar Chart ----
     const revCtx = document.getElementById('revenueChart')?.getContext('2d');
     if (revCtx) {
         const revGrad = createGradient(revCtx, 'rgba(234,179,8,0.6)', 'rgba(234,179,8,0.05)');
-        new Chart(revCtx, {
+        revenueChart = new Chart(revCtx, {
             type: 'bar',
             data: {
                 labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
@@ -598,6 +734,7 @@ document.addEventListener('DOMContentLoaded', function() {
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
+                animation: { duration: 400 },
                 plugins: {
                     legend: { display: false },
                     tooltip: {
@@ -641,7 +778,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (values.length === 0) {
             stCtx.canvas.parentElement.innerHTML = '<div class="db-empty-state"><i class="bi bi-inbox"></i> No orders yet</div>';
         } else {
-        new Chart(stCtx, {
+        statusChart = new Chart(stCtx, {
             type: 'doughnut',
             data: {
                 labels: labels,
@@ -657,6 +794,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 responsive: true,
                 maintainAspectRatio: false,
                 cutout: '70%',
+                animation: { duration: 400 },
                 plugins: {
                     legend: {
                         position: 'bottom',
@@ -684,6 +822,13 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         }
     }
+
+    // ---- Auto-refresh every 30 seconds ----
+    // Wait 5 seconds before first refresh, then every 30s
+    setTimeout(() => {
+        refreshDashboard();
+        setInterval(refreshDashboard, 30000);
+    }, 5000);
 
 });
 </script>
