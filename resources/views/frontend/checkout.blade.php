@@ -314,7 +314,7 @@
         </div>
         @endif
 
-        <form action="{{ route('checkout.process') }}" method="POST" id="checkoutForm">
+        <form action="{{ route('checkout.process') }}" method="POST" id="checkoutForm" novalidate>
             @csrf
             <div class="row g-4">
                 <div class="col-lg-7">
@@ -350,14 +350,15 @@
                     <div class="fp-chk-card reveal-left" style="transition-delay:0.2s;">
                         <h5 class="fp-chk-card-title"><i class="bi bi-coin"></i> Payment Method</h5>
                         <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;">
-                            <div class="fp-chk-pm-card {{ old('payment_type') == 'full' ? 'active' : '' }}" onclick="selectPM(this, 'full')">
-                                <input type="radio" name="payment_type" value="full" {{ old('payment_type') == 'full' ? 'checked' : '' }} required>
+                            @php $pmType = old('payment_type', 'full'); @endphp
+                            <div class="fp-chk-pm-card {{ $pmType == 'full' ? 'active' : '' }}" onclick="selectPM(this, 'full')">
+                                <input type="radio" name="payment_type" value="full" {{ $pmType == 'full' ? 'checked' : '' }} required>
                                 <i class="bi bi-cash-stack"></i>
                                 <strong>Pay in Full</strong>
                                 <small>One-time payment</small>
                             </div>
-                            <div class="fp-chk-pm-card {{ old('payment_type') == 'installment' ? 'active' : '' }}" onclick="selectPM(this, 'installment')">
-                                <input type="radio" name="payment_type" value="installment" {{ old('payment_type') == 'installment' ? 'checked' : '' }} required>
+                            <div class="fp-chk-pm-card {{ $pmType == 'installment' ? 'active' : '' }}" onclick="selectPM(this, 'installment')">
+                                <input type="radio" name="payment_type" value="installment" {{ $pmType == 'installment' ? 'checked' : '' }} required>
                                 <i class="bi bi-calendar-check"></i>
                                 <strong>Pay in Installments</strong>
                                 <small>Flexible plans</small>
@@ -365,7 +366,7 @@
                         </div>
                         @error('payment_type')<small class="fp-chk-field-error">{{ $message }}</small>@enderror
 
-                        <div id="planSelect" style="display:{{ old('payment_type') == 'installment' ? 'block' : 'none' }};">
+                        <div id="planSelect" style="display:{{ $pmType == 'installment' ? 'block' : 'none' }};">
                             <label style="display:block;font-size:12px;color:var(--text-dim);margin-bottom:8px;font-weight:600;">Select Installment Plan</label>
                             <select name="installment_plan_id" class="fp-chk-select">
                                 <option value="">Choose a plan</option>
@@ -395,27 +396,28 @@
 
                     <div class="fp-chk-card reveal-left" style="transition-delay:0.4s;">
                         <h5 class="fp-chk-card-title"><i class="bi bi-credit-card-2-front"></i> Pay Using</h5>
+                        @php $pmMethod = old('payment_method', 'paystack'); @endphp
                         <div style="display:flex;gap:12px;flex-wrap:wrap;">
-                            <div class="fp-chk-pm-card {{ old('payment_method') == 'wallet' ? 'active' : '' }}" onclick="selectGW(this, 'wallet')" style="flex:1;min-width:120px;">
-                                <input type="radio" name="payment_method" value="wallet" {{ old('payment_method') == 'wallet' ? 'checked' : '' }} required>
+                            <div class="fp-chk-pm-card {{ $pmMethod == 'wallet' ? 'active' : '' }}" onclick="selectGW(this, 'wallet')" style="flex:1;min-width:120px;">
+                                <input type="radio" name="payment_method" value="wallet" {{ $pmMethod == 'wallet' ? 'checked' : '' }} required>
                                 <i class="bi bi-wallet2"></i>
                                 <strong>Wallet</strong>
                                 <small>₦{{ number_format($wallet->balance ?? 0, 0) }}</small>
                             </div>
-                            <div class="fp-chk-pm-card {{ old('payment_method') == 'paystack' ? 'active' : '' }}" onclick="selectGW(this, 'paystack')" style="flex:1;min-width:120px;">
-                                <input type="radio" name="payment_method" value="paystack" {{ old('payment_method') == 'paystack' ? 'checked' : '' }} required>
+                            <div class="fp-chk-pm-card {{ $pmMethod == 'paystack' ? 'active' : '' }}" onclick="selectGW(this, 'paystack')" style="flex:1;min-width:120px;">
+                                <input type="radio" name="payment_method" value="paystack" {{ $pmMethod == 'paystack' ? 'checked' : '' }} required>
                                 <i class="bi bi-credit-card-fill"></i>
                                 <strong>Paystack</strong>
                                 <small>Card, Bank, USSD</small>
                             </div>
-                            <div class="fp-chk-pm-card {{ old('payment_method') == 'flutterwave' ? 'active' : '' }}" onclick="selectGW(this, 'flutterwave')" style="flex:1;min-width:120px;">
-                                <input type="radio" name="payment_method" value="flutterwave" {{ old('payment_method') == 'flutterwave' ? 'checked' : '' }} required>
+                            <div class="fp-chk-pm-card {{ $pmMethod == 'flutterwave' ? 'active' : '' }}" onclick="selectGW(this, 'flutterwave')" style="flex:1;min-width:120px;">
+                                <input type="radio" name="payment_method" value="flutterwave" {{ $pmMethod == 'flutterwave' ? 'checked' : '' }} required>
                                 <i class="bi bi-globe"></i>
                                 <strong>Flutterwave</strong>
                                 <small>Card, Bank, Mobile Money</small>
                             </div>
-                            <div class="fp-chk-pm-card {{ old('payment_method') == 'korapay' ? 'active' : '' }}" onclick="selectGW(this, 'korapay')" style="flex:1;min-width:120px;">
-                                <input type="radio" name="payment_method" value="korapay" {{ old('payment_method') == 'korapay' ? 'checked' : '' }} required>
+                            <div class="fp-chk-pm-card {{ $pmMethod == 'korapay' ? 'active' : '' }}" onclick="selectGW(this, 'korapay')" style="flex:1;min-width:120px;">
+                                <input type="radio" name="payment_method" value="korapay" {{ $pmMethod == 'korapay' ? 'checked' : '' }} required>
                                 <i class="bi bi-shield-fill-check"></i>
                                 <strong>Korapay</strong>
                                 <small>Card, Bank Transfer, USSD</small>
@@ -531,6 +533,7 @@ function selectGW(el, value) {
 
 document.getElementById('checkoutForm')?.addEventListener('submit', function(e) {
     const btn = document.getElementById('placeOrderBtn');
+    if (btn.disabled) { e.preventDefault(); return; }
     btn.disabled = true;
     btn.innerHTML = '<span class="spinner-border spinner-border-sm" style="width:16px;height:16px;"></span> Processing...';
 });
