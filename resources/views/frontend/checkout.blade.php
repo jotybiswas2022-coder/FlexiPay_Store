@@ -497,6 +497,7 @@
 </section>
 
 @include('frontend.partials.footer')
+@endsection
 
 @push('scripts')
 <script>
@@ -539,4 +540,3 @@ document.getElementById('checkoutForm')?.addEventListener('submit', function(e) 
 });
 </script>
 @endpush
-@endsection
