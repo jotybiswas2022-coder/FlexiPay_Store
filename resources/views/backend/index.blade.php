@@ -2,6 +2,18 @@
 @section('title', 'Dashboard — FlexiPay Admin')
 @section('page_title', 'Dashboard')
 
+@push('styles')
+<style>
+.chart-container { position: relative; height: 220px; width: 100%; min-width: 0; }
+.chart-container-sm { position: relative; height: 50px; width: 100%; margin-top: 4px; }
+.chart-legend { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 12px; }
+.chart-legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text-muted); }
+.chart-legend-dot { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
+.chart-section { grid-template-columns: 2fr 1fr; }
+@media (max-width: 992px) { .chart-section { grid-template-columns: 1fr; } }
+</style>
+@endpush
+
 @section('content')
 <style>
 /* ===== DASHBOARD SPECIFIC STYLES ===== */
@@ -61,18 +73,6 @@
     line-height: 1.2; position: relative; z-index: 1;
 }
 .db-stat-label { font-size: 12px; color: var(--text-dim); margin-top: 2px; position: relative; z-index: 1; }
-
-/* Mini Sparkline Bar */
-.db-sparkline { display: flex; align-items: flex-end; gap: 2px; height: 28px; margin-top: 10px; position: relative; z-index: 1; }
-.db-sparkline .bar {
-    flex: 1; border-radius: 2px 2px 0 0; min-height: 3px;
-    animation: barRise 0.8s ease both;
-}
-@keyframes barRise { from { height: 0% !important; } }
-.db-sparkline .bar.gold { background: linear-gradient(to top, rgba(234,179,8,0.3), rgba(234,179,8,0.7)); }
-.db-sparkline .bar.blue { background: linear-gradient(to top, rgba(59,130,246,0.3), rgba(59,130,246,0.7)); }
-.db-sparkline .bar.green { background: linear-gradient(to top, rgba(34,197,94,0.3), rgba(34,197,94,0.7)); }
-.db-sparkline .bar.purple { background: linear-gradient(to top, rgba(168,85,247,0.3), rgba(168,85,247,0.7)); }
 
 /* Two-column layout */
 .db-two-col { grid-template-columns: 2fr 1fr; }
@@ -293,14 +293,6 @@
 
 <!-- STATS ROW -->
 <div class="db-grid db-stats">
-    @php
-        $sparkGen = function($max = 80) { return array_map(fn() => rand(15, $max), range(1, 12)); };
-        $revSpark = $sparkGen(100);
-        $ordSpark = $sparkGen(70);
-        $usrSpark = $sparkGen(60);
-        $prdSpark = $sparkGen(50);
-    @endphp
-
     <div class="db-stat-card anim-fade-up anim-delay-1">
         <div class="stat-glow glow-gold"></div>
         <div class="db-stat-top">
@@ -309,7 +301,7 @@
         </div>
         <div class="db-stat-value">₦{{ number_format($totalRevenue ?? 0, 0) }}</div>
         <div class="db-stat-label">Total Revenue</div>
-        <div class="db-sparkline">@foreach($revSpark as $v)<div class="bar gold" style="height:{{$v}}%;"></div>@endforeach</div>
+        <div class="chart-container-sm"><canvas id="sparklineRevenue"></canvas></div>
     </div>
 
     <div class="db-stat-card anim-fade-up anim-delay-2">
@@ -320,7 +312,7 @@
         </div>
         <div class="db-stat-value">{{ number_format($totalOrders ?? 0) }}</div>
         <div class="db-stat-label">Total Orders</div>
-        <div class="db-sparkline">@foreach($ordSpark as $v)<div class="bar blue" style="height:{{$v}}%;"></div>@endforeach</div>
+        <div class="chart-container-sm"><canvas id="sparklineOrders"></canvas></div>
     </div>
 
     <div class="db-stat-card anim-fade-up anim-delay-3">
@@ -331,7 +323,7 @@
         </div>
         <div class="db-stat-value">{{ number_format($totalUsers ?? 0) }}</div>
         <div class="db-stat-label">Registered Customers</div>
-        <div class="db-sparkline">@foreach($usrSpark as $v)<div class="bar green" style="height:{{$v}}%;"></div>@endforeach</div>
+        <div class="chart-container-sm"><canvas id="sparklineUsers"></canvas></div>
     </div>
 
     <div class="db-stat-card anim-fade-up anim-delay-4">
@@ -342,7 +334,7 @@
         </div>
         <div class="db-stat-value">{{ number_format($totalProducts ?? 0) }}</div>
         <div class="db-stat-label">Products Listed</div>
-        <div class="db-sparkline">@foreach($prdSpark as $v)<div class="bar purple" style="height:{{$v}}%;"></div>@endforeach</div>
+        <div class="chart-container-sm"><canvas id="sparklineProducts"></canvas></div>
     </div>
 </div>
 
@@ -372,6 +364,34 @@
             <div class="req-link">Review <i class="bi bi-chevron-right"></i></div>
         </div>
     </a>
+</div>
+
+<!-- ===== CHARTS SECTION ===== -->
+<div class="db-grid chart-section anim-fade-up anim-delay-5" style="margin-top: 18px;">
+
+    <!-- Revenue Bar Chart -->
+    <div class="db-section">
+        <div class="db-section-head">
+            <h5><i class="bi bi-graph-up"></i> Revenue {{ now()->year }}</h5>
+            <a href="{{ route('admin.analytics') }}" class="fp-btn fp-btn-ghost" style="padding:5px 12px;font-size:11px;">
+                Full Analytics <i class="bi bi-arrow-right"></i>
+            </a>
+        </div>
+        <div class="db-section-body" style="padding:16px 20px;">
+            <div class="chart-container"><canvas id="revenueChart"></canvas></div>
+        </div>
+    </div>
+
+    <!-- Order Status Doughnut -->
+    <div class="db-section">
+        <div class="db-section-head">
+            <h5><i class="bi bi-pie-chart-fill"></i> Orders by Status</h5>
+        </div>
+        <div class="db-section-body" style="padding:16px 20px;">
+            <div class="chart-container"><canvas id="statusChart"></canvas></div>
+        </div>
+    </div>
+
 </div>
 
 <!-- TWO-COLUMN: Recent Orders + Recent Users -->
@@ -472,11 +492,54 @@
     </div>
 </div>
 
-<!-- COUNTER ANIMATION -->
+<!-- ===== CHART.JS ===== -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 <script>
+// Global Chart.js dark theme defaults
+Chart.defaults.color = '#A1A1AA';
+Chart.defaults.borderColor = 'rgba(42,42,46,0.5)';
+Chart.defaults.font.family = "'Space Grotesk', sans-serif";
+
+// Helper: gradient fill
+function createGradient(ctx, color1, color2) {
+    const g = ctx.createLinearGradient(0, 0, 0, 200);
+    g.addColorStop(0, color1);
+    g.addColorStop(1, color2);
+    return g;
+}
+
+// Helper: sparkline on a canvas
+function makeSparkline(id, data, color) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    new Chart(el, {
+        type: 'line',
+        data: {
+            labels: ['','','','','','','','','','','',''],
+            datasets: [{
+                data: data,
+                borderColor: color,
+                backgroundColor: color + '33',
+                borderWidth: 1.5,
+                pointRadius: 0,
+                tension: 0.4,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false }, tooltip: { enabled: false } },
+            scales: { x: { display: false }, y: { display: false, beginAtZero: true } }
+        }
+    });
+}
+
 document.addEventListener('DOMContentLoaded', function() {
-    const els = document.querySelectorAll('.db-stat-value');
-    els.forEach(el => {
+
+    // ---- Stat Value Counter Animation ----
+    const statEls = document.querySelectorAll('.db-stat-value');
+    statEls.forEach(el => {
         const txt = el.textContent;
         const m = txt.match(/[\d,]+/);
         if (!m) return;
@@ -499,6 +562,129 @@ document.addEventListener('DOMContentLoaded', function() {
         }, { threshold: 0.3 });
         obs.observe(el);
     });
+
+    // ---- Mini Sparklines ----
+    @php
+        $sparkRev = json_encode($revenueByMonth ?? []);
+        $sparkOrd = json_encode($ordersByMonth ?? []);
+        $sparkUsr = json_encode($usersByMonth ?? []);
+        $sparkPrd = array_map(fn() => rand(5, 20), range(1,12));
+        $sparkPrdJson = json_encode($sparkPrd);
+    @endphp
+
+    makeSparkline('sparklineRevenue', {{ $sparkRev }}, '#EAB308');
+    makeSparkline('sparklineOrders', {{ $sparkOrd }}, '#60A5FA');
+    makeSparkline('sparklineUsers', {{ $sparkUsr }}, '#4ADE80');
+    makeSparkline('sparklineProducts', {{ $sparkPrdJson }}, '#C084FC');
+
+    // ---- Revenue Bar Chart ----
+    const revCtx = document.getElementById('revenueChart')?.getContext('2d');
+    if (revCtx) {
+        const revGrad = createGradient(revCtx, 'rgba(234,179,8,0.6)', 'rgba(234,179,8,0.05)');
+        new Chart(revCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+                datasets: [{
+                    label: 'Revenue',
+                    data: {{ json_encode($revenueByMonth ?? []) }},
+                    backgroundColor: revGrad,
+                    borderColor: '#EAB308',
+                    borderWidth: 1,
+                    borderRadius: 4,
+                    borderSkipped: false,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: '#1A1A1E',
+                        titleColor: '#F4F4F5',
+                        bodyColor: '#EAB308',
+                        borderColor: '#2A2A2E',
+                        borderWidth: 1,
+                        padding: 10,
+                        callbacks: {
+                            label: ctx => '₦' + ctx.parsed.y.toLocaleString()
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#71717A', font: { size: 10 } }
+                    },
+                    y: {
+                        grid: { color: 'rgba(42,42,46,0.3)' },
+                        ticks: {
+                            color: '#71717A',
+                            font: { size: 10 },
+                            callback: val => '₦' + (val / 1000).toFixed(0) + 'k'
+                        },
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+
+    // ---- Order Status Doughnut ----
+    const stCtx = document.getElementById('statusChart')?.getContext('2d');
+    if (stCtx) {
+        const statusData = @json($ordersByStatus ?? []);
+        const labels = Object.keys(statusData).map(s => s.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()));
+        const values = Object.values(statusData);
+        const colors = ['#4ADE80', '#60A5FA', '#EAB308', '#EF4444', '#C084FC', '#F472B6'];
+        if (values.length === 0) {
+            stCtx.canvas.parentElement.innerHTML = '<div class="db-empty-state"><i class="bi bi-inbox"></i> No orders yet</div>';
+        } else {
+        new Chart(stCtx, {
+            type: 'doughnut',
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: values,
+                    backgroundColor: colors.slice(0, labels.length),
+                    borderColor: '#121214',
+                    borderWidth: 2,
+                    hoverOffset: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '70%',
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            color: '#A1A1AA',
+                            font: { size: 10, family: "'Space Grotesk', sans-serif" },
+                            padding: 12,
+                            usePointStyle: true,
+                            pointStyle: 'circle'
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: '#1A1A1E',
+                        titleColor: '#F4F4F5',
+                        bodyColor: '#A1A1AA',
+                        borderColor: '#2A2A2E',
+                        borderWidth: 1,
+                        padding: 10,
+                        callbacks: {
+                            label: ctx => ctx.parsed + ' orders'
+                        }
+                    }
+                }
+            }
+        });
+        }
+    }
+
 });
 </script>
 @endsection
