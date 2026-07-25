@@ -1,7 +1,7 @@
 @extends('frontend.app')
 @section('title', 'Checkout — FlexiPay Store')
 
-@push('styles')
+@section('content')
 <style>
 .fp-chk-hero {
     position: relative; padding: 40px 0 60px; overflow: hidden;
@@ -274,9 +274,6 @@
     .fp-chk-trust { grid-template-columns: 1fr; }
 }
 </style>
-@endpush
-
-@section('content')
 <section class="fp-chk-hero">
     <div class="fp-chk-orb"></div>
     <div class="fp-chk-orb2"></div>
@@ -499,7 +496,6 @@
 @include('frontend.partials.footer')
 @endsection
 
-@push('scripts')
 <script>
 function selectAddr(el, id) {
     document.querySelectorAll('.addr-card').forEach(c => c.classList.remove('active'));
@@ -539,4 +535,3 @@ document.getElementById('checkoutForm')?.addEventListener('submit', function(e) 
     btn.innerHTML = '<span class="spinner-border spinner-border-sm" style="width:16px;height:16px;"></span> Processing...';
 });
 </script>
-@endpush
