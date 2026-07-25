@@ -496,8 +496,7 @@
 
 @include('frontend.partials.footer')
 
-@section('scripts')
-@parent
+@push('scripts')
 <script>
 function selectAddr(el, id) {
     document.querySelectorAll('.addr-card').forEach(c => c.classList.remove('active'));
@@ -506,7 +505,6 @@ function selectAddr(el, id) {
 }
 
 function selectPM(el, type) {
-    document.querySelectorAll('.fp-chk-pm-card[name="payment_type"]').forEach(c => c.classList.remove('active'));
     document.querySelectorAll('.fp-chk-pm-card').forEach(c => {
         const input = c.querySelector('input[name="payment_type"]');
         if (input) c.classList.remove('active');
@@ -537,5 +535,5 @@ document.getElementById('checkoutForm')?.addEventListener('submit', function(e) 
     btn.innerHTML = '<span class="spinner-border spinner-border-sm" style="width:16px;height:16px;"></span> Processing...';
 });
 </script>
-@stop
+@endpush
 @endsection
