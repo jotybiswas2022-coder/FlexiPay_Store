@@ -396,17 +396,29 @@
                     <div class="fp-chk-card reveal-left" style="transition-delay:0.4s;">
                         <h5 class="fp-chk-card-title"><i class="bi bi-credit-card-2-front"></i> Pay Using</h5>
                         <div style="display:flex;gap:12px;flex-wrap:wrap;">
-                            <div class="fp-chk-pm-card {{ old('payment_method') == 'wallet' ? 'active' : '' }}" onclick="selectGW(this, 'wallet')" style="flex:1;">
+                            <div class="fp-chk-pm-card {{ old('payment_method') == 'wallet' ? 'active' : '' }}" onclick="selectGW(this, 'wallet')" style="flex:1;min-width:120px;">
                                 <input type="radio" name="payment_method" value="wallet" {{ old('payment_method') == 'wallet' ? 'checked' : '' }} required>
                                 <i class="bi bi-wallet2"></i>
                                 <strong>Wallet</strong>
                                 <small>₦{{ number_format($wallet->balance ?? 0, 0) }}</small>
                             </div>
-                            <div class="fp-chk-pm-card {{ old('payment_method') == 'gateway' ? 'active' : '' }}" onclick="selectGW(this, 'gateway')" style="flex:1;">
-                                <input type="radio" name="payment_method" value="gateway" {{ old('payment_method') == 'gateway' ? 'checked' : '' }} required>
-                                <i class="bi bi-bank"></i>
-                                <strong>Card / Bank</strong>
-                                <small>Paystack, Flutterwave</small>
+                            <div class="fp-chk-pm-card {{ old('payment_method') == 'paystack' ? 'active' : '' }}" onclick="selectGW(this, 'paystack')" style="flex:1;min-width:120px;">
+                                <input type="radio" name="payment_method" value="paystack" {{ old('payment_method') == 'paystack' ? 'checked' : '' }} required>
+                                <i class="bi bi-credit-card-fill"></i>
+                                <strong>Paystack</strong>
+                                <small>Card, Bank, USSD</small>
+                            </div>
+                            <div class="fp-chk-pm-card {{ old('payment_method') == 'flutterwave' ? 'active' : '' }}" onclick="selectGW(this, 'flutterwave')" style="flex:1;min-width:120px;">
+                                <input type="radio" name="payment_method" value="flutterwave" {{ old('payment_method') == 'flutterwave' ? 'checked' : '' }} required>
+                                <i class="bi bi-globe"></i>
+                                <strong>Flutterwave</strong>
+                                <small>Card, Bank, Mobile Money</small>
+                            </div>
+                            <div class="fp-chk-pm-card {{ old('payment_method') == 'korapay' ? 'active' : '' }}" onclick="selectGW(this, 'korapay')" style="flex:1;min-width:120px;">
+                                <input type="radio" name="payment_method" value="korapay" {{ old('payment_method') == 'korapay' ? 'checked' : '' }} required>
+                                <i class="bi bi-shield-fill-check"></i>
+                                <strong>Korapay</strong>
+                                <small>Card, Bank Transfer, USSD</small>
                             </div>
                         </div>
                         @error('payment_method')<small class="fp-chk-field-error">{{ $message }}</small>@enderror

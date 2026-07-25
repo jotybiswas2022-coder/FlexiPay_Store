@@ -54,7 +54,7 @@ class CheckoutController extends Controller
             'installment_plan_id' => 'required_if:payment_type,installment|nullable|exists:installment_plans,id',
             'delivery_address_id' => 'required|exists:delivery_addresses,id',
             'has_insurance' => 'boolean',
-            'payment_method' => 'required|in:pay_now,wallet,gateway',
+            'payment_method' => 'required|in:wallet,paystack,flutterwave,korapay',
             'agree_terms' => 'required|accepted',
         ]);
 
@@ -139,12 +139,21 @@ class CheckoutController extends Controller
 
         // Process payment
         if ($request->payment_method === 'wallet') {
-            // Redirect to wallet payment
             return $this->processWalletPayment($order);
         }
 
-        // Redirect to payment gateway
-        return redirect()->route('payment.gateway', $order->id);
+        // Create transaction with selected gateway
+        PaymentTransaction::create([
+            'order_id' => $order->id,
+            'user_id' => auth()->id(),
+            'amount' => $order->remaining_amount ?? $order->grand_total,
+            'transaction_reference' => 'TXN-' . strtoupper(Str::random(15)),
+            'gateway' => $request->payment_method,
+            'status' => 'pending',
+        ]);
+
+        return redirect()->route('order.confirmation', $order->id)
+            ->with('success', 'Order placed successfully!');
     }
 
     private function processWalletPayment(Order $order)
