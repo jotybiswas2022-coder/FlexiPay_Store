@@ -76,10 +76,13 @@ class AdminOrderController extends Controller
     {
         $request->validate([
             'amount' => 'required|numeric|min:0',
-            'is_active' => 'boolean',
         ]);
 
-        $fee->update($request->all());
+        $fee->update([
+            'amount' => $request->amount,
+            'is_active' => $request->boolean('is_active'),
+        ]);
+
         return back()->with('success', 'Fee updated successfully!');
     }
 

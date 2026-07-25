@@ -36,12 +36,12 @@ Route::prefix('admin')->middleware('admin')->group(function () {
     // ===== ORDERS =====
     Route::prefix('orders')->controller(AdminOrderController::class)->group(function () {
         Route::get('/', 'index')->name('admin.orders.index');
+        Route::get('/fees', 'fees')->name('admin.orders.fees');
+        Route::post('/fees/{fee}', 'updateFee')->name('admin.orders.fees.update');
+        Route::get('/export/csv', 'export')->name('admin.orders.export');
         Route::get('/{order}', 'show')->name('admin.orders.show');
         Route::post('/{order}/status', 'updateStatus')->name('admin.orders.status');
         Route::post('/{order}/delivery', 'updateDeliveryStatus')->name('admin.orders.delivery');
-        Route::get('/export/csv', 'export')->name('admin.orders.export');
-        Route::get('/fees', 'fees')->name('admin.orders.fees');
-        Route::post('/fees/{fee}', 'updateFee')->name('admin.orders.fees.update');
     });
 
     // ===== USERS =====
