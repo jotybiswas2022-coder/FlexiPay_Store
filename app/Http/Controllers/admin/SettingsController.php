@@ -20,6 +20,7 @@ class SettingsController extends Controller
             'email'          => 'required|string',
             'phone'          => 'required|string',
             'location'       => 'required|string',
+            'default_gateway' => 'nullable|string',
         ]);
 
         $settings = Setting::first() ?? new Setting();
@@ -27,6 +28,19 @@ class SettingsController extends Controller
         $settings->email = $request->email;
         $settings->phone = $request->phone;
         $settings->location = $request->location;
+        $settings->default_gateway = $request->default_gateway;
+
+        // Save gateway configuration as JSON
+        $gatewayConfig = [
+            'paystack_public' => $request->paystack_public ?? '',
+            'paystack_secret' => $request->paystack_secret ?? '',
+            'flutterwave_public' => $request->flutterwave_public ?? '',
+            'flutterwave_secret' => $request->flutterwave_secret ?? '',
+            'flutterwave_encryption' => $request->flutterwave_encryption ?? '',
+            'korapay_public' => $request->korapay_public ?? '',
+            'korapay_secret' => $request->korapay_secret ?? '',
+        ];
+        $settings->gateway_config = $gatewayConfig;
 
         $settings->save();
 
