@@ -1,211 +1,109 @@
 @extends('backend.app')
+@section('title', 'Add Post — FlexiPay Admin')
+@section('page_title', 'Add Post')
 
 @section('content')
-
-<div class="container-fluid" style="height: calc(100vh - 80px); overflow-y: auto; padding-bottom: 20px;">
-
-    <!-- Header -->
-    <div class="row px-3 pt-3 pb-2 align-items-center">
-        <div class="col-md-8">
-            <h3 class="fw-bold mb-1">
-                <i class="bi bi-plus-circle me-2 text-primary"></i> Add New Worker
-            </h3>
-            <small class="text-muted">Fill the form below to add a new Worker</small>
-        </div>
-        <div class="col-md-4 text-md-end mt-2 mt-md-0">
-            <a href="{{ url('admin/workers') }}" class="btn btn-outline-secondary rounded-pill px-4">
-                <i class="bi bi-arrow-left"></i> Go Back
-            </a>
-        </div>
-    </div>
-
-    <!-- Card -->
-    <div class="card border-0 shadow-sm mx-3 mt-3 product-card">
-        <div class="card-body p-4">
-
-            <form action="{{ url('/admin/workers/store') }}" method="post" enctype="multipart/form-data">
-                @csrf
-                <div class="row g-3">
-
-                    <!-- Name -->
-                    <div class="col-md-6">
-                        <label class="form-label fw-semibold">
-                            <i class="bi bi-person me-1 text-secondary"></i>
-                            Name <span class="text-danger">*</span>
-                        </label>
-                        <div class="input-group">
-                            <span class="input-group-text bg-light"><i class="bi bi-person"></i></span>
-                            <input type="text" class="form-control" name="title" placeholder="Enter Name" required>
-                        </div>
-                    </div>
-
-                    <!-- Category -->
-                    <div class="col-md-6">
-                        <label class="form-label fw-semibold">
-                            <i class="bi bi-tags me-1 text-secondary"></i>
-                            Sheba Category <span class="text-danger">*</span>
-                        </label>
-                        <select name="category_id" class="form-select" required>
-                            <option value="">Select Category</option>
-                            @foreach ($categories as $category)
-                                <option value="{{ $category->id }}">{{ $category->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <!-- Contact Number -->
-                    <div class="col-md-6">
-                        <label class="form-label fw-semibold">
-                            <i class="bi bi-telephone me-1 text-secondary"></i>
-                            Contact Number <span class="text-danger">*</span>
-                        </label>
-                        <div class="input-group">
-                            <span class="input-group-text bg-light"><i class="bi bi-phone"></i></span>
-                            <input type="number" class="form-control" name="contact_number" placeholder="Enter Contact Number" required>
-                        </div>
-                    </div>
-
-                    <!-- Division (FIXED) -->
-                    <div class="col-md-6">
-                        <label class="form-label fw-semibold">
-                            <i class="bi bi-geo-alt me-1 text-secondary"></i>
-                            Division <span class="text-danger">*</span>
-                        </label>
-                        <select name="division" class="form-select" required>
-                            <option value="">Select Division</option>
-                            <option value="Khulna">Khulna</option>
-                            <option value="Dhaka">Dhaka</option>
-                            <option value="Chittagong">Chittagong</option>
-                            <option value="Rajshahi">Rajshahi</option>
-                            <option value="Sylhet">Sylhet</option>
-                            <option value="Barishal">Barishal</option>
-                            <option value="Mymensingh">Mymensingh</option>
-                            <option value="Rangpur">Rangpur</option>
-                        </select>
-                    </div>
-
-                    <!-- Status -->
-                    <div class="col-md-6">
-                        <label class="form-label fw-semibold">
-                            <i class="bi bi-list-check me-1 text-secondary"></i>
-                            Status <span class="text-danger">*</span>
-                        </label>
-                        <select name="status" class="form-select">
-                            <option value="">Select Status</option>
-                            <option value="1">Active</option>
-                            <option value="0">Inactive</option>
-                        </select>
-                    </div>
-
-                    <!-- File Upload -->
-                    <div class="col-md-6">
-                        <label class="form-label fw-semibold">
-                            <i class="bi bi-image me-1 text-secondary"></i>
-                            Profile Image <span class="text-danger">*</span>
-                        </label>
-                        <input type="file"
-                               class="form-control"
-                               name="file"
-                               id="file"
-                               accept="image/*"
-                               required>
-
-                        <div class="mt-3">
-                            <img id="preview"
-                                 src=""
-                                 class="img-fluid rounded shadow-sm d-none"
-                                 style="max-height: 150px;">
-                        </div>
-                    </div>
-
-                    <!-- Submit -->
-                    <div class="col-12 mt-2">
-                        <button type="submit" class="btn btn-success px-4 rounded-pill w-100 w-md-auto">
-                            <i class="bi bi-check-circle me-1"></i> Save Worker
-                        </button>
-                    </div>
-
+<div class="fp-table-wrap">
+    <div class="fp-table-header"><h5><i class="bi bi-plus-circle"></i> New Post</h5></div>
+    <div style="padding:24px;">
+        <form action="{{ url('/admin/workers/store') }}" method="post" enctype="multipart/form-data">
+            @csrf
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <label style="display:block;font-size:12px;color:var(--text-dim);margin-bottom:6px;">
+                        <i class="bi bi-person" style="color:var(--gold-500);"></i> Name <span style="color:#ef4444;">*</span>
+                    </label>
+                    <input type="text" class="fp-form-control" name="title" placeholder="Enter name" required>
                 </div>
-            </form>
-
-        </div>
+                <div class="col-md-6">
+                    <label style="display:block;font-size:12px;color:var(--text-dim);margin-bottom:6px;">
+                        <i class="bi bi-tags" style="color:var(--gold-500);"></i> Category <span style="color:#ef4444;">*</span>
+                    </label>
+                    <select name="category_id" class="fp-form-control" required>
+                        <option value="">Select Category</option>
+                        @foreach ($categories as $category)
+                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label style="display:block;font-size:12px;color:var(--text-dim);margin-bottom:6px;">
+                        <i class="bi bi-telephone" style="color:var(--gold-500);"></i> Contact Number <span style="color:#ef4444;">*</span>
+                    </label>
+                    <input type="number" class="fp-form-control" name="contact_number" placeholder="Enter contact number" required>
+                </div>
+                <div class="col-md-6">
+                    <label style="display:block;font-size:12px;color:var(--text-dim);margin-bottom:6px;">
+                        <i class="bi bi-geo-alt" style="color:var(--gold-500);"></i> Division <span style="color:#ef4444;">*</span>
+                    </label>
+                    <select name="division" class="fp-form-control" required>
+                        <option value="">Select Division</option>
+                        <option value="Khulna">Khulna</option>
+                        <option value="Dhaka">Dhaka</option>
+                        <option value="Chittagong">Chittagong</option>
+                        <option value="Rajshahi">Rajshahi</option>
+                        <option value="Sylhet">Sylhet</option>
+                        <option value="Barishal">Barishal</option>
+                        <option value="Mymensingh">Mymensingh</option>
+                        <option value="Rangpur">Rangpur</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label style="display:block;font-size:12px;color:var(--text-dim);margin-bottom:6px;">
+                        <i class="bi bi-list-check" style="color:var(--gold-500);"></i> Status <span style="color:#ef4444;">*</span>
+                    </label>
+                    <select name="status" class="fp-form-control">
+                        <option value="">Select Status</option>
+                        <option value="1">Active</option>
+                        <option value="0">Inactive</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label style="display:block;font-size:12px;color:var(--text-dim);margin-bottom:6px;">
+                        <i class="bi bi-image" style="color:var(--gold-500);"></i> Profile Image <span style="color:#ef4444;">*</span>
+                    </label>
+                    <input type="file" class="fp-form-control" name="file" id="file" accept="image/*,video/mp4" required>
+                    <div class="mt-3">
+                        <img id="preview" src="" class="d-none rounded-4" style="max-height:150px;border:1px solid var(--card-border);">
+                    </div>
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="fp-btn fp-btn-gold"><i class="bi bi-check-lg"></i> Save</button>
+                    <a href="{{ url('admin/workers') }}" class="fp-btn fp-btn-ghost ms-2"><i class="bi bi-arrow-left"></i> Back</a>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
 
-<!-- SweetAlert2 CDN -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 <script>
-// File validation & preview
-document.getElementById('file').addEventListener('change', function(e) {
+document.getElementById('file')?.addEventListener('change', function(e) {
     const preview = document.getElementById('preview');
     const file = e.target.files[0];
     if (!file) return;
-
-    const fileType = file.type;
     const allowedImages = ['image/jpeg','image/png','image/gif','image/webp'];
-
-    if (allowedImages.includes(fileType)) {
+    if (allowedImages.includes(file.type)) {
         preview.src = URL.createObjectURL(file);
         preview.classList.remove('d-none');
-        return;
-    }
-
-    if (fileType === 'video/mp4') {
+    } else if (file.type === 'video/mp4') {
         preview.classList.add('d-none');
-        Swal.fire({
-            icon: 'success',
-            title: 'MP4 Video Selected',
-            text: file.name,
-            confirmButtonColor: '#4f46e5'
-        });
-        return;
+        Swal.fire({icon:'success', title:'MP4 Video Selected', text:file.name, background:'#1A1A1E', color:'#F4F4F5'});
+    } else {
+        Swal.fire({icon:'error', title:'Invalid File', text:'Only Image and MP4 video allowed!', background:'#1A1A1E', color:'#F4F4F5'});
+        e.target.value = '';
+        preview.classList.add('d-none');
     }
-
-    Swal.fire({
-        icon: 'error',
-        title: 'Invalid File',
-        text: 'Only Image and MP4 video allowed!',
-        confirmButtonColor: '#4f46e5'
-    });
-
-    e.target.value = '';
-    preview.classList.add('d-none');
 });
-
-// Laravel alerts
 @if(session('success'))
-Swal.fire({icon:'success', title:'Success!', text:"{{ session('success') }}"});
+Swal.fire({icon:'success', title:'Success!', text:"{{ session('success') }}", background:'#1A1A1E', color:'#F4F4F5'});
 @endif
-
 @if(session('error'))
-Swal.fire({icon:'error', title:'Error!', text:"{{ session('error') }}"});
+Swal.fire({icon:'error', title:'Error!', text:"{{ session('error') }}", background:'#1A1A1E', color:'#F4F4F5'});
 @endif
-
 @if ($errors->any())
 let errorMessages = @json($errors->all());
-Swal.fire({icon:'error', title:'Validation Error', html:errorMessages.join('<br>')});
+Swal.fire({icon:'error', title:'Validation Error', html:errorMessages.join('<br>'), background:'#1A1A1E', color:'#F4F4F5'});
 @endif
 </script>
-
-<style>
-.product-card { border-radius: 14px; }
-.form-control:focus, .form-select:focus {
-    border-color:#4f46e5;
-    box-shadow:0 0 0 0.15rem rgba(79,70,229,0.25);
-}
-.btn-success { transition:.25s; }
-.btn-success:hover {
-    background:#4f46e5;
-    border-color:#4f46e5;
-}
-@media (max-width: 992px) {
-    .card-body { padding:20px; }
-}
-@media (max-width: 576px) {
-    .row.g-3 > [class*='col-'] { width:100%; }
-    .btn-success { width:100%; }
-}
-</style>
-
 @endsection

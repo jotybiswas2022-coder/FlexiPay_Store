@@ -1,128 +1,94 @@
 @extends('backend.app')
+@section('title', 'Categories — FlexiPay Admin')
+@section('page_title', 'Categories')
 
 @section('content')
 
 @if (session('success'))
-    <div class="alert alert-success alert-dismissible fade show m-3" role="alert">
-        {{ session('success') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+<div class="fp-table-wrap mb-4" style="border-left:3px solid #4ade80;">
+    <div class="p-3" style="color:#4ade80;font-size:14px;">
+        <i class="bi bi-check-circle-fill me-1"></i> {{ session('success') }}
     </div>
+</div>
 @endif
 
-<div class="container-fluid" style="height: calc(100vh - 80px); overflow-y: auto; padding: 20px 0;">
-
-    <!-- Header -->
-    <div class="row px-3 pt-3 pb-2 align-items-center">
-        <!-- Page Title & Subtitle -->
-        <div class="col-md-8 col-12 mb-2 mb-md-0">
-            <h2 class="fw-bold d-flex align-items-center flex-wrap mb-1">
-                <i class="bi bi-tags me-2 text-primary fs-3"></i>
-                <span>Category List</span>
-            </h2>
-            <small class="text-muted d-block">Manage all categories efficiently</small>
-        </div>
-
-        <!-- Add New Category Button -->
-        <div class="col-md-4 col-12 text-md-end">
-            <a href="{{ url('admin/category/create') }}" class="btn btn-primary w-100 w-md-auto">
-                <i class="bi bi-plus-circle me-1"></i> Add New Category
-            </a>
-        </div>
+<div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+    <div>
+        <p class="mb-0" style="color:var(--text-muted);">{{ $categories->count() ?? 0 }} categories</p>
     </div>
+    <a href="{{ url('admin/category/create') }}" class="fp-btn fp-btn-gold"><i class="bi bi-plus-lg"></i> Add Category</a>
+</div>
 
-    <!-- Card -->
-    <div class="card mx-3 shadow-sm border-0 rounded-3 mt-3">
-        <div class="card-body p-3">
+<div class="fp-table-wrap">
+    <div class="fp-table-header">
+        <h5>All Categories</h5>
+        <input type="text" id="categorySearch" class="fp-form-control" placeholder="Search..." style="width:220px;padding:6px 12px;font-size:13px;">
+    </div>
+    <div class="table-responsive">
+        <table class="fp-table">
+            <thead><tr><th>#</th><th>Name</th><th>Created</th><th>Actions</th></tr></thead>
+            <tbody>
+                @forelse($categories as $category)
+                    <tr>
+                        <td style="color:var(--text-dim);">{{ $loop->iteration }}</td>
+                        <td><strong style="color:var(--text-primary);">{{ $category->name }}</strong></td>
+                        <td style="color:var(--text-dim);font-size:12px;">{{ $category->created_at->format('M d, Y H:i') }}</td>
+                        <td>
+                            <div class="d-flex gap-1">
+                                <button class="fp-btn fp-btn-ghost" style="padding:4px 10px;" data-bs-toggle="modal" data-bs-target="#editModal{{ $category->id }}">
+                                    <i class="bi bi-pencil-fill"></i>
+                                </button>
+                                <button class="fp-btn fp-btn-ghost" style="padding:4px 10px;color:#ef4444;" onclick="confirmation({{ $category->id }})">
+                                    <i class="bi bi-trash-fill"></i>
+                                </button>
+                            </div>
 
-            <!-- Search -->
-            <div class="mb-3">
-                <input type="text" id="categorySearch" class="form-control" placeholder="Search categories...">
-            </div>
-
-            <!-- Table -->
-            <div class="table-responsive">
-                <table class="table table-hover align-middle mb-0">
-                    <thead class="table-light">
-                        <tr>
-                            <th style="width:60px;">#</th>
-                            <th>Name</th>
-                            <th style="width:180px;">Created At</th>
-                            <th style="width:200px;">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse($categories as $category)
-                            <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td class="fw-medium">{{ $category->name }}</td>
-                                <td>{{ $category->created_at->format('d M, Y H:i') }}</td>
-                                <td class="text-center">
-                                    <!-- Edit Button -->
-                                    <button class="btn btn-sm btn-primary me-2 mb-1 mb-md-0" data-bs-toggle="modal" data-bs-target="#editModal{{ $category->id }}">
-                                        <i class="bi bi-pencil-square"></i> Edit
-                                    </button>
-
-                                    <!-- Edit Modal -->
-                                    <div class="modal fade" id="editModal{{ $category->id }}" tabindex="-1" aria-labelledby="editModalLabel{{ $category->id }}" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content border-0 shadow-lg rounded-4">
-                                                <div class="modal-header bg-primary text-white rounded-top-4">
-                                                    <h5 class="modal-title fw-semibold" id="editModalLabel{{ $category->id }}">
-                                                        <i class="bi bi-pencil-square me-2"></i>Edit Category
-                                                    </h5>
-                                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                                                </div>
-                                                <form action="{{ url('admin/category/update/'.$category->id) }}" method="POST">
-                                                    @csrf
-                                                    <div class="modal-body px-4 py-3">
-                                                        <div class="mb-3">
-                                                            <label class="form-label fw-semibold">Category Name <span class="text-danger">*</span></label>
-                                                            <input type="text" class="form-control" name="name" value="{{ $category->name }}" required>
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer border-0 px-4 pb-4 flex-wrap">
-                                                        <button type="button" class="btn btn-outline-secondary rounded-pill px-4 mb-2" data-bs-dismiss="modal">
-                                                            <i class="bi bi-x-circle me-1"></i> Cancel
-                                                        </button>
-                                                        <button type="submit" class="btn btn-primary rounded-pill px-4 mb-2">
-                                                            <i class="bi bi-save me-1"></i> Save Changes
-                                                        </button>
-                                                    </div>
-                                                </form>
-                                            </div>
+                            <!-- Edit Modal -->
+                            <div class="modal fade" id="editModal{{ $category->id }}" tabindex="-1">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content" style="background:var(--card-dark);border:1px solid var(--card-border);border-radius:16px;">
+                                        <div class="modal-header" style="border-bottom:1px solid var(--card-border);padding:18px 24px;">
+                                            <h5 class="modal-title fw-semibold" style="color:var(--text-primary);font-family:'Syne',sans-serif;font-size:15px;">
+                                                <i class="bi bi-pencil-square me-2" style="color:var(--gold-500);"></i>Edit Category
+                                            </h5>
+                                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" style="filter:invert(0.6);"></button>
                                         </div>
+                                        <form action="{{ url('admin/category/update/'.$category->id) }}" method="POST">
+                                            @csrf
+                                            <div class="modal-body p-4">
+                                                <label style="display:block;font-size:12px;color:var(--text-dim);margin-bottom:6px;">Category Name <span style="color:#ef4444;">*</span></label>
+                                                <input type="text" class="fp-form-control" name="name" value="{{ $category->name }}" required>
+                                            </div>
+                                            <div class="modal-footer" style="border-top:1px solid var(--card-border);padding:16px 24px;">
+                                                <button type="button" class="fp-btn fp-btn-ghost" data-bs-dismiss="modal"><i class="bi bi-x-circle me-1"></i> Cancel</button>
+                                                <button type="submit" class="fp-btn fp-btn-gold"><i class="bi bi-check-lg me-1"></i> Save Changes</button>
+                                            </div>
+                                        </form>
                                     </div>
-
-                                    <!-- Delete Button -->
-                                    <button class="btn btn-sm btn-danger mb-1 mb-md-0" onclick="confirmation({{ $category->id }})">
-                                        <i class="bi bi-trash"></i> Delete
-                                    </button>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="4" class="text-center text-muted py-4">No categories found</td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-            </div>
-
-        </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                @empty
+                    <tr><td colspan="4" class="text-center py-4" style="color:var(--text-dim);">No categories found</td></tr>
+                @endforelse
+            </tbody>
+        </table>
     </div>
-
 </div>
 
 <script>
 function confirmation(id) {
     Swal.fire({
-        title: 'Delete the Category',
-        text: 'Are you sure you want to delete this category?',
+        title: 'Delete Category?',
+        text: 'This action cannot be undone.',
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#d33',
-        cancelButtonColor: '#6c757d',
-        confirmButtonText: 'Yes, delete it'
+        confirmButtonColor: '#ef4444',
+        cancelButtonColor: '#71717A',
+        confirmButtonText: 'Yes, delete it',
+        background: '#1A1A1E',
+        color: '#F4F4F5'
     }).then((result) => {
         if (result.isConfirmed) {
             window.location.href = '/admin/category/delete/' + id;
@@ -130,59 +96,18 @@ function confirmation(id) {
     });
 }
 
-// Search functionality
 document.addEventListener('DOMContentLoaded', function () {
     const searchInput = document.getElementById('categorySearch');
-    searchInput.addEventListener('keyup', function () {
-        const filter = searchInput.value.toLowerCase();
-        const rows = document.querySelectorAll('table tbody tr');
-
-        rows.forEach(row => {
-            const categoryName = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
-            row.style.display = categoryName.includes(filter) ? '' : 'none';
+    if (searchInput) {
+        searchInput.addEventListener('keyup', function () {
+            const filter = searchInput.value.toLowerCase();
+            const rows = document.querySelectorAll('table tbody tr');
+            rows.forEach(row => {
+                const name = row.querySelector('td:nth-child(2)')?.textContent.toLowerCase() ?? '';
+                row.style.display = name.includes(filter) ? '' : 'none';
+            });
         });
-    });
+    }
 });
 </script>
-
-<style>
-.table-hover tbody tr:hover {
-    background-color: rgba(13, 110, 253, 0.05);
-    transition: 0.2s;
-}
-
-.card-body {
-    border-radius: 12px;
-}
-
-.btn-sm i {
-    margin-right: 4px;
-}
-
-.alert {
-    border-radius: 12px;
-    font-size: 14px;
-}
-
-.fw-medium {
-    font-weight: 500;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .table-responsive {
-        overflow-x: auto;
-    }
-
-    .modal-footer {
-        flex-direction: column;
-        gap: 0.5rem;
-    }
-
-    .btn-sm {
-        width: 100%;
-    }
-}
-</style>
-
 @endsection
