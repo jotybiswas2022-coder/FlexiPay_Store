@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
     @stack('styles')
     <style>
         :root {
@@ -51,7 +51,7 @@
         html { scroll-behavior: smooth; }
 
         body {
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: 'Inter', sans-serif;
             background: var(--near-black);
             color: var(--text-primary);
             overflow-x: hidden;
@@ -98,7 +98,7 @@
         #pageLoader.hidden { opacity: 0; visibility: hidden; }
         .loader-logo {
             font-size: 36px; font-weight: 800; color: var(--gold-500);
-            margin-bottom: 28px; font-family: 'Syne', sans-serif;
+            margin-bottom: 28px; font-family: 'Plus Jakarta Sans', sans-serif;
             animation: loaderPulse 1.4s ease-in-out infinite;
             letter-spacing: -1px;
         }
@@ -185,7 +185,7 @@
             margin-bottom: 14px;
         }
         .section-head h2 {
-            font-family: 'Syne', sans-serif;
+            font-family: 'Plus Jakarta Sans', sans-serif;
             font-size: clamp(28px, 4vw, 40px);
             font-weight: 800; color: var(--text-primary);
             margin-bottom: 12px;
@@ -205,7 +205,7 @@
         }
 
         .counter-num {
-            font-family: 'Syne', sans-serif;
+            font-family: 'Plus Jakarta Sans', sans-serif;
             font-size: 36px; font-weight: 800;
             background: linear-gradient(135deg, var(--gold-400), var(--gold-600));
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;

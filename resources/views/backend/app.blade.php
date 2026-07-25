@@ -7,7 +7,7 @@
     <title>@yield('title', 'Admin — FlexiPay Store')</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --gold-400: #FACC15;
@@ -28,7 +28,7 @@
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: 'Inter', sans-serif;
             background: var(--near-black);
             color: var(--text-muted);
             overflow-x: hidden;
@@ -59,7 +59,7 @@
             color: var(--near-black); font-size: 18px;
         }
         .fp-sidebar-brand-text {
-            font-family: 'Syne', sans-serif;
+            font-family: 'Plus Jakarta Sans', sans-serif;
             font-size: 16px; font-weight: 800;
             color: var(--text-primary);
         }
@@ -119,7 +119,7 @@
             color: var(--text-primary); font-size: 20px;
             cursor: pointer;
         }
-        .fp-topbar h5 { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; color: var(--text-primary); margin: 0; }
+        .fp-topbar h5 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; font-weight: 700; color: var(--text-primary); margin: 0; }
         .fp-topbar-right { display: flex; align-items: center; gap: 12px; }
         .fp-topbar-user {
             display: flex; align-items: center; gap: 8px;
@@ -150,7 +150,7 @@
             color: var(--gold-500); font-size: 20px;
             margin-bottom: 12px;
         }
-        .fp-stat-card .stat-num { font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 800; color: var(--text-primary); }
+        .fp-stat-card .stat-num { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 28px; font-weight: 800; color: var(--text-primary); }
         .fp-stat-card .stat-label { font-size: 13px; color: var(--text-dim); }
 
         /* Table */
@@ -165,7 +165,7 @@
             border-bottom: 1px solid var(--card-border);
             display: flex; align-items: center; justify-content: space-between;
         }
-        .fp-table-header h5 { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; color: var(--text-primary); margin: 0; }
+        .fp-table-header h5 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px; font-weight: 700; color: var(--text-primary); margin: 0; }
         .fp-table { width: 100%; border-collapse: collapse; }
         .fp-table th {
             padding: 12px 20px; text-align: left;
