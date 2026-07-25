@@ -269,7 +269,7 @@
                 </a>
 
                 <div class="nav-section">Orders</div>
-                <a href="{{ route('admin.orders.index') }}" class="{{ request()->routeIs('admin.orders.*') ? 'active' : '' }}">
+                <a href="{{ route('admin.orders.index') }}" class="{{ request()->routeIs('admin.orders.*') && !request()->routeIs('admin.orders.fees*') ? 'active' : '' }}">
                     <i class="bi bi-receipt"></i> Orders
                 </a>
                 <a href="{{ route('admin.orders.fees') }}" class="{{ request()->routeIs('admin.orders.fees*') ? 'active' : '' }}">
@@ -277,7 +277,7 @@
                 </a>
 
                 <div class="nav-section">Users</div>
-                <a href="{{ route('admin.users.index') }}" class="{{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
+                <a href="{{ route('admin.users.index') }}" class="{{ request()->routeIs('admin.users.*') && !request()->routeIs('admin.users.verifications*') ? 'active' : '' }}">
                     <i class="bi bi-people-fill"></i> Customers
                 </a>
                 <a href="{{ route('admin.users.verifications') }}" class="{{ request()->routeIs('admin.users.verifications*') ? 'active' : '' }}">
