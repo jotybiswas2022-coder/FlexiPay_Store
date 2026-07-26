@@ -9,8 +9,13 @@
             <div class="fp-table-header"><h5>Order Details</h5></div>
             <div style="padding:20px;">
                 <div class="row g-3">
+                    <div class="col-md-4"><label style="display:block;font-size:11px;color:var(--text-dim);text-transform:uppercase;">Order Date</label><strong style="color:var(--text-primary);">{{ $order->created_at->format('M d, Y h:i A') }}</strong></div>
                     <div class="col-md-4"><label style="display:block;font-size:11px;color:var(--text-dim);text-transform:uppercase;">Customer</label><strong style="color:var(--text-primary);">{{ $order->user?->name ?? 'N/A' }}</strong><br><small style="color:var(--text-dim);">{{ $order->user?->email }}</small></div>
-                    <div class="col-md-4"><label style="display:block;font-size:11px;color:var(--text-dim);text-transform:uppercase;">Total</label><strong style="color:var(--gold-400);font-size:20px;">₦{{ number_format($order->total, 0) }}</strong></div>
+                    <div class="col-md-4"><label style="display:block;font-size:11px;color:var(--text-dim);text-transform:uppercase;">Grand Total</label><strong style="color:var(--gold-400);font-size:20px;">₦{{ number_format($order->grand_total, 0) }}</strong></div>
+                    <div class="col-md-4"><label style="display:block;font-size:11px;color:var(--text-dim);text-transform:uppercase;">Base Amount</label><strong style="color:var(--text-primary);">₦{{ number_format($order->base_amount, 0) }}</strong></div>
+                    <div class="col-md-4"><label style="display:block;font-size:11px;color:var(--text-dim);text-transform:uppercase;">Shipping</label><strong style="color:var(--text-primary);">₦{{ number_format($order->shipping_fee, 0) }}</strong></div>
+                    <div class="col-md-4"><label style="display:block;font-size:11px;color:var(--text-dim);text-transform:uppercase;">Interest</label><strong style="color:var(--text-primary);">₦{{ number_format($order->interest_amount, 0) }}</strong></div>
+                    <div class="col-md-4"><label style="display:block;font-size:11px;color:var(--text-dim);text-transform:uppercase;">Insurance</label><strong style="color:var(--text-primary);">{{ $order->has_insurance ? '₦'.number_format($order->insurance_fee, 0) : 'None' }}</strong></div>
                     <div class="col-md-4"><label style="display:block;font-size:11px;color:var(--text-dim);text-transform:uppercase;">Status</label>
                         <form action="{{ route('admin.orders.status', $order) }}" method="POST" class="d-flex gap-2">
                             @csrf
@@ -49,14 +54,15 @@
                     @foreach($order->items as $item)
                     <tr>
                         <td><strong style="color:var(--text-primary);">{{ $item->product?->name ?? 'Product' }}</strong></td>
-                        <td>₦{{ number_format($item->price, 0) }}</td>
+                        <td>₦{{ number_format($item->unit_price, 0) }}</td>
                         <td>{{ $item->quantity }}</td>
-                        <td style="color:var(--gold-400);font-weight:600;">₦{{ number_format($item->quantity * $item->price, 0) }}</td>
+                        <td style="color:var(--gold-400);font-weight:600;">₦{{ number_format($item->subtotal ?? ($item->quantity * $item->unit_price), 0) }}</td>
                     </tr>
                     @endforeach
                 </tbody>
                 <tfoot>
-                    <tr><td colspan="3" class="text-end" style="font-weight:700;color:var(--text-primary);">Total</td><td style="font-weight:700;color:var(--gold-500);font-size:16px;">₦{{ number_format($order->total, 0) }}</td></tr>
+                    <tr><td colspan="3" class="text-end" style="font-weight:700;color:var(--text-primary);">Subtotal</td><td style="font-weight:700;color:var(--gold-500);font-size:16px;">₦{{ number_format($order->total_amount, 0) }}</td></tr>
+                    <tr><td colspan="3" class="text-end" style="font-weight:700;color:var(--text-primary);">Grand Total</td><td style="font-weight:700;color:var(--gold-500);font-size:16px;">₦{{ number_format($order->grand_total, 0) }}</td></tr>
                 </tfoot>
             </table>
         </div>
