@@ -83,12 +83,18 @@
                         @else <i class="bi bi-dash-circle-fill"></i> Not Submitted
                         @endif
                     </span>
-                    @if($status == 'unsubmitted' && $vt['key'] != 'email')
+                    @if($verification?->rejection_reason)
+                        <div style="background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2);border-radius:6px;padding:8px 10px;margin-top:10px;font-size:11px;color:#ef4444;text-align:left;">
+                            <strong>Reason:</strong> {{ $verification->rejection_reason }}
+                        </div>
+                    @endif
+                    @if(in_array($status, ['unsubmitted', 'rejected']) && $vt['key'] != 'email' && $vt['key'] != 'store_terms')
                         <form action="{{ route('profile.verification.submit') }}" method="POST" class="mt-3" enctype="multipart/form-data">
                             @csrf
                             <input type="hidden" name="type" value="{{ $vt['key'] }}">
-                            <input type="file" name="file" class="fp-v-file" required>
-                            <button type="submit" class="fp-v-submit mt-2">Upload & Submit</button>
+                            <input type="text" name="document_number" class="fp-v-file" placeholder="Document number (optional)" style="margin-bottom:6px;background:#121214;border:1px solid #2A2A2E;border-radius:6px;padding:8px 10px;color:#F4F4F5;font-size:12px;">
+                            <input type="file" name="document" class="fp-v-file" required {{ $status == 'rejected' ? '' : '' }}>
+                            <button type="submit" class="fp-v-submit mt-2">{{ $status == 'rejected' ? 'Resubmit' : 'Upload & Submit' }}</button>
                         </form>
                     @endif
                 </div>
