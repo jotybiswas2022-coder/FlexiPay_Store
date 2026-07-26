@@ -49,10 +49,17 @@
         <div class="fp-table-wrap mt-4">
             <div class="fp-table-header"><h5>Order Items</h5></div>
             <table class="fp-table">
-                <thead><tr><th>Product</th><th>Price</th><th>Qty</th><th>Total</th></tr></thead>
+                <thead><tr><th>Image</th><th>Product</th><th>Price</th><th>Qty</th><th>Total</th></tr></thead>
                 <tbody>
                     @foreach($order->items as $item)
                     <tr>
+                        <td>
+                            @if($item->product && $item->product->primaryImage)
+                                <img src="{{ asset('storage/'.$item->product->primaryImage->image_path) }}" alt="{{ $item->product->name }}" style="width:48px;height:48px;border-radius:6px;object-fit:cover;background:var(--dark-900);">
+                            @else
+                                <div style="width:48px;height:48px;border-radius:6px;background:var(--dark-900);display:flex;align-items:center;justify-content:center;color:var(--card-border);font-size:16px;"><i class="bi bi-image"></i></div>
+                            @endif
+                        </td>
                         <td><strong style="color:var(--text-primary);">{{ $item->product?->name ?? 'Product' }}</strong></td>
                         <td>₦{{ number_format($item->unit_price, 0) }}</td>
                         <td>{{ $item->quantity }}</td>
@@ -61,8 +68,8 @@
                     @endforeach
                 </tbody>
                 <tfoot>
-                    <tr><td colspan="3" class="text-end" style="font-weight:700;color:var(--text-primary);">Subtotal</td><td style="font-weight:700;color:var(--gold-500);font-size:16px;">₦{{ number_format($order->total_amount, 0) }}</td></tr>
-                    <tr><td colspan="3" class="text-end" style="font-weight:700;color:var(--text-primary);">Grand Total</td><td style="font-weight:700;color:var(--gold-500);font-size:16px;">₦{{ number_format($order->grand_total, 0) }}</td></tr>
+                    <tr><td colspan="4" class="text-end" style="font-weight:700;color:var(--text-primary);">Subtotal</td><td style="font-weight:700;color:var(--gold-500);font-size:16px;">₦{{ number_format($order->total_amount, 0) }}</td></tr>
+                    <tr><td colspan="4" class="text-end" style="font-weight:700;color:var(--text-primary);">Grand Total</td><td style="font-weight:700;color:var(--gold-500);font-size:16px;">₦{{ number_format($order->grand_total, 0) }}</td></tr>
                 </tfoot>
             </table>
         </div>
