@@ -108,5 +108,4 @@ document.querySelectorAll('.fp-preset').forEach(btn => {
     });
 });
 </script>
-@stop
 @endsection

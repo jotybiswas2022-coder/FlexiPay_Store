@@ -350,5 +350,4 @@ function filterCategory(btn, cat) {
     document.querySelectorAll('.faq-item').forEach(i => i.style.display = '');
 }
 </script>
-@stop
 @endsection

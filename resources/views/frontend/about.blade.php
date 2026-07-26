@@ -264,5 +264,4 @@
 </section>
 
 @include('frontend.partials.footer')
-@stop
 @endsection
