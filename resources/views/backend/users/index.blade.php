@@ -17,16 +17,16 @@
                 <td><span class="fp-badge {{ $u->is_suspended ? 'fp-badge-inactive' : 'fp-badge-active' }}">{{ $u->is_suspended ? 'Suspended' : 'Active' }}</span></td>
                 <td>{{ $u->is_admin ? 'Admin' : 'User' }}</td>
                 <td>
-                    <a href="{{ route('admin.users.show', $u) }}" class="fp-btn fp-btn-ghost" style="padding:4px 10px;"><i class="bi bi-eye"></i></a>
+                    <a href="{{ route('admin.users.show', $u) }}" class="fp-btn fp-btn-ghost" style="padding:4px 10px;"><i class="bi bi-eye"></i> View</a>
                     @if($u->is_suspended)
                     <form action="{{ route('admin.users.unsuspend', $u) }}" method="POST" class="d-inline">
                         @csrf
-                        <button type="submit" class="fp-btn fp-btn-ghost" style="padding:4px 10px;color:#4ade80;"><i class="bi bi-unlock-fill"></i></button>
+                        <button type="submit" class="fp-btn fp-btn-ghost" style="padding:4px 10px;color:#4ade80;"><i class="bi bi-unlock-fill"></i> Unsuspend</button>
                     </form>
                     @else
                     <form action="{{ route('admin.users.suspend', $u) }}" method="POST" class="d-inline">
                         @csrf
-                        <button type="submit" class="fp-btn fp-btn-ghost" style="padding:4px 10px;color:var(--gold-400);"><i class="bi bi-lock-fill"></i></button>
+                        <button type="submit" class="fp-btn fp-btn-ghost" style="padding:4px 10px;color:var(--gold-400);"><i class="bi bi-lock-fill"></i> Suspend</button>
                     </form>
                     @endif
                 </td>
