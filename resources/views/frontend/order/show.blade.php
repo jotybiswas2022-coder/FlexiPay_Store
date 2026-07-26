@@ -173,9 +173,11 @@
                             </form>
                         </div>
                         <div class="mt-2">
-                            <form action="{{ route('orders.cancel', $order) }}" method="POST">
+                            <form action="{{ route('orders.cancel', $order) }}" method="POST" id="cancelOrderForm">
                                 @csrf
-                                <button type="submit" class="fp-action-btn danger w-100"><i class="bi bi-x-circle"></i> Cancel Order</button>
+                                <input type="hidden" name="reason" id="cancelReason">
+                                <input type="hidden" name="accept_fee" id="cancelAcceptFee" value="0">
+                                <button type="button" class="fp-action-btn danger w-100" id="cancelOrderBtn"><i class="bi bi-x-circle"></i> Cancel Order</button>
                             </form>
                         </div>
                     </div>
@@ -243,11 +245,17 @@ document.addEventListener('DOMContentLoaded', function() {
         Swal.fire({ icon:'info', title:'Info', text:"{{ session('info') }}", background:'#1A1A1E', color:'#F4F4F5', confirmButtonColor:'#EAB308' });
     @endif
 
-    document.querySelector('form[action="{{ route('orders.cancel', $order) }}"]')?.addEventListener('submit', function(e) {
-        e.preventDefault();
+    document.getElementById('cancelOrderBtn')?.addEventListener('click', function() {
         Swal.fire({
             title: 'Cancel Order?',
-            text: 'A 10% cancellation fee will apply. This action cannot be undone.',
+            html: `
+                <p style="color:#A1A1AA;margin-bottom:16px;font-size:14px;">A 10% cancellation fee will apply. This action cannot be undone.</p>
+                <textarea id="swalCancelReason" class="swal2-textarea" placeholder="Tell us why you're cancelling (min 10 characters)" style="background:#121214;color:#F4F4F5;border:1px solid #2A2A2E;border-radius:8px;padding:10px;width:100%;resize:vertical;font-family:inherit;"></textarea>
+                <label style="display:flex;align-items:center;gap:8px;margin-top:12px;color:#A1A1AA;font-size:13px;cursor:pointer;">
+                    <input type="checkbox" id="swalAcceptFee" style="accent-color:#EAB308;width:16px;height:16px;">
+                    I understand and accept the 10% cancellation fee
+                </label>
+            `,
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#ef4444',
@@ -256,9 +264,27 @@ document.addEventListener('DOMContentLoaded', function() {
             cancelButtonText: 'Keep order',
             background: '#1A1A1E',
             color: '#F4F4F5',
+            didOpen: () => {
+                document.getElementById('swalCancelReason').focus();
+            },
+            preConfirm: () => {
+                const reason = document.getElementById('swalCancelReason').value.trim();
+                const acceptFee = document.getElementById('swalAcceptFee').checked;
+                if (!reason || reason.length < 10) {
+                    Swal.showValidationMessage('Please provide a reason (at least 10 characters)');
+                    return false;
+                }
+                if (!acceptFee) {
+                    Swal.showValidationMessage('You must accept the cancellation fee');
+                    return false;
+                }
+                return { reason, acceptFee };
+            }
         }).then((result) => {
             if (result.isConfirmed) {
-                this.submit();
+                document.getElementById('cancelReason').value = result.value.reason;
+                document.getElementById('cancelAcceptFee').value = result.value.acceptFee ? '1' : '0';
+                document.getElementById('cancelOrderForm').submit();
             }
         });
     });
