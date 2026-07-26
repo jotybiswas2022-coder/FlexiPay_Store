@@ -282,10 +282,7 @@ document.addEventListener('DOMContentLoaded', function() {
             preConfirm: () => {
                 const reason = document.getElementById('swalCancelReason')?.value.trim();
                 const accept = document.getElementById('swalAcceptFee')?.checked;
-                if (!reason || reason.length < 10) {
-                    Swal.showValidationMessage('Please enter a reason (at least 10 characters)');
-                    return false;
-                }
+
                 if (!accept) {
                     Swal.showValidationMessage('Please accept the cancellation fee');
                     return false;

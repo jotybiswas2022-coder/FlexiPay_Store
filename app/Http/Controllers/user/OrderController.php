@@ -158,7 +158,7 @@ class OrderController extends Controller
         $cancellationFee = ($order->grand_total * $cancellationFeePercent) / 100;
 
         $request->validate([
-            'reason' => 'required|string|min:10',
+            'reason' => 'nullable|string|max:1000',
             'accept_fee' => 'required|accepted',
         ]);
 
