@@ -38,6 +38,8 @@ Route::middleware(['auth'])->prefix('checkout')->controller(CheckoutController::
     Route::post('/process', 'process')->name('checkout.process');
     Route::get('/payment/{order}', 'paymentGateway')->name('payment.gateway');
     Route::post('/payment/{order}/process', 'processPayment')->name('payment.process');
+    Route::post('/apply-promo', 'applyPromoCode')->name('checkout.apply-promo');
+    Route::get('/remove-promo', 'removePromoCode')->name('checkout.remove-promo');
     Route::get('/confirmation/{order}', 'confirmation')->name('order.confirmation');
 });
 

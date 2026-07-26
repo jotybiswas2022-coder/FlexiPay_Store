@@ -15,7 +15,8 @@ class Order extends Model
         'insurance_fee', 'interest_amount', 'grand_total',
         'paid_amount', 'remaining_amount', 'payment_type',
         'has_insurance', 'delivery_status', 'delivered_at',
-        'delivery_address_id', 'cancellation_reason', 'cancellation_fee', 'notes'
+        'delivery_address_id', 'cancellation_reason', 'cancellation_fee', 'notes',
+        'promo_code_id', 'discount_amount'
     ];
 
     protected $casts = [
@@ -28,6 +29,7 @@ class Order extends Model
         'grand_total' => 'decimal:2',
         'paid_amount' => 'decimal:2',
         'remaining_amount' => 'decimal:2',
+        'discount_amount' => 'decimal:2',
         'delivered_at' => 'datetime',
     ];
 
@@ -64,6 +66,11 @@ class Order extends Model
     public function deliveryTrackings()
     {
         return $this->hasMany(DeliveryTracking::class);
+    }
+
+    public function promoCode()
+    {
+        return $this->belongsTo(PromoCode::class);
     }
 
     public function reviews()

@@ -14,6 +14,7 @@ use App\Models\Wallet;
 use App\Models\DeliveryAddress;
 use App\Models\Setting;
 use App\Models\InsuranceSetting;
+use App\Models\PromoCode;
 use Illuminate\Support\Str;
 
 class CheckoutController extends Controller
@@ -41,9 +42,22 @@ class CheckoutController extends Controller
             $total += $item['price'] * $item['quantity'];
         }
 
+        $promoCode = null;
+        $discount = 0;
+        $promoSession = session('promo_code');
+        if ($promoSession) {
+            $promoCode = PromoCode::where('code', $promoSession['code'])->first();
+            if ($promoCode && $promoCode->isValid() && $total >= $promoCode->min_order_amount) {
+                $discount = $promoCode->calculateDiscount($total);
+            } else {
+                session()->forget('promo_code');
+            }
+        }
+
         return view('frontend.checkout', compact(
             'cart', 'total', 'installmentPlans',
-            'addresses', 'settings', 'insurance', 'wallet'
+            'addresses', 'settings', 'insurance', 'wallet',
+            'promoCode', 'discount'
         ));
     }
 
@@ -87,6 +101,22 @@ class CheckoutController extends Controller
 
         $grandTotal = $baseAmount + $shippingFee + $insuranceFee + $interestAmount;
 
+        // Apply promo code discount
+        $discountAmount = 0;
+        $promoCodeId = null;
+        $promoSession = session('promo_code');
+        if ($promoSession) {
+            $promoCode = PromoCode::where('code', $promoSession['code'])->first();
+            if ($promoCode && $promoCode->isValid() && $totalAmount >= $promoCode->min_order_amount) {
+                $discountAmount = $promoCode->calculateDiscount($totalAmount);
+                $grandTotal -= $discountAmount;
+                if ($grandTotal < 0) $grandTotal = 0;
+                $promoCodeId = $promoCode->id;
+                $promoCode->increment('used_count');
+            }
+            session()->forget('promo_code');
+        }
+
         // Create order
         $order = Order::create([
             'order_number' => 'ORD-' . strtoupper(Str::random(10)),
@@ -99,6 +129,8 @@ class CheckoutController extends Controller
             'insurance_fee' => $insuranceFee,
             'interest_amount' => $interestAmount,
             'grand_total' => $grandTotal,
+            'discount_amount' => $discountAmount,
+            'promo_code_id' => $promoCodeId,
             'paid_amount' => 0,
             'remaining_amount' => $grandTotal,
             'payment_type' => $request->payment_type,
@@ -222,9 +254,40 @@ class CheckoutController extends Controller
             ->with('success', 'Order placed successfully!');
     }
 
+    public function applyPromoCode(Request $request)
+    {
+        $request->validate(['code' => 'required|string|max:50']);
+
+        $promoCode = PromoCode::where('code', $request->code)->first();
+
+        if (!$promoCode || !$promoCode->isValid()) {
+            return back()->with('error', 'Invalid or expired promo code.');
+        }
+
+        $cart = session()->get('cart', []);
+        $total = 0;
+        foreach ($cart as $item) {
+            $total += $item['price'] * $item['quantity'];
+        }
+
+        if ($total < $promoCode->min_order_amount) {
+            return back()->with('error', 'Minimum order amount of ₦' . number_format($promoCode->min_order_amount, 0) . ' required.');
+        }
+
+        session(['promo_code' => ['code' => $promoCode->code, 'discount' => $promoCode->calculateDiscount($total)]]);
+
+        return back()->with('success', 'Promo code "' . $promoCode->code . '" applied!');
+    }
+
+    public function removePromoCode()
+    {
+        session()->forget('promo_code');
+        return back()->with('success', 'Promo code removed.');
+    }
+
     public function confirmation(Order $order)
     {
-        $order->load(['items.product', 'installmentPlan', 'installmentPayments', 'deliveryAddress']);
+        $order->load(['items.product', 'installmentPlan', 'installmentPayments', 'deliveryAddress', 'promoCode']);
         return view('frontend.order.confirmation', compact('order'));
     }
 }

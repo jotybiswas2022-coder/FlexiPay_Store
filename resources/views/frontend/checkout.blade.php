@@ -250,6 +250,11 @@
 }
 .fp-chk-trust-item i { color: var(--gold-500); font-size: 14px; }
 
+.fp-chk-promo { margin-top:16px; }
+.fp-chk-promo-form { display:flex; gap:8px; }
+.fp-chk-promo-applied { display:flex; align-items:center; gap:10px; padding:10px 14px; background:rgba(74,222,128,0.05); border:1px solid rgba(74,222,128,0.2); border-radius:8px; font-size:13px; }
+.fp-chk-promo-applied span { display:flex; align-items:center; gap:6px; }
+
 .fp-chk-error {
     display: flex; align-items: center; gap: 8px;
     background: rgba(239,68,68,0.1);
@@ -456,18 +461,40 @@
                             @endforeach
                         </div>
 
+                        <div class="fp-chk-promo">
+                            @if($promoCode ?? null)
+                                <div class="fp-chk-promo-applied">
+                                    <span><i class="bi bi-tag-fill"></i> {{ $promoCode->code }}</span>
+                                    <span style="color:#4ade80;">-₦{{ number_format($discount, 0) }}</span>
+                                    <a href="{{ route('checkout.remove-promo') }}" style="color:#ef4444;font-size:11px;text-decoration:none;">Remove</a>
+                                </div>
+                            @else
+                                <form action="{{ route('checkout.apply-promo') }}" method="POST" class="fp-chk-promo-form">
+                                    @csrf
+                                    <input type="text" name="code" class="fp-chk-promo-input" placeholder="Promo code" style="flex:1;background:#121214;border:1px solid #2A2A2E;border-radius:6px;padding:8px 12px;color:#F4F4F5;font-size:13px;font-family:inherit;">
+                                    <button type="submit" class="fp-chk-promo-btn" style="background:rgba(234,179,8,0.1);border:1px solid rgba(234,179,8,0.2);border-radius:6px;padding:8px 14px;color:var(--gold-400);font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;">Apply</button>
+                                </form>
+                            @endif
+                        </div>
+
                         <div style="margin-top:16px;">
                             <div class="fp-chk-total-line">
                                 <span>Subtotal</span>
                                 <span>₦{{ number_format($total, 0) }}</span>
                             </div>
+                            @if($discount > 0)
+                            <div class="fp-chk-total-line">
+                                <span>Discount</span>
+                                <span style="color:#4ade80;">-₦{{ number_format($discount, 0) }}</span>
+                            </div>
+                            @endif
                             <div class="fp-chk-total-line">
                                 <span>Shipping</span>
                                 <span style="color:var(--gold-400);">Calculated at checkout</span>
                             </div>
                             <div class="fp-chk-total-line final">
                                 <span>Total</span>
-                                <span>₦{{ number_format($total, 0) }}</span>
+                                <span>₦{{ number_format(max($total - $discount, 0), 0) }}</span>
                             </div>
                         </div>
 

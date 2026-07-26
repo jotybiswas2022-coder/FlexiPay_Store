@@ -128,6 +128,16 @@ Route::prefix('admin')->middleware('admin')->group(function () {
         Route::get('/export', 'export')->name('admin.analytics.export');
     });
 
+    // ===== PROMO CODES =====
+    Route::prefix('promo-codes')->controller(PromoCodeController::class)->group(function () {
+        Route::get('/', 'index')->name('admin.promo-codes.index');
+        Route::get('/create', 'create')->name('admin.promo-codes.create');
+        Route::post('/store', 'store')->name('admin.promo-codes.store');
+        Route::get('/edit/{promoCode}', 'edit')->name('admin.promo-codes.edit');
+        Route::post('/update/{promoCode}', 'update')->name('admin.promo-codes.update');
+        Route::get('/delete/{promoCode}', 'destroy')->name('admin.promo-codes.delete');
+    });
+
     // ===== FAQS =====
     Route::prefix('faqs')->controller(AdminFaqController::class)->group(function () {
         Route::get('/', 'index')->name('admin.faqs.index');
