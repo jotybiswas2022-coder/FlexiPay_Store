@@ -203,6 +203,8 @@
         .fp-btn-ghost:hover { border-color: var(--gold-400); color: var(--gold-400); }
         .fp-btn-danger { background: rgba(239,68,68,0.1); color: #ef4444; border: 1px solid rgba(239,68,68,0.2); }
         .fp-btn-danger:hover { background: rgba(239,68,68,0.2); }
+        .fp-btn-success { background: rgba(74,222,128,0.1); color: #4ade80; border: 1px solid rgba(74,222,128,0.2); }
+        .fp-btn-success:hover { background: rgba(74,222,128,0.2); }
 
         .fp-form-control {
             background: var(--surface-dark);
