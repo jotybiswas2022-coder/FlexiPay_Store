@@ -101,14 +101,14 @@ class AdminUserController extends Controller
     {
         $verification = \App\Models\UserVerification::findOrFail($id);
         $request->validate([
-            'status' => 'required|in:verified,rejected',
+            'status' => 'required|in:approved,rejected',
             'rejection_reason' => 'required_if:status,rejected|nullable|string',
         ]);
 
         $verification->update([
             'status' => $request->status,
             'rejection_reason' => $request->status === 'rejected' ? $request->rejection_reason : null,
-            'verified_at' => $request->status === 'verified' ? now() : null,
+            'verified_at' => $request->status === 'approved' ? now() : null,
         ]);
 
         // Update user verification status
@@ -124,6 +124,6 @@ class AdminUserController extends Controller
             $user->update([$field => $request->status]);
         }
 
-        return back()->with('success', 'Verification ' . $request->status . '!');
+        return back()->with('success', 'Verification ' . ($request->status === 'approved' ? 'approved' : 'rejected') . '!');
     }
 }

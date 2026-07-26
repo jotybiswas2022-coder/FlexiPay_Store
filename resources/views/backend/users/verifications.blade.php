@@ -51,7 +51,7 @@
 
                     <form id="approve-form-{{ $v->id }}" action="{{ route('admin.users.verifications.update', $v->id) }}" method="POST" style="display:none;">
                         @csrf
-                        <input type="hidden" name="status" value="verified">
+                        <input type="hidden" name="status" value="approved">
                     </form>
 
                     <form id="reject-form-{{ $v->id }}" action="{{ route('admin.users.verifications.update', $v->id) }}" method="POST" style="display:none;">
