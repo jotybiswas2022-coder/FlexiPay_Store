@@ -107,5 +107,4 @@
     </div>
 </div>
 @include('frontend.partials.footer')
-@stop
 @endsection
