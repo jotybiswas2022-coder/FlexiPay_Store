@@ -59,7 +59,7 @@
                         <strong>₦{{ number_format(auth()->user()->wallet?->balance ?? 0, 0) }}</strong>
                     </div>
 
-                    <form action="{{ route('wallet.fund') }}" method="POST" class="mt-4">
+                    <form action="{{ route('wallet.fund.process') }}" method="POST" class="mt-4">
                         @csrf
                         <div class="fp-form-group">
                             <label><i class="bi bi-cash-coin"></i> Amount to Add (₦)</label>

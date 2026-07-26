@@ -32,6 +32,12 @@ class WalletController extends Controller
         return view('frontend.wallet.index', compact('wallet', 'transactions'));
     }
 
+    public function showFundForm()
+    {
+        $wallet = auth()->user()->wallet;
+        return view('frontend.wallet.fund', compact('wallet'));
+    }
+
     public function fund(Request $request)
     {
         $request->validate([
