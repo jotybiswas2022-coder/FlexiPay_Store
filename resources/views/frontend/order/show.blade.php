@@ -173,7 +173,7 @@
                             </form>
                         </div>
                         <div class="mt-2">
-                            <form action="{{ route('orders.cancel', $order) }}" method="POST" onsubmit="return confirm('Cancel this order? 10% fee applies.')">
+                            <form action="{{ route('orders.cancel', $order) }}" method="POST">
                                 @csrf
                                 <button type="submit" class="fp-action-btn danger w-100"><i class="bi bi-x-circle"></i> Cancel Order</button>
                             </form>
@@ -228,3 +228,40 @@
 
 @include('frontend.partials.footer')
 @endsection
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    @if(session('success'))
+        Swal.fire({ icon:'success', title:'Success!', text:"{{ session('success') }}", background:'#1A1A1E', color:'#F4F4F5', confirmButtonColor:'#EAB308' });
+    @endif
+    @if(session('error'))
+        Swal.fire({ icon:'error', title:'Error!', text:"{{ session('error') }}", background:'#1A1A1E', color:'#F4F4F5', confirmButtonColor:'#EAB308' });
+    @endif
+    @if(session('info'))
+        Swal.fire({ icon:'info', title:'Info', text:"{{ session('info') }}", background:'#1A1A1E', color:'#F4F4F5', confirmButtonColor:'#EAB308' });
+    @endif
+
+    document.querySelector('form[action="{{ route('orders.cancel', $order) }}"]')?.addEventListener('submit', function(e) {
+        e.preventDefault();
+        Swal.fire({
+            title: 'Cancel Order?',
+            text: 'A 10% cancellation fee will apply. This action cannot be undone.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#ef4444',
+            cancelButtonColor: '#52525B',
+            confirmButtonText: 'Yes, cancel it',
+            cancelButtonText: 'Keep order',
+            background: '#1A1A1E',
+            color: '#F4F4F5',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                this.submit();
+            }
+        });
+    });
+});
+</script>
+@endpush
