@@ -235,59 +235,77 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    const swalDark = Swal.mixin({
+        background: '#1A1A1E',
+        color: '#F4F4F5',
+        confirmButtonColor: '#EAB308',
+        cancelButtonColor: '#52525B',
+        backdrop: 'rgba(0,0,0,0.7)',
+        customClass: {
+            popup: 'swal-dark-popup',
+            validationMessage: 'swal-dark-validation',
+        }
+    });
+
     @if(session('success'))
-        Swal.fire({ icon:'success', title:'Success!', text:"{{ session('success') }}", background:'#1A1A1E', color:'#F4F4F5', confirmButtonColor:'#EAB308' });
+        swalDark.fire({ icon:'success', title:'Success!', text:"{{ session('success') }}" });
     @endif
     @if(session('error'))
-        Swal.fire({ icon:'error', title:'Error!', text:"{{ session('error') }}", background:'#1A1A1E', color:'#F4F4F5', confirmButtonColor:'#EAB308' });
+        swalDark.fire({ icon:'error', title:'Error!', text:"{{ session('error') }}" });
     @endif
     @if(session('info'))
-        Swal.fire({ icon:'info', title:'Info', text:"{{ session('info') }}", background:'#1A1A1E', color:'#F4F4F5', confirmButtonColor:'#EAB308' });
+        swalDark.fire({ icon:'info', title:'Info', text:"{{ session('info') }}" });
     @endif
 
     document.getElementById('cancelOrderBtn')?.addEventListener('click', function() {
-        Swal.fire({
+        swalDark.fire({
             title: 'Cancel Order?',
             html: `
-                <p style="color:#A1A1AA;margin-bottom:16px;font-size:14px;">A 10% cancellation fee will apply. This action cannot be undone.</p>
-                <textarea id="swalCancelReason" class="swal2-textarea" placeholder="Tell us why you're cancelling (min 10 characters)" style="background:#121214;color:#F4F4F5;border:1px solid #2A2A2E;border-radius:8px;padding:10px;width:100%;resize:vertical;font-family:inherit;"></textarea>
-                <label style="display:flex;align-items:center;gap:8px;margin-top:12px;color:#A1A1AA;font-size:13px;cursor:pointer;">
-                    <input type="checkbox" id="swalAcceptFee" style="accent-color:#EAB308;width:16px;height:16px;">
-                    I understand and accept the 10% cancellation fee
+                <p style="color:#A1A1AA;margin-bottom:16px;font-size:14px;">A 10% cancellation fee will apply.</p>
+                <textarea id="swalCancelReason" placeholder="Why are you cancelling? (min 10 chars)" style="background:#121214;color:#F4F4F5;border:1px solid #3A3A3E;border-radius:8px;padding:10px 12px;width:100%;min-height:80px;resize:vertical;font-family:inherit;font-size:14px;outline:none;box-sizing:border-box;"></textarea>
+                <label style="display:flex;align-items:center;gap:8px;margin-top:14px;color:#A1A1AA;font-size:13px;cursor:pointer;user-select:none;">
+                    <input type="checkbox" id="swalAcceptFee" style="accent-color:#EAB308;width:16px;height:16px;flex-shrink:0;">
+                    I accept the 10% cancellation fee
                 </label>
             `,
             icon: 'warning',
+            iconColor: '#facc15',
             showCancelButton: true,
             confirmButtonColor: '#ef4444',
-            cancelButtonColor: '#52525B',
-            confirmButtonText: 'Yes, cancel it',
+            confirmButtonText: 'Yes, cancel order',
             cancelButtonText: 'Keep order',
-            background: '#1A1A1E',
-            color: '#F4F4F5',
+            width: '420px',
+            padding: '24px',
             didOpen: () => {
-                document.getElementById('swalCancelReason').focus();
+                document.getElementById('swalCancelReason')?.focus();
             },
             preConfirm: () => {
-                const reason = document.getElementById('swalCancelReason').value.trim();
-                const acceptFee = document.getElementById('swalAcceptFee').checked;
+                const reason = document.getElementById('swalCancelReason')?.value.trim();
+                const accept = document.getElementById('swalAcceptFee')?.checked;
                 if (!reason || reason.length < 10) {
-                    Swal.showValidationMessage('Please provide a reason (at least 10 characters)');
+                    Swal.showValidationMessage('Please enter a reason (at least 10 characters)');
                     return false;
                 }
-                if (!acceptFee) {
-                    Swal.showValidationMessage('You must accept the cancellation fee');
+                if (!accept) {
+                    Swal.showValidationMessage('Please accept the cancellation fee');
                     return false;
                 }
-                return { reason, acceptFee };
+                return { reason, acceptFee: accept };
             }
-        }).then((result) => {
-            if (result.isConfirmed) {
-                document.getElementById('cancelReason').value = result.value.reason;
-                document.getElementById('cancelAcceptFee').value = result.value.acceptFee ? '1' : '0';
+        }).then((r) => {
+            if (r.isConfirmed) {
+                document.getElementById('cancelReason').value = r.value.reason;
+                document.getElementById('cancelAcceptFee').value = r.value.acceptFee ? '1' : '0';
                 document.getElementById('cancelOrderForm').submit();
             }
         });
     });
 });
 </script>
+<style>
+.swal-dark-popup { border:1px solid #2A2A2E;border-radius:16px !important; }
+.swal-dark-popup .swal2-title { color:#F4F4F5;font-size:18px; }
+.swal-dark-popup .swal2-textarea:focus { border-color:#EAB308 !important;box-shadow:0 0 0 2px rgba(234,179,8,0.15); }
+.swal-dark-validation { background:#27272A;color:#ef4444;border-radius:6px;padding:6px 10px;font-size:12px;margin-top:8px; }
+</style>
 @endpush
