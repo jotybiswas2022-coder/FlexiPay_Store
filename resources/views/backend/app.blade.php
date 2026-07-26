@@ -269,6 +269,9 @@
                 <a href="{{ route('admin.suppliers.index') }}" class="{{ request()->routeIs('admin.suppliers.*') ? 'active' : '' }}">
                     <i class="bi bi-truck"></i> Suppliers
                 </a>
+                <a href="{{ route('admin.promo-codes.index') }}" class="{{ request()->routeIs('admin.promo-codes.*') ? 'active' : '' }}">
+                    <i class="bi bi-percent"></i> Promo Codes
+                </a>
 
                 <div class="nav-section">Orders</div>
                 <a href="{{ route('admin.orders.index') }}" class="{{ request()->routeIs('admin.orders.*') && !request()->routeIs('admin.orders.fees*') ? 'active' : '' }}">
