@@ -327,34 +327,7 @@
     </div>
 </section>
 
-<!-- ===== CATEGORIES ===== -->
-<section class="fp-section fp-section-alt">
-    <div class="container">
-        <div class="fp-section-header">
-            <span class="fp-section-tag"><i class="bi bi-grid"></i> Categories</span>
-            <h2>Shop by Category</h2>
-            <p>Find exactly what you're looking for</p>
-        </div>
-        <div class="row g-2">
-            @forelse($categories ?? [] as $category)
-            <div class="col-lg-3 col-md-4 col-6">
-                <a href="{{ url('/shop?category_id='.$category->id) }}" class="fp-cat">
-                    <i class="bi {{ ['bi-phone','bi-laptop','bi-tv','bi-watch','bi-headphones','bi-speaker','bi-camera','bi-printer','bi-joystick','bi-house-gear','bi-car-front','bi-tshirt'][$loop->index % 12] }}"></i>
-                    <span>{{ $category->name }}</span>
-                    <i class="bi bi-chevron-right"></i>
-                </a>
-            </div>
-            @empty
-            <div class="col-12">
-                <div class="fp-empty">
-                    <i class="bi bi-grid"></i>
-                    <p>Categories coming soon!</p>
-                </div>
-            </div>
-            @endforelse
-        </div>
-    </div>
-</section>
+
 
 <!-- ===== TESTIMONIALS ===== -->
 <section class="fp-section">
@@ -879,36 +852,6 @@
 }
 
 /* ============================================================
-   CATEGORIES
-   ============================================================ */
-.fp-cat {
-    display: flex; align-items: center; gap: 10px;
-    background: #16161d;
-    border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 10px;
-    padding: 14px 16px;
-    text-decoration: none;
-    transition: all 0.25s ease;
-    height: 100%;
-}
-.fp-cat:hover {
-    border-color: rgba(234,179,8,0.2);
-    transform: translateX(4px);
-}
-.fp-cat i:first-child {
-    font-size: 18px; color: #eab308;
-    width: 24px; text-align: center;
-}
-.fp-cat span {
-    flex: 1; font-size: 14px; font-weight: 600; color: #f4f4f5;
-}
-.fp-cat i:last-child {
-    font-size: 12px; color: rgba(255,255,255,0.15);
-    transition: all 0.25s;
-}
-.fp-cat:hover i:last-child { color: #eab308; transform: translateX(3px); }
-
-/* ============================================================
    TESTIMONIALS
    ============================================================ */
 .fp-testi {
@@ -1063,8 +1006,7 @@
     .fp-fcard { padding: 16px 14px; }
     .fp-fcard h3 { font-size: 14px; }
     .fp-fcard p { font-size: 12px; }
-    .fp-cat { padding: 12px 14px; }
-    .fp-cat span { font-size: 13px; }
+
     .fp-testi { padding: 20px 16px; }
     .fp-testi p { font-size: 13px; }
     .fp-testi-stars { font-size: 12px; }
@@ -1124,9 +1066,7 @@
     .fp-fcard-icon { width: 36px; height: 36px; font-size: 15px; margin-bottom: 8px; }
     .fp-fcard h3 { font-size: 13px; }
     .fp-fcard p { font-size: 12px; }
-    .fp-cat { padding: 10px 12px; }
-    .fp-cat i:first-child { font-size: 16px; width: 20px; }
-    .fp-cat span { font-size: 13px; }
+
     .fp-testi { padding: 18px 14px; }
     .fp-testi p { font-size: 13px; }
     .fp-testi-stars { font-size: 11px; }
