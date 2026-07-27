@@ -1097,6 +1097,8 @@
     .fp-hero { min-height: auto; padding: 60px 0 80px; text-align: center; }
     .fp-hero-content { max-width: 100%; }
     .fp-hero-actions { justify-content: center; }
+    .fp-hero-search { display: flex; justify-content: center; }
+    .fp-hs-form { width: 100%; max-width: 440px; }
     .fp-hero-trust { justify-content: center; }
     .fp-hero-desc { margin-left: auto; margin-right: auto; }
     .fp-hero-grid { max-width: 400px; margin: 0 auto; }
