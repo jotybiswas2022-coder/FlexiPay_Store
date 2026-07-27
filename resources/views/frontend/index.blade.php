@@ -20,7 +20,8 @@
         <div class="fp-hero-glow g1"></div>
         <div class="fp-hero-glow g2"></div>
     </div>
-    <div class="container">            <div class="row align-items-center g-5">
+    <div class="container">
+        <div class="row align-items-center g-5">
             <div class="col-lg-6">
                 <div class="fp-hero-content">
                     <div class="fp-hero-badge">
@@ -46,7 +47,7 @@
                     <div class="fp-hero-search">
                         <form action="{{ url('/shop') }}" method="GET" class="fp-hs-form" role="search">
                             <i class="bi bi-search"></i>
-                            <input type="text" name="search" placeholder="Search products, brands, categories..." aria-label="Search products">
+                            <input type="text" name="search" placeholder="Search products, brands, categories..." aria-label="Search products" autocomplete="off">
                             <button type="submit">Search</button>
                         </form>
                     </div>
@@ -68,7 +69,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </section>
@@ -1012,49 +1012,150 @@
    RESPONSIVE
    ============================================================ */
 @media (max-width: 991px) {
-    .fp-hero { min-height: auto; padding: 60px 0 80px; text-align: center; }
+    .fp-hero { min-height: auto; padding: 50px 0 70px; text-align: center; }
     .fp-hero-content { max-width: 100%; }
     .fp-hero-actions { justify-content: center; }
     .fp-hero-search { display: flex; justify-content: center; }
     .fp-hs-form { width: 100%; max-width: 440px; }
     .fp-hero-trust { justify-content: center; }
-    .fp-hero-desc { margin-left: auto; margin-right: auto; }
-
+    .fp-hero-desc { margin-left: auto; margin-right: auto; max-width: 100%; }
     .fp-section { padding: 50px 0; }
     .fp-card-img { height: 180px; }
 }
 @media (max-width: 768px) {
-    .fp-hero { padding: 40px 0 60px; }
-    .fp-hero-title { font-size: 28px; }
-    .fp-hero-desc { font-size: 14px; }
-    .fp-hero-trust { gap: 16px; flex-wrap: wrap; }
-    .fp-ht-item { font-size: 12px; }
-    .fp-ht-item strong { font-size: 15px; }
-    .fp-card-img { height: 160px; }
-    .fp-section-header { margin-bottom: 28px; }
-    .fp-section-header h2 { font-size: 24px; }
-    .fp-stats { padding: 40px 0; }
-    .fp-stat-num { font-size: 26px; }
-    .fp-cta { padding: 50px 0; }
-    .fp-trust-inner { gap: 10px; }
-    .fp-trust-item { font-size: 12px; }
-    .fp-trust-dot { display: none; }
-}
-@media (max-width: 576px) {
-    .fp-hero-title { font-size: 24px; }
-    .fp-hero-actions { flex-direction: column; }
+    .fp-hero { padding: 35px 0 50px; }
+    .fp-hero-title { font-size: 26px; }
+    .fp-hero-desc { font-size: 14px; margin-bottom: 20px; }
+    .fp-hero-badge { font-size: 11px; padding: 5px 12px; }
+    .fp-hero-actions { flex-direction: column; gap: 10px; }
     .fp-hero-actions .fp-btn-primary,
     .fp-hero-actions .fp-btn-secondary { width: 100%; justify-content: center; }
-    .fp-card-img { height: 140px; }
-    .fp-card-body h3 { font-size: 13px; }
-    .fp-price-current { font-size: 14px; }
-    .fp-step { padding: 24px 16px; }
-    .fp-fcard { padding: 16px 14px; }
-    .fp-fcard h3 { font-size: 14px; }
-    .fp-cta-actions { flex-direction: column; }
+    .fp-hero-search { margin-bottom: 18px; }
+    .fp-hs-form input { padding: 10px 10px; font-size: 13px; }
+    .fp-hs-form button { padding: 10px 14px; font-size: 12px; }
+    .fp-hero-trust { gap: 12px; justify-content: center; }
+    .fp-ht-item { font-size: 12px; }
+    .fp-ht-item strong { font-size: 15px; }
+    .fp-card-img { height: 150px; }
+    .fp-section-header { margin-bottom: 24px; }
+    .fp-section-header h2 { font-size: 22px; }
+    .fp-section { padding: 40px 0; }
+    .fp-stats { padding: 35px 0; }
+    .fp-stat { padding: 20px 12px; }
+    .fp-stat-num { font-size: 24px; }
+    .fp-stat i { font-size: 24px; }
+    .fp-cta { padding: 45px 0; }
+    .fp-cta-title { font-size: 24px; }
+    .fp-cta-desc { font-size: 14px; margin-bottom: 20px; }
+    .fp-cta-actions { flex-direction: column; gap: 10px; }
     .fp-cta-actions .fp-btn-primary,
     .fp-cta-actions .fp-btn-secondary { width: 100%; justify-content: center; }
-    .fp-cta-features { gap: 12px; flex-direction: column; }
+    .fp-cta-features { gap: 10px; flex-direction: column; align-items: center; }
+    .fp-trust-inner { gap: 8px; flex-direction: column; align-items: center; }
+    .fp-trust-item { font-size: 12px; }
+    .fp-trust-dot { display: none; }
+    .fp-marquee-item { font-size: 12px; }
+    .fp-marquee-dot { margin: 0 16px; }
+    .fp-step { padding: 24px 16px; }
+    .fp-step h3 { font-size: 16px; }
+    .fp-step p { font-size: 13px; }
+    .fp-step-icon { width: 50px; height: 50px; font-size: 20px; }
+    .fp-fcard { padding: 16px 14px; }
+    .fp-fcard h3 { font-size: 14px; }
+    .fp-fcard p { font-size: 12px; }
+    .fp-cat { padding: 12px 14px; }
+    .fp-cat span { font-size: 13px; }
+    .fp-testi { padding: 20px 16px; }
+    .fp-testi p { font-size: 13px; }
+    .fp-testi-stars { font-size: 12px; }
+    .fp-empty { padding: 40px 16px; }
+    .fp-empty i { font-size: 32px; }
+}
+@media (max-width: 576px) {
+    .fp-hero { padding: 30px 0 40px; }
+    .fp-hero-title { font-size: 22px; }
+    .fp-hero-desc { font-size: 13px; margin-bottom: 16px; }
+    .fp-hero-badge { font-size: 10px; padding: 4px 10px; margin-bottom: 16px; }
+    .fp-hero-actions { gap: 8px; margin-bottom: 16px; }
+    .fp-hero-actions .fp-btn-primary,
+    .fp-hero-actions .fp-btn-secondary { padding: 12px 20px; font-size: 14px; }
+    .fp-hero-search { margin-bottom: 14px; }
+    .fp-hs-form { border-radius: 10px; }
+    .fp-hs-form i { font-size: 13px; padding-left: 12px; }
+    .fp-hs-form input { padding: 10px 8px; font-size: 13px; }
+    .fp-hs-form button { padding: 10px 14px; font-size: 12px; }
+    .fp-ht-item { font-size: 11px; }
+    .fp-ht-item strong { font-size: 14px; }
+    .fp-ht-item i { font-size: 13px; }
+    .fp-ht-divider { height: 18px; }
+    .fp-card-img { height: 130px; }
+    .fp-card-body { padding: 10px 12px 14px; }
+    .fp-card-body h3 { font-size: 13px; margin-bottom: 6px; }
+    .fp-price-current { font-size: 14px; }
+    .fp-price-old { font-size: 12px; }
+    .fp-card-meta { font-size: 11px; }
+    .fp-card-badge { font-size: 10px; padding: 3px 8px; }
+    .fp-card-discount { font-size: 10px; padding: 3px 6px; }
+    .fp-section { padding: 35px 0; }
+    .fp-section-header { margin-bottom: 20px; }
+    .fp-section-header h2 { font-size: 20px; }
+    .fp-section-header p { font-size: 13px; }
+    .fp-section-tag { font-size: 10px; padding: 4px 10px; }
+    .fp-stats { padding: 30px 0; }
+    .fp-stat { padding: 18px 10px; }
+    .fp-stat-num { font-size: 22px; }
+    .fp-stat span { font-size: 12px; }
+    .fp-stat i { font-size: 22px; }
+    .fp-cta { padding: 35px 0; }
+    .fp-cta-title { font-size: 22px; }
+    .fp-cta-desc { font-size: 13px; margin-bottom: 18px; max-width: 100%; }
+    .fp-cta-tag { font-size: 10px; padding: 4px 10px; }
+    .fp-cta-actions { gap: 8px; margin-bottom: 18px; }
+    .fp-cta-actions .fp-btn-primary,
+    .fp-cta-actions .fp-btn-secondary { padding: 12px 20px; font-size: 14px; }
+    .fp-cta-features span { font-size: 13px; }
+    .fp-cta-features i { font-size: 14px; }
+    .fp-step { padding: 20px 14px; }
+    .fp-step h3 { font-size: 15px; }
+    .fp-step p { font-size: 13px; }
+    .fp-step-icon { width: 46px; height: 46px; font-size: 18px; margin-bottom: 12px; }
+    .fp-step-num { font-size: 32px; }
+    .fp-fcard { padding: 14px 12px; }
+    .fp-fcard-icon { width: 36px; height: 36px; font-size: 15px; margin-bottom: 8px; }
+    .fp-fcard h3 { font-size: 13px; }
+    .fp-fcard p { font-size: 12px; }
+    .fp-cat { padding: 10px 12px; }
+    .fp-cat i:first-child { font-size: 16px; width: 20px; }
+    .fp-cat span { font-size: 13px; }
+    .fp-testi { padding: 18px 14px; }
+    .fp-testi p { font-size: 13px; }
+    .fp-testi-stars { font-size: 11px; }
+    .fp-testi-author strong { font-size: 13px; }
+    .fp-testi-author small { font-size: 11px; }
+    .fp-testi-avatar { width: 32px; height: 32px; font-size: 12px; }
+    .fp-empty { padding: 30px 16px; }
+    .fp-empty i { font-size: 28px; }
+    .fp-empty p { font-size: 13px; }
+}
+
+/* === Very small screens (under 400px) === */
+@media (max-width: 400px) {
+    .fp-hero { padding: 24px 0 34px; }
+    .fp-hero-title { font-size: 20px; }
+    .fp-hero-desc { font-size: 12px; }
+    .fp-hero-badge { font-size: 9px; padding: 3px 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+    .fp-hero-actions .fp-btn-primary,
+    .fp-hero-actions .fp-btn-secondary { padding: 10px 16px; font-size: 13px; }
+    .fp-hs-form input { font-size: 12px; }
+    .fp-hs-form button { font-size: 11px; padding: 8px 10px; }
+    .fp-ht-item strong { font-size: 13px; }
+    .fp-ht-item { font-size: 10px; }
+    .fp-card-img { height: 110px; }
+    .fp-card-body h3 { font-size: 12px; }
+    .fp-price-current { font-size: 13px; }
+    .fp-section-header h2 { font-size: 18px; }
+    .fp-stat-num { font-size: 20px; }
+    .container { padding-left: 12px; padding-right: 12px; }
 }
 
 /* === Counter animation helpers (re-use app.blade.js) === */
