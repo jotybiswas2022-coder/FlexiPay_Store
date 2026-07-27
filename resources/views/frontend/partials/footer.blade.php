@@ -25,7 +25,7 @@ $location = $settings?->location ?? 'Lagos, Nigeria';
                     <form class="fp-nl-form reveal-right" onsubmit="handleNLSubmit(event)">
                         <div class="fp-nl-input-wrap">
                             <i class="bi bi-envelope-fill"></i>
-                            <input type="email" placeholder="Enter your email address" required>
+                            <input type="email" id="newsletter-email" name="email" placeholder="Enter your email address" required aria-label="Email for newsletter">
                         </div>
                         <button type="submit"><i class="bi bi-send-fill"></i> Subscribe</button>
                     </form>
