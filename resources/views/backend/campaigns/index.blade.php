@@ -8,6 +8,11 @@
     <i class="bi bi-check-circle-fill"></i> {{ session('success') }}
 </div>
 @endif
+@if(session('error'))
+<div style="background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2);border-radius:8px;padding:12px 16px;margin-bottom:20px;color:#ef4444;font-size:13px;display:flex;align-items:center;gap:8px;">
+    <i class="bi bi-exclamation-triangle-fill"></i> {{ session('error') }}
+</div>
+@endif
 
 <div class="d-flex justify-content-between align-items-center mb-4">
     <p class="mb-0" style="color:var(--text-muted);">{{ $campaigns->total() }} campaigns</p>
