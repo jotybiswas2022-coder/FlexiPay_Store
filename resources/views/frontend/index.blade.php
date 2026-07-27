@@ -200,8 +200,9 @@
                 <div class="fp-product-card reveal-up" data-tilt="6" style="transition-delay:{{ ($loop->index % 4) * 0.08 }}s">
                     <a href="{{ url('/product/'.$product->slug) }}" class="fp-product-link">
                         <div class="fp-product-img-wrap">
-                            @if($product->primaryImage)
-                                <img src="{{ asset('storage/'.$product->primaryImage->image_path) }}" alt="{{ $product->name }}" loading="lazy">
+                            @php $img = $product->primaryImage ?? $product->images->first(); @endphp
+                            @if($img)
+                                <img src="{{ asset('storage/'.$img->image_path) }}" alt="{{ $product->name }}" loading="lazy">
                             @else
                                 <div class="fp-product-no-img">
                                     <i class="bi bi-image"></i>
@@ -469,8 +470,9 @@
                 <div class="fp-product-card reveal-up" data-tilt="6" style="transition-delay:{{ ($loop->index % 4) * 0.06 }}s">
                     <a href="{{ url('/product/'.$product->slug) }}" class="fp-product-link">
                         <div class="fp-product-img-wrap">
-                            @if($product->primaryImage)
-                                <img src="{{ asset('storage/'.$product->primaryImage->image_path) }}" alt="{{ $product->name }}" loading="lazy">
+                            @php $img = $product->primaryImage ?? $product->images->first(); @endphp
+                            @if($img)
+                                <img src="{{ asset('storage/'.$img->image_path) }}" alt="{{ $product->name }}" loading="lazy">
                             @else
                                 <div class="fp-product-no-img"><i class="bi bi-image"></i></div>
                             @endif

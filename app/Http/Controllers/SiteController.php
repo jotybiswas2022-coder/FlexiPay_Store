@@ -20,7 +20,7 @@ class SiteController extends Controller
         $slider = Slider::latest()->first();
         $featuredProducts = Product::where('featured', true)
             ->where('status', 'active')
-            ->with(['category', 'primaryImage', 'installmentPlans'])
+            ->with(['category', 'primaryImage', 'images', 'installmentPlans'])
             ->latest()
             ->take(12)
             ->get()
@@ -31,7 +31,7 @@ class SiteController extends Controller
         $categories = Category::all();
         $brands = Brand::where('is_active', true)->get();
         $newArrivals = Product::where('status', 'active')
-            ->with(['category', 'primaryImage'])
+            ->with(['category', 'primaryImage', 'images'])
             ->latest()
             ->take(8)
             ->get();
@@ -45,7 +45,7 @@ class SiteController extends Controller
     // Shop page
     public function shop(Request $request)
     {
-        $query = Product::where('status', 'active')->with(['category', 'brand', 'primaryImage']);
+        $query = Product::where('status', 'active')->with(['category', 'brand', 'primaryImage', 'images']);
 
         if ($request->search) {
             $query->where(function($q) use ($request) {
@@ -98,7 +98,7 @@ class SiteController extends Controller
         $relatedProducts = Product::where('category_id', $product->category_id)
             ->where('id', '!=', $product->id)
             ->where('status', 'active')
-            ->with(['primaryImage'])
+            ->with(['primaryImage', 'images'])
             ->latest()
             ->take(8)
             ->get();

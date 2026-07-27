@@ -274,8 +274,9 @@
                     <div class="fp-prod-related-card reveal-up" data-tilt="6" style="transition-delay:{{ $i * 0.06 }}s">
                         <a href="{{ url('/product/'.$rp->slug) }}" class="fp-prod-related-link">
                             <div class="fp-prod-related-img">
-                                @if($rp->primaryImage)
-                                    <img src="{{ asset('storage/'.$rp->primaryImage->image_path) }}" alt="{{ $rp->name }}" loading="lazy">
+                                @php $rpImg = $rp->primaryImage ?? $rp->images->first(); @endphp
+                                @if($rpImg)
+                                    <img src="{{ asset('storage/'.$rpImg->image_path) }}" alt="{{ $rp->name }}" loading="lazy">
                                 @else
                                     <div class="fp-prod-related-no-img"><i class="bi bi-image"></i></div>
                                 @endif
