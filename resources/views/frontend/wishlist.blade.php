@@ -3,43 +3,60 @@
 
 @push('styles')
 <style>
+/* ===== WISHLIST HERO ===== */
 .fp-wl-hero {
-    position: relative; padding: 40px 0 20px; overflow: hidden;
-    background: linear-gradient(180deg, rgba(234,179,8,0.03) 0%, transparent 100%);
+    position: relative; padding: 50px 0 28px; overflow: hidden;
+    background: linear-gradient(135deg, #0A0A0B 0%, #1A1A1E 30%, #0A0A0B 70%);
+    border-bottom: 1px solid var(--card-border);
+}
+.fp-wl-hero-grid {
+    position: absolute; inset: 0; pointer-events: none;
+    background-image:
+        linear-gradient(rgba(234,179,8,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(234,179,8,0.025) 1px, transparent 1px);
+    background-size: 60px 60px;
 }
 .fp-wl-orb {
     position: absolute; width: 500px; height: 500px; border-radius: 50%;
-    background: radial-gradient(circle, rgba(234,179,8,0.05) 0%, transparent 60%);
+    background: radial-gradient(circle, rgba(234,179,8,0.04) 0%, transparent 60%);
     top: -200px; left: -100px; pointer-events: none;
-    animation: wlOrbPulse 4s ease-in-out infinite;
+    animation: wlOrbPulse 6s ease-in-out infinite;
 }
 .fp-wl-orb2 {
     position: absolute; width: 400px; height: 400px; border-radius: 50%;
     background: radial-gradient(circle, rgba(234,179,8,0.03) 0%, transparent 60%);
     bottom: -150px; right: -100px; pointer-events: none;
-    animation: wlOrbPulse 5s ease-in-out infinite reverse;
+    animation: wlOrbPulse 7s ease-in-out infinite reverse;
 }
-@keyframes wlOrbPulse { 0%,100%{transform:scale(1);opacity:0.5} 50%{transform:scale(1.1);opacity:1} }
+@keyframes wlOrbPulse { 0%,100%{transform:scale(1);opacity:0.4} 50%{transform:scale(1.15);opacity:0.8} }
 
-.fp-wl-section {
-    padding-bottom: 80px; min-height: 60vh;
-}
+.fp-wl-section { padding-bottom: 80px; min-height: 60vh; }
 
+/* ===== GRID ===== */
 .fp-wl-grid { display: grid; gap: 20px; }
 .fp-wl-grid-4 { grid-template-columns: repeat(4, 1fr); }
-.fp-wl-grid-3 { grid-template-columns: repeat(3, 1fr); }
-.fp-wl-grid-2 { grid-template-columns: repeat(2, 1fr); }
 
+/* ===== CARD ===== */
 .fp-wl-card {
-    background: var(--card-dark); border: 1px solid var(--card-border);
+    background: var(--card-dark);
+    border: 1px solid var(--card-border);
     border-radius: var(--radius); overflow: hidden;
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    position: relative; contain: layout style; min-width: 0;
+    position: relative; min-width: 0;
+    display: flex; flex-direction: column;
 }
+.fp-wl-card::after {
+    content: ''; position: absolute; inset: 0;
+    border-radius: var(--radius);
+    pointer-events: none; opacity: 0;
+    transition: opacity 0.4s;
+    box-shadow: inset 0 0 0 1px rgba(234,179,8,0.15);
+}
+.fp-wl-card:hover::after { opacity: 1; }
 .fp-wl-card:hover {
-    border-color: rgba(234,179,8,0.25);
+    border-color: rgba(234,179,8,0.35);
     transform: translateY(-6px);
-    box-shadow: 0 12px 40px rgba(0,0,0,0.3), 0 0 30px rgba(234,179,8,0.05);
+    box-shadow: 0 16px 48px rgba(234,179,8,0.1);
 }
 
 .fp-wl-img-wrap {
@@ -48,50 +65,57 @@
 }
 .fp-wl-img-wrap img {
     width: 100%; height: 100%; object-fit: cover;
-    transition: transform 0.5s ease;
+    transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
-.fp-wl-card:hover .fp-wl-img-wrap img { transform: scale(1.08); }
+.fp-wl-card:hover .fp-wl-img-wrap img { transform: scale(1.12); }
 .fp-wl-no-img {
-    width: 100%; height: 100%; display: flex; align-items: center;
-    justify-content: center; color: var(--card-border); font-size: 36px;
+    width: 100%; height: 100%; display: flex;
+    align-items: center; justify-content: center;
+    color: var(--card-border); font-size: 36px;
 }
 
 .fp-wl-badge {
     position: absolute; top: 10px; left: 10px;
-    background: var(--gold-500); color: var(--near-black);
-    font-size: 10px; font-weight: 700; padding: 4px 10px;
-    border-radius: 99px; z-index: 2;
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: white; font-size: 10px; font-weight: 700;
+    padding: 4px 10px; border-radius: 6px; z-index: 2;
+    box-shadow: 0 2px 10px rgba(239,68,68,0.3);
 }
 
-.fp-wl-remove {
+.fp-wl-remove-top {
     position: absolute; top: 10px; right: 10px;
     width: 34px; height: 34px; border-radius: 50%;
     background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
     border: 1px solid rgba(255,255,255,0.1); color: white;
     display: flex; align-items: center; justify-content: center;
-    cursor: pointer; transition: all 0.3s; font-size: 13px; z-index: 2;
-    touch-action: manipulation;
+    cursor: pointer; transition: all 0.3s; font-size: 13px; z-index: 3;
+    touch-action: manipulation; text-decoration: none;
 }
-.fp-wl-remove:hover { background: #ef4444; transform: scale(1.1); border-color: #ef4444; }
+.fp-wl-remove-top:hover { background: #ef4444; transform: scale(1.1) rotate(90deg); border-color: #ef4444; }
 
 .fp-wl-overlay {
     position: absolute; inset: 0; background: rgba(0,0,0,0.5);
     display: flex; align-items: center; justify-content: center;
-    opacity: 0; transition: opacity 0.3s; z-index: 1;
+    opacity: 0; transition: opacity 0.3s ease; z-index: 2;
+    backdrop-filter: blur(2px);
 }
 .fp-wl-card:hover .fp-wl-overlay { opacity: 1; }
 .fp-wl-view-btn {
-    padding: 8px 18px; border-radius: 8px;
-    background: var(--gold-500); color: var(--near-black);
-    font-size: 12px; font-weight: 700; border: none; cursor: pointer;
+    padding: 10px 20px; border-radius: 8px;
+    background: linear-gradient(135deg, var(--gold-500), var(--gold-600));
+    color: var(--near-black); font-size: 13px; font-weight: 700;
+    border: none; cursor: pointer;
     display: flex; align-items: center; gap: 6px;
-    transform: translateY(10px); transition: all 0.3s;
-    font-family: inherit;
+    transform: translateY(15px) scale(0.95);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    font-family: inherit; box-shadow: 0 8px 24px rgba(0,0,0,0.3);
 }
-.fp-wl-card:hover .fp-wl-view-btn { transform: translateY(0); }
+.fp-wl-card:hover .fp-wl-view-btn { transform: translateY(0) scale(1); }
 
 .fp-wl-body {
-    padding: 16px; display: flex; flex-direction: column; gap: 6px;
+    padding: 16px 16px 0;
+    display: flex; flex-direction: column; gap: 6px;
+    flex: 1;
 }
 .fp-wl-category {
     font-size: 11px; font-weight: 600; color: var(--gold-500);
@@ -103,34 +127,75 @@
     overflow: hidden; line-height: 1.4;
 }
 .fp-wl-price-row {
-    display: flex; align-items: center; gap: 8px; margin-top: auto;
+    display: flex; align-items: center; gap: 8px;
+    margin-top: auto; padding-top: 8px;
 }
-.fp-wl-price { color: var(--gold-400); font-weight: 700; font-size: 17px; }
-.fp-wl-price-old { color: var(--text-dim); font-size: 13px; text-decoration: line-through; }
+.fp-wl-price {
+    color: var(--gold-400); font-weight: 700;
+    font-size: 17px; font-family: 'Syne', sans-serif;
+}
+.fp-wl-price-old {
+    color: var(--text-dim); font-size: 13px; text-decoration: line-through;
+}
 .fp-wl-installment {
-    font-size: 11px; color: var(--text-dim); margin-top: 2px;
+    font-size: 11px; color: var(--text-dim);
+    padding: 0 16px;
 }
 .fp-wl-installment strong { color: var(--gold-400); }
 
-.fp-wl-footer { padding: 0 16px 16px; }
+/* ===== FOOTER ACTIONS ===== */
+.fp-wl-footer {
+    padding: 12px 16px 16px;
+    display: flex; flex-direction: column; gap: 8px;
+}
+.fp-wl-footer form { margin: 0; }
 .fp-wl-cart-btn {
-    width: 100%; padding: 11px;
-    background: rgba(234,179,8,0.1); border: 1.5px solid rgba(234,179,8,0.2);
-    color: var(--gold-400); border-radius: var(--radius-sm);
-    font-size: 13px; font-weight: 600; cursor: pointer;
+    width: 100%; padding: 12px;
+    background: linear-gradient(135deg, var(--gold-500), var(--gold-600));
+    color: var(--near-black); border: none;
+    border-radius: var(--radius-sm); font-size: 13px; font-weight: 700;
+    cursor: pointer; display: flex; align-items: center;
+    justify-content: center; gap: 6px;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    font-family: inherit;
+}
+.fp-wl-cart-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-gold);
+}
+.fp-wl-cart-btn i { font-size: 15px; }
+
+.fp-wl-remove-btn {
+    width: 100%; padding: 10px;
+    background: transparent;
+    border: 1px solid rgba(239,68,68,0.2);
+    color: #f87171; border-radius: var(--radius-sm);
+    font-size: 12px; font-weight: 600; cursor: pointer;
     display: flex; align-items: center; justify-content: center; gap: 6px;
     transition: all 0.3s; font-family: inherit;
 }
-.fp-wl-cart-btn:hover { background: var(--gold-500); color: var(--near-black); border-color: var(--gold-500); transform: translateY(-1px); }
-
-.fp-alert {
-    display: flex; align-items: center; gap: 8px;
-    background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.2);
-    color: #4ade80; padding: 14px 18px; border-radius: var(--radius-sm);
-    font-weight: 500; font-size: 13px; margin-bottom: 24px;
-    animation: slideDownAlert 0.4s ease-out;
+.fp-wl-remove-btn:hover {
+    background: rgba(239,68,68,0.08);
+    border-color: #ef4444;
+    color: #ef4444;
 }
 
+/* ===== ALERT ===== */
+.fp-alert {
+    display: flex; align-items: center; gap: 10px;
+    background: rgba(34,197,94,0.08);
+    border: 1px solid rgba(34,197,94,0.2);
+    color: #4ade80; padding: 14px 20px;
+    border-radius: var(--radius-sm);
+    font-weight: 500; font-size: 13px; margin-bottom: 24px;
+    animation: alertSlide 0.4s ease-out;
+}
+@keyframes alertSlide {
+    from { opacity:0; transform: translateY(-10px); }
+    to { opacity:1; transform: translateY(0); }
+}
+
+/* ===== EMPTY ===== */
 .fp-wl-empty {
     text-align: center; padding: 80px 20px;
 }
@@ -138,29 +203,49 @@
     width: 100px; height: 100px; border-radius: 50%;
     background: var(--card-dark); border: 2px solid var(--card-border);
     display: flex; align-items: center; justify-content: center;
-    margin: 0 auto 20px; font-size: 40px; color: var(--text-dim);
-    animation: emptyPulse 2s ease-in-out infinite;
+    margin: 0 auto 24px; font-size: 40px; color: var(--text-dim);
+    transition: all 0.3s;
+    animation: emptyPulse 3s ease-in-out infinite;
 }
-@keyframes emptyPulse { 0%,100%{transform:scale(1);opacity:0.5} 50%{transform:scale(1.05);opacity:1} }
-.fp-wl-empty h3 { font-family: 'Syne', sans-serif; color: var(--text-primary); font-size: 24px; margin-bottom: 8px; }
-.fp-wl-empty p { color: var(--text-muted); font-size: 15px; margin-bottom: 24px; max-width: 400px; margin-left: auto; margin-right: auto; }
+.fp-wl-empty:hover .fp-wl-empty-icon {
+    border-color: rgba(234,179,8,0.2);
+}
+@keyframes emptyPulse {
+    0%,100% { transform: scale(1); opacity: 0.6; }
+    50% { transform: scale(1.05); opacity: 1; }
+}
+.fp-wl-empty h3 {
+    font-family: 'Syne', sans-serif;
+    color: var(--text-primary); font-size: 24px; margin-bottom: 8px;
+}
+.fp-wl-empty p {
+    color: var(--text-muted); font-size: 15px;
+    margin-bottom: 24px; max-width: 400px;
+    margin-left: auto; margin-right: auto;
+}
 
-@media (max-width: 991px) {
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1199px) {
     .fp-wl-grid-4 { grid-template-columns: repeat(3, 1fr); }
 }
 @media (max-width: 767px) {
-    .fp-wl-grid-4, .fp-wl-grid-3 { grid-template-columns: repeat(2, 1fr); }
+    .fp-wl-hero { padding: 36px 0 20px; }
+    .fp-wl-grid-4 { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    .fp-wl-img-wrap { height: 160px; }
 }
 @media (max-width: 480px) {
-    .fp-wl-grid-4, .fp-wl-grid-3, .fp-wl-grid-2 { grid-template-columns: 1fr; }
+    .fp-wl-grid-4 { grid-template-columns: 1fr; }
+    .fp-wl-footer { flex-direction: row; }
+    .fp-wl-footer .fp-wl-cart-btn { font-size: 12px; padding: 10px; }
 }
 </style>
 @endpush
 
 @section('content')
 <section class="fp-wl-hero">
-    <div class="fp-wl-orb"></div>
-    <div class="fp-wl-orb2"></div>
+    <div class="fp-wl-hero-grid" aria-hidden="true"></div>
+    <div class="fp-wl-orb" aria-hidden="true"></div>
+    <div class="fp-wl-orb2" aria-hidden="true"></div>
     <div class="container">
         <div class="section-head reveal-up">
             <div class="section-badge"><i class="bi bi-heart-fill"></i> My Wishlist</div>
@@ -213,10 +298,10 @@
                     </div>
                 </a>
                 <div class="fp-wl-footer">
-                    <form action="{{ route('wishlist.toggle') }}" method="POST" style="margin-bottom:8px;">
+                    <form action="{{ route('wishlist.toggle') }}" method="POST">
                         @csrf
                         <input type="hidden" name="product_id" value="{{ $product->id }}">
-                        <button type="submit" class="fp-wl-remove" style="position:static;width:auto;height:auto;border-radius:var(--radius-sm);padding:8px;font-size:12px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2);color:#ef4444;">
+                        <button type="submit" class="fp-wl-remove-btn">
                             <i class="bi bi-heartbreak-fill"></i> Remove
                         </button>
                     </form>
