@@ -20,8 +20,7 @@
         <div class="fp-hero-glow g1"></div>
         <div class="fp-hero-glow g2"></div>
     </div>
-    <div class="container">
-        <div class="row align-items-center g-5 min-vh-85">
+    <div class="container">            <div class="row align-items-center g-5">
             <div class="col-lg-6">
                 <div class="fp-hero-content">
                     <div class="fp-hero-badge">
@@ -43,6 +42,13 @@
                         <a href="{{ url('/register') }}" class="fp-btn-secondary">
                             <i class="bi bi-person-plus"></i> Create Account
                         </a>
+                    </div>
+                    <div class="fp-hero-search">
+                        <form action="{{ url('/shop') }}" method="GET" class="fp-hs-form" role="search">
+                            <i class="bi bi-search"></i>
+                            <input type="text" name="search" placeholder="Search products, brands, categories..." aria-label="Search products">
+                            <button type="submit">Search</button>
+                        </form>
                     </div>
                     <div class="fp-hero-trust">
                         <div class="fp-ht-item">
@@ -123,6 +129,38 @@
                 <i class="bi bi-coin"></i>
                 <span>0% interest plans available</span>
             </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== MARQUEE ===== -->
+<section class="fp-marquee-section">
+    <div class="fp-marquee-track">
+        <div class="fp-marquee-content">
+            <span class="fp-marquee-item"><i class="bi bi-shield-fill-check"></i> 100% Secure</span>
+            <span class="fp-marquee-dot">✦</span>
+            <span class="fp-marquee-item"><i class="bi bi-coin"></i> 0% Interest</span>
+            <span class="fp-marquee-dot">✦</span>
+            <span class="fp-marquee-item"><i class="bi bi-truck"></i> Free Delivery</span>
+            <span class="fp-marquee-dot">✦</span>
+            <span class="fp-marquee-item"><i class="bi bi-arrow-repeat"></i> Easy Exchange</span>
+            <span class="fp-marquee-dot">✦</span>
+            <span class="fp-marquee-item"><i class="bi bi-headset"></i> 24/7 Support</span>
+            <span class="fp-marquee-dot">✦</span>
+            <span class="fp-marquee-item"><i class="bi bi-clock"></i> Instant Approval</span>
+            <span class="fp-marquee-dot">✦</span>
+            <span class="fp-marquee-item"><i class="bi bi-shield-fill-check"></i> 100% Secure</span>
+            <span class="fp-marquee-dot">✦</span>
+            <span class="fp-marquee-item"><i class="bi bi-coin"></i> 0% Interest</span>
+            <span class="fp-marquee-dot">✦</span>
+            <span class="fp-marquee-item"><i class="bi bi-truck"></i> Free Delivery</span>
+            <span class="fp-marquee-dot">✦</span>
+            <span class="fp-marquee-item"><i class="bi bi-arrow-repeat"></i> Easy Exchange</span>
+            <span class="fp-marquee-dot">✦</span>
+            <span class="fp-marquee-item"><i class="bi bi-headset"></i> 24/7 Support</span>
+            <span class="fp-marquee-dot">✦</span>
+            <span class="fp-marquee-item"><i class="bi bi-clock"></i> Instant Approval</span>
+            <span class="fp-marquee-dot">✦</span>
         </div>
     </div>
 </section>
@@ -509,7 +547,7 @@
 }
 .fp-hero-actions {
     display: flex; gap: 12px; flex-wrap: wrap;
-    margin-bottom: 32px;
+    margin-bottom: 20px;
 }
 .fp-btn-primary, .fp-btn-secondary {
     display: inline-flex; align-items: center; gap: 8px;
@@ -539,6 +577,50 @@
     transform: translateY(-2px);
     color: #f4f4f5;
 }
+/* Hero Search */
+.fp-hero-search { margin-bottom: 24px; }
+.fp-hs-form {
+    display: flex; align-items: center;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    overflow: hidden;
+    max-width: 480px;
+    transition: border-color 0.25s, background 0.25s;
+}
+.fp-hs-form:focus-within {
+    border-color: rgba(234,179,8,0.25);
+    background: rgba(255,255,255,0.06);
+}
+.fp-hs-form i {
+    color: #71717a;
+    padding-left: 16px;
+    font-size: 15px;
+}
+.fp-hs-form input {
+    flex: 1;
+    border: none; outline: none;
+    background: transparent;
+    color: #f4f4f5;
+    padding: 12px 12px;
+    font-size: 14px;
+    font-family: inherit;
+}
+.fp-hs-form input::placeholder { color: #52525b; }
+.fp-hs-form button {
+    background: transparent;
+    color: #a1a1aa;
+    border: none;
+    padding: 12px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color 0.25s;
+    font-family: inherit;
+    white-space: nowrap;
+}
+.fp-hs-form button:hover { color: #eab308; }
+
 .fp-hero-trust {
     display: flex; align-items: center; gap: 24px;
 }
@@ -554,7 +636,7 @@
     font-family: 'Syne', sans-serif;
     font-weight: 800; color: #f4f4f5; font-size: 18px;
 }
-.ht-divider {
+.fp-ht-divider {
     width: 1px; height: 24px;
     background: rgba(255,255,255,0.08);
 }
@@ -634,6 +716,41 @@
 .fp-trust-dot {
     width: 4px; height: 4px; background: rgba(234,179,8,0.3);
     border-radius: 50%;
+}
+
+/* ============================================================
+   MARQUEE
+   ============================================================ */
+.fp-marquee-section {
+    background: #0d0d11;
+    padding: 14px 0;
+    border-top: 1px solid rgba(255,255,255,0.04);
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    overflow: hidden;
+}
+.fp-marquee-track {
+    overflow: hidden;
+    mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+}
+.fp-marquee-content {
+    display: flex; align-items: center;
+    animation: marqueeScroll 30s linear infinite;
+    width: max-content;
+}
+.fp-marquee-item {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: #a1a1aa; font-size: 13px; font-weight: 500;
+    white-space: nowrap;
+}
+.fp-marquee-item i { color: #eab308; font-size: 14px; }
+.fp-marquee-dot {
+    color: #eab308; margin: 0 24px;
+    font-size: 8px; opacity: 0.3;
+}
+@keyframes marqueeScroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
 }
 
 /* ============================================================
@@ -1024,11 +1141,6 @@
 [data-count] { display: inline-block; }
 </style>
 
-<script>
-// Quick search
-function quickSearch(q) {
-    window.location.href = '{{ url("/shop") }}?search=' + encodeURIComponent(q);
-}
-</script>
+
 
 @endsection
