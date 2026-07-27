@@ -235,6 +235,18 @@
         }
 
         /* Scrollbar */
+        /* SweetAlert Popup Custom Styles */
+        .fp-swal-popup {
+            border: 1px solid #2A2A2E !important;
+            border-radius: 16px !important;
+            padding: 24px !important;
+        }
+        .fp-swal-popup .swal2-title {
+            font-family: 'Plus Jakarta Sans', sans-serif !important;
+            font-weight: 700 !important;
+        }
+        .fp-swal-popup .fp-btn { margin: 0 4px; }
+
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: var(--near-black); }
         ::-webkit-scrollbar-thumb { background: var(--card-border); border-radius: 99px; }
