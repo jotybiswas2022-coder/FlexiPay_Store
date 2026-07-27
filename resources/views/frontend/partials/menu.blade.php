@@ -3,15 +3,20 @@
     <div class="container-fluid px-4">
         <div class="d-flex justify-content-between align-items-center">
             <div class="d-flex align-items-center gap-3 flex-wrap">
-                <span class="fp-topbar-item"><i class="bi bi-telephone-fill"></i> +234 800-FLEXIPAY</span>
+                <span class="fp-topbar-item"><span class="fp-topbar-dot"></span><i class="bi bi-telephone-fill"></i> +234 800-FLEXIPAY</span>
+                <span class="fp-topbar-divider d-none d-md-inline"></span>
                 <span class="fp-topbar-item d-none d-md-inline"><i class="bi bi-envelope-fill"></i> support@flexipay.store</span>
+                <span class="fp-topbar-divider d-none d-lg-inline"></span>
                 <span class="fp-topbar-item d-none d-lg-inline"><i class="bi bi-clock-fill"></i> Mon–Sat: 8AM–6PM</span>
+                <span class="fp-topbar-divider d-none d-xl-inline"></span>
+                <span class="fp-topbar-item d-none d-xl-inline"><i class="bi bi-geo-alt-fill"></i> Lagos, Nigeria</span>
             </div>
             <div class="d-flex align-items-center gap-1">
-                <a href="#" title="Facebook" class="fp-social-top"><i class="bi bi-facebook"></i></a>
-                <a href="#" title="Twitter/X" class="fp-social-top"><i class="bi bi-twitter-x"></i></a>
-                <a href="#" title="Instagram" class="fp-social-top"><i class="bi bi-instagram"></i></a>
-                <a href="#" title="WhatsApp" class="fp-social-top"><i class="bi bi-whatsapp"></i></a>
+                <span class="fp-topbar-label d-none d-sm-inline">Follow Us:</span>
+                <a href="#" title="Facebook" class="fp-social-top" data-social="facebook"><i class="bi bi-facebook"></i></a>
+                <a href="#" title="Twitter/X" class="fp-social-top" data-social="twitter"><i class="bi bi-twitter-x"></i></a>
+                <a href="#" title="Instagram" class="fp-social-top" data-social="instagram"><i class="bi bi-instagram"></i></a>
+                <a href="#" title="WhatsApp" class="fp-social-top" data-social="whatsapp"><i class="bi bi-whatsapp"></i></a>
             </div>
         </div>
     </div>
@@ -147,25 +152,99 @@
 
 <style>
 .fp-topbar {
-    background: var(--dark-900);
+    background: linear-gradient(180deg, var(--dark-900), var(--dark-950));
     color: var(--text-dim);
-    padding: 5px 0;
+    padding: 6px 0;
     font-size: 12px;
     font-weight: 500;
-    border-bottom: 1px solid var(--card-border);
     position: relative;
     z-index: 1041;
+    border-bottom: 1px solid rgba(234,179,8,0.08);
+    box-shadow: 0 1px 0 rgba(234,179,8,0.03) inset;
 }
-.fp-topbar i { color: var(--gold-500); margin-right: 4px; font-size: 11px; }
-.fp-topbar-item { display: inline-flex; align-items: center; }
+.fp-topbar::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(234,179,8,0.15), transparent);
+}
+.fp-topbar i { 
+    color: var(--gold-500); 
+    margin-right: 4px; 
+    font-size: 11px;
+    filter: drop-shadow(0 0 3px rgba(234,179,8,0.2));
+}
+.fp-topbar-item { 
+    display: inline-flex; 
+    align-items: center; 
+    gap: 5px;
+    position: relative;
+    transition: color 0.3s;
+}
+.fp-topbar-item:hover { color: var(--gold-400); }
+.fp-topbar-dot {
+    width: 5px; height: 5px;
+    background: #22c55e;
+    border-radius: 50%;
+    display: inline-block;
+    animation: topbarDot 2s ease-in-out infinite;
+    box-shadow: 0 0 6px rgba(34,197,94,0.4);
+    flex-shrink: 0;
+}
+@keyframes topbarDot {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.3); }
+}
+.fp-topbar-divider {
+    width: 1px; height: 12px;
+    background: linear-gradient(180deg, transparent, var(--card-border), transparent);
+    flex-shrink: 0;
+}
+.fp-topbar-label {
+    color: var(--text-dim);
+    font-size: 11px;
+    margin-right: 4px;
+    letter-spacing: 0.3px;
+}
+
 .fp-social-top {
     color: var(--text-dim);
-    font-size: 14px;
-    transition: all 0.3s;
-    padding: 2px 5px;
-    border-radius: 4px;
+    font-size: 13px;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    width: 26px; height: 26px;
+    display: inline-flex; align-items: center; justify-content: center;
+    border-radius: 6px;
+    position: relative;
 }
-.fp-social-top:hover { color: var(--gold-400); background: rgba(234,179,8,0.06); }
+.fp-social-top::before {
+    content: ''; position: absolute; inset: 0;
+    border-radius: 6px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+.fp-social-top[data-social="facebook"]:hover { 
+    color: #1877f2; 
+    background: rgba(24,119,242,0.1);
+    box-shadow: 0 0 12px rgba(24,119,242,0.15);
+    transform: translateY(-1px);
+}
+.fp-social-top[data-social="twitter"]:hover { 
+    color: #fff; 
+    background: rgba(0,0,0,0.15);
+    box-shadow: 0 0 12px rgba(255,255,255,0.08);
+    transform: translateY(-1px);
+}
+.fp-social-top[data-social="instagram"]:hover { 
+    color: #e1306c; 
+    background: rgba(225,48,108,0.1);
+    box-shadow: 0 0 12px rgba(225,48,108,0.15);
+    transform: translateY(-1px);
+}
+.fp-social-top[data-social="whatsapp"]:hover { 
+    color: #25d366; 
+    background: rgba(37,211,102,0.1);
+    box-shadow: 0 0 12px rgba(37,211,102,0.15);
+    transform: translateY(-1px);
+}
 
 .fp-navbar {
     padding: 0 !important;
@@ -355,6 +434,7 @@
 }
 
 @media (max-width: 991px) {
+    .fp-topbar { padding: 4px 0; font-size: 11px; }
     .fp-nav-link { padding: 12px 16px !important; border-radius: 8px; margin: 2px 8px; }
     .fp-nav-link::after { display: none; }
     .fp-active { background: rgba(234,179,8,0.08); }
@@ -364,6 +444,13 @@
         margin-top: 4px;
         max-height: calc(100vh - 80px);
         overflow-y: auto;
+    }
+    .fp-navbar .navbar-collapse.show {
+        animation: mobileMenuSlide 0.3s ease-out;
+    }
+    @keyframes mobileMenuSlide {
+        from { opacity: 0; transform: translateY(-10px); max-height: 0; }
+        to { opacity: 1; transform: translateY(0); max-height: calc(100vh - 80px); }
     }
     .fp-register-btn { margin: 4px 16px; display: flex; justify-content: center; }
     .fp-navbar .dropdown-menu {
