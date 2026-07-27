@@ -16,6 +16,7 @@ use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\SettingsController;
 use App\Http\Controllers\admin\ContactController;
 use App\Http\Controllers\admin\SliderController;
+use App\Http\Controllers\admin\PromoCodeController;
 
 Route::prefix('admin')->middleware('admin')->group(function () {
 
