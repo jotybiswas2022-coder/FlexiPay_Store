@@ -3,98 +3,151 @@
 
 @push('styles')
 <style>
+/* ===== PROFILE HERO ===== */
 .fp-prof-hero {
-    position: relative; padding: 30px 0 20px; overflow: hidden; isolation: isolate;
-    background: linear-gradient(180deg, rgba(234,179,8,0.03) 0%, transparent 100%);
+    position: relative; padding: 50px 0 28px; overflow: hidden;
+    background: linear-gradient(135deg, #0A0A0B 0%, #1A1A1E 30%, #0A0A0B 70%);
+    border-bottom: 1px solid var(--card-border);
+}
+.fp-prof-hero-grid {
+    position: absolute; inset: 0; pointer-events: none;
+    background-image:
+        linear-gradient(rgba(234,179,8,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(234,179,8,0.025) 1px, transparent 1px);
+    background-size: 60px 60px;
 }
 .fp-prof-orb {
-    position: absolute; width: 400px; height: 400px; border-radius: 50%;
+    position: absolute; width: 450px; height: 450px; border-radius: 50%;
     background: radial-gradient(circle, rgba(234,179,8,0.04) 0%, transparent 60%);
-    top: -150px; right: -80px; pointer-events: none;
-    animation: prfPulse 4s ease-in-out infinite;
+    top: -180px; right: -100px; pointer-events: none;
+    animation: prfPulse 6s ease-in-out infinite;
 }
-@keyframes prfPulse { 0%,100%{transform:scale(1);opacity:0.5} 50%{transform:scale(1.1);opacity:1} }
+@keyframes prfPulse { 0%,100%{transform:scale(1);opacity:0.4} 50%{transform:scale(1.15);opacity:0.8} }
 
 .fp-prof-section { padding-bottom: 80px; min-height: 60vh; }
 
 .fp-alert {
-    display: flex; align-items: center; gap: 8px;
+    display: flex; align-items: center; gap: 10px;
     background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.2);
-    color: #4ade80; padding: 14px 18px; border-radius: var(--radius-sm);
+    color: #4ade80; padding: 14px 20px; border-radius: var(--radius-sm);
     font-weight: 500; font-size: 13px; margin-bottom: 24px;
+    animation: alertSlide 0.4s ease-out;
+}
+@keyframes alertSlide {
+    from { opacity:0; transform: translateY(-10px); }
+    to { opacity:1; transform: translateY(0); }
 }
 
+/* ===== SIDEBAR ===== */
 .fp-profile-sidebar {
     background: var(--card-dark); border: 1px solid var(--card-border);
-    border-radius: var(--radius); padding: 24px; position: sticky; top: 100px;
-    transition: all 0.3s;
+    border-radius: var(--radius); padding: 24px;
+    position: sticky; top: 100px;
+    transition: all 0.3s ease;
 }
-.fp-profile-sidebar:hover { border-color: rgba(234,179,8,0.15); }
-.fp-profile-avatar { text-align: center; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid var(--card-border); }
+.fp-profile-sidebar:hover {
+    border-color: rgba(234,179,8,0.15);
+    box-shadow: var(--shadow-glow-sm);
+}
+.fp-profile-avatar {
+    text-align: center; margin-bottom: 20px;
+    padding-bottom: 20px; border-bottom: 1px solid var(--card-border);
+}
 .fp-avatar-circle {
-    width: 64px; height: 64px; border-radius: 50%;
+    width: 68px; height: 68px; border-radius: 50%;
     background: linear-gradient(135deg, var(--gold-500), var(--gold-600));
     color: var(--near-black); display: flex; align-items: center; justify-content: center;
-    font-size: 24px; font-weight: 800; font-family: 'Syne', sans-serif;
+    font-size: 26px; font-weight: 800; font-family: 'Syne', sans-serif;
     margin: 0 auto 12px;
+    box-shadow: var(--shadow-gold);
+    transition: transform 0.3s;
 }
+.fp-profile-sidebar:hover .fp-avatar-circle { transform: scale(1.05); }
 .fp-profile-avatar h5 { color: var(--text-primary); font-size: 16px; font-weight: 600; }
 .fp-avatar-email { color: var(--text-dim); font-size: 12px; word-break: break-all; }
 
 .fp-profile-nav { display: flex; flex-direction: column; gap: 4px; }
 .fp-profile-nav a {
     display: flex; align-items: center; gap: 8px;
-    padding: 10px 12px; border-radius: 6px;
+    padding: 10px 12px; border-radius: 8px;
     color: var(--text-muted); font-size: 13px; font-weight: 500;
-    transition: all 0.2s; text-decoration: none;
+    transition: all 0.3s; text-decoration: none;
     touch-action: manipulation;
 }
-.fp-profile-nav a:hover, .fp-profile-nav a.active { background: rgba(234,179,8,0.08); color: var(--gold-400); }
-.fp-profile-nav a i { width: 18px; font-size: 14px; }
+.fp-profile-nav a:hover { background: rgba(234,179,8,0.08); color: var(--gold-400); }
+.fp-profile-nav a.active {
+    background: rgba(234,179,8,0.12);
+    color: var(--gold-400);
+    font-weight: 600;
+}
+.fp-profile-nav a i { width: 18px; font-size: 14px; text-align: center; }
 
 .fp-logout-btn {
-    width: 100%; margin-top: 16px; padding: 10px;
+    width: 100%; margin-top: 16px; padding: 11px;
     background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.2);
-    color: #ef4444; border-radius: 6px;
-    font-size: 13px; font-weight: 500; cursor: pointer;
+    color: #ef4444; border-radius: 8px;
+    font-size: 13px; font-weight: 600; cursor: pointer;
     display: flex; align-items: center; justify-content: center; gap: 6px;
-    transition: all 0.2s; font-family: inherit;
+    transition: all 0.3s; font-family: inherit;
 }
-.fp-logout-btn:hover { background: rgba(239,68,68,0.15); }
+.fp-logout-btn:hover { background: rgba(239,68,68,0.15); border-color: #ef4444; }
 
+/* ===== STATS ===== */
 .fp-stat-mini {
     background: var(--card-dark); border: 1px solid var(--card-border);
-    border-radius: var(--radius-sm); padding: 16px;
+    border-radius: var(--radius-sm); padding: 18px 16px;
     display: flex; align-items: center; gap: 14px;
-    transition: all 0.3s;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
-.fp-stat-mini:hover { border-color: rgba(234,179,8,0.2); transform: translateY(-2px); }
+.fp-stat-mini:hover {
+    border-color: rgba(234,179,8,0.2);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-glow-sm);
+}
 .fp-stat-mini i { font-size: 28px; color: var(--gold-500); }
-.fp-stat-mini strong { display: block; color: var(--text-primary); font-size: 18px; font-weight: 700; }
+.fp-stat-mini strong { display: block; color: var(--text-primary); font-size: 18px; font-weight: 700; font-family: 'Syne', sans-serif; }
 .fp-stat-mini span { color: var(--text-dim); font-size: 12px; }
 
+/* ===== CARDS ===== */
 .fp-profile-card {
     background: var(--card-dark); border: 1px solid var(--card-border);
     border-radius: var(--radius); overflow: hidden;
-    transition: all 0.3s;
+    transition: all 0.3s ease;
 }
-.fp-profile-card:hover { border-color: rgba(234,179,8,0.15); }
+.fp-profile-card:hover {
+    border-color: rgba(234,179,8,0.15);
+    box-shadow: var(--shadow-glow-sm);
+}
 .fp-profile-card-header {
     display: flex; align-items: center; justify-content: space-between;
-    padding: 18px 24px; border-bottom: 1px solid var(--card-border);
+    padding: 18px 24px;
+    border-bottom: 1px solid var(--card-border);
+    background: var(--surface-dark);
 }
 .fp-profile-card-header h4 {
     font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700;
     color: var(--text-primary); display: flex; align-items: center; gap: 8px; margin: 0;
 }
 .fp-profile-card-header h4 i { color: var(--gold-500); }
-.btn-edit { font-size: 12px; color: var(--gold-400); font-weight: 600; display: flex; align-items: center; gap: 4px; text-decoration: none; }
-.btn-edit:hover { color: var(--gold-300); }
+.btn-edit {
+    font-size: 12px; color: var(--gold-400); font-weight: 600;
+    display: flex; align-items: center; gap: 4px;
+    text-decoration: none; padding: 6px 12px;
+    border-radius: 6px; transition: all 0.3s;
+}
+.btn-edit:hover { background: rgba(234,179,8,0.08); color: var(--gold-300); }
 .fp-profile-card-body { padding: 24px; }
 
-.fp-info-item label { display: block; font-size: 12px; color: var(--text-dim); font-weight: 500; margin-bottom: 4px; }
-.fp-info-item span { color: var(--text-primary); font-size: 15px; font-weight: 500; }
+.fp-info-item label {
+    display: block; font-size: 11px; color: var(--text-dim);
+    font-weight: 500; margin-bottom: 4px;
+    text-transform: uppercase; letter-spacing: 0.5px;
+}
+.fp-info-item span {
+    color: var(--text-primary); font-size: 15px; font-weight: 500;
+}
 
+/* ===== RECENT ORDERS ===== */
 .fp-order-row {
     display: flex; align-items: center; justify-content: space-between;
     padding: 16px 24px; border-bottom: 1px solid var(--card-border);
@@ -103,14 +156,30 @@
 .fp-order-row:last-child { border-bottom: none; }
 .fp-order-row:hover { background: rgba(234,179,8,0.03); }
 .fp-order-status-badge {
-    padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; text-transform: uppercase;
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 4px 10px; border-radius: 6px;
+    font-size: 11px; font-weight: 600; text-transform: uppercase;
 }
-.fp-order-status-badge.processing, .fp-order-status-badge.partial_paid { background: rgba(234,179,8,0.15); color: var(--gold-400); }
-.fp-order-status-badge.completed { background: rgba(34,197,94,0.15); color: #4ade80; }
-.fp-order-status-badge.cancelled { background: rgba(239,68,68,0.15); color: #ef4444; }
-.fp-order-status-badge.shipped { background: rgba(59,130,246,0.15); color: #60a5fa; }
+.fp-order-status-badge.pending { background: rgba(234,179,8,0.12); color: var(--gold-400); }
+.fp-order-status-badge.processing, .fp-order-status-badge.partial_paid { background: rgba(234,179,8,0.12); color: var(--gold-400); }
+.fp-order-status-badge.completed { background: rgba(34,197,94,0.12); color: #4ade80; }
+.fp-order-status-badge.cancelled { background: rgba(239,68,68,0.12); color: #f87171; }
+.fp-order-status-badge.shipped { background: rgba(59,130,246,0.12); color: #60a5fa; }
+
+.fp-order-empty {
+    text-align: center; padding: 32px 20px;
+}
+.fp-order-empty-icon {
+    width: 48px; height: 48px; border-radius: 50%;
+    background: var(--surface-dark);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 8px; font-size: 20px; color: var(--text-dim);
+}
+.fp-order-empty p { color: var(--text-dim); font-size: 13px; margin: 0; }
+.fp-order-empty a { color: var(--gold-400); }
 
 @media (max-width: 991px) {
+    .fp-prof-hero { padding: 36px 0 20px; }
     .fp-profile-sidebar { position: static; margin-bottom: 24px; }
 }
 </style>
@@ -118,6 +187,7 @@
 
 @section('content')
 <section class="fp-prof-hero">
+    <div class="fp-prof-hero-grid" aria-hidden="true"></div>
     <div class="fp-prof-orb" aria-hidden="true"></div>
     <div class="container">
         <div class="section-head reveal-up">
@@ -247,9 +317,9 @@
                             <span style="color:var(--gold-400);font-weight:700;font-family:'Syne',sans-serif;">₦{{ number_format($order->total, 0) }}</span>
                         </div>
                         @empty
-                        <div class="text-center py-4" style="color:var(--text-dim);">
-                            <i class="bi bi-inbox" style="font-size:32px;display:block;margin-bottom:8px;"></i>
-                            No orders yet. <a href="{{ url('/shop') }}" style="color:var(--gold-400);">Start shopping!</a>
+                        <div class="fp-order-empty">
+                            <div class="fp-order-empty-icon"><i class="bi bi-inbox"></i></div>
+                            <p>No orders yet. <a href="{{ url('/shop') }}">Start shopping!</a></p>
                         </div>
                         @endforelse
                     </div>

@@ -3,42 +3,110 @@
 
 @push('styles')
 <style>
+/* ===== VERIFICATION HERO ===== */
 .fp-vr-hero {
-    position: relative; padding: 30px 0 20px; overflow: hidden; isolation: isolate;
-    background: linear-gradient(180deg, rgba(234,179,8,0.03) 0%, transparent 100%);
+    position: relative; padding: 50px 0 28px; overflow: hidden;
+    background: linear-gradient(135deg, #0A0A0B 0%, #1A1A1E 30%, #0A0A0B 70%);
+    border-bottom: 1px solid var(--card-border);
+}
+.fp-vr-hero-grid {
+    position: absolute; inset: 0; pointer-events: none;
+    background-image:
+        linear-gradient(rgba(234,179,8,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(234,179,8,0.025) 1px, transparent 1px);
+    background-size: 60px 60px;
 }
 .fp-vr-orb {
     position: absolute; width: 400px; height: 400px; border-radius: 50%;
     background: radial-gradient(circle, rgba(234,179,8,0.04) 0%, transparent 60%);
     top: -150px; right: -80px; pointer-events: none;
-    animation: vrPulse 4s ease-in-out infinite;
+    animation: vrPulse 6s ease-in-out infinite;
 }
-@keyframes vrPulse { 0%,100%{transform:scale(1);opacity:0.5} 50%{transform:scale(1.1);opacity:1} }
+@keyframes vrPulse { 0%,100%{transform:scale(1);opacity:0.4} 50%{transform:scale(1.15);opacity:0.8} }
 
 .fp-vr-section { padding-bottom: 80px; min-height: 60vh; }
-.fp-alert { display:flex;align-items:center;gap:8px;background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.2);color:#4ade80;padding:14px 18px;border-radius:var(--radius-sm);font-weight:500;font-size:13px;margin-bottom:24px; }
-.fp-verification-card { background:var(--card-dark);border:1px solid var(--card-border);border-radius:var(--radius);padding:24px;text-align:center;transition:all 0.3s;height:100%; }
-.fp-verification-card:hover { transform:translateY(-3px);box-shadow:var(--shadow-card-hover); }
-.fp-verification-card.status-approved { border-color:rgba(34,197,94,0.3); }
-.fp-verification-card.status-pending { border-color:rgba(234,179,8,0.3); }
-.fp-verification-card.status-rejected { border-color:rgba(239,68,68,0.3); }
-.fp-v-icon { width:52px;height:52px;border-radius:12px;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:22px; }
-.status-approved .fp-v-icon { background:rgba(34,197,94,0.1);color:#4ade80; }
-.status-pending .fp-v-icon { background:rgba(234,179,8,0.1);color:var(--gold-400); }
-.status-rejected .fp-v-icon { background:rgba(239,68,68,0.1);color:#ef4444; }
-.fp-verification-card h5 { color:var(--text-primary);font-size:15px;font-weight:600;margin-bottom:8px; }
-.fp-v-status { display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border-radius:6px;font-size:12px;font-weight:500; }
-.fp-v-status.approved { background:rgba(34,197,94,0.15);color:#4ade80; }
-.fp-v-status.pending { background:rgba(234,179,8,0.15);color:var(--gold-400); }
-.fp-v-status.rejected { background:rgba(239,68,68,0.15);color:#ef4444; }
-.fp-v-file { width:100%;padding:6px;font-size:12px;color:var(--text-muted); }
-.fp-v-submit { width:100%;padding:8px;background:rgba(234,179,8,0.1);border:1px solid rgba(234,179,8,0.2);border-radius:6px;color:var(--gold-400);font-size:12px;font-weight:600;cursor:pointer;transition:all 0.2s;font-family:inherit; }
-.fp-v-submit:hover { background:rgba(234,179,8,0.2); }
+.fp-alert { display:flex;align-items:center;gap:10px;background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.2);color:#4ade80;padding:14px 20px;border-radius:var(--radius-sm);font-weight:500;font-size:13px;margin-bottom:24px;animation:alertSlide 0.4s ease-out; }
+@keyframes alertSlide { from{opacity:0;transform:translateY(-10px)} to{opacity:1;transform:translateY(0)} }
+
+.fp-verification-card {
+    background: var(--card-dark); border: 1px solid var(--card-border);
+    border-radius: var(--radius); padding: 28px 24px;
+    text-align: center; height: 100%;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative; overflow: hidden;
+}
+.fp-verification-card::after {
+    content: ''; position: absolute; inset: 0;
+    border-radius: var(--radius);
+    pointer-events: none; opacity: 0;
+    transition: opacity 0.4s;
+    box-shadow: inset 0 0 0 1px rgba(234,179,8,0.15);
+}
+.fp-verification-card:hover::after { opacity: 1; }
+.fp-verification-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 36px rgba(0,0,0,0.3);
+}
+.fp-verification-card.status-approved { border-color: rgba(34,197,94,0.35); }
+.fp-verification-card.status-pending { border-color: rgba(234,179,8,0.35); }
+.fp-verification-card.status-rejected { border-color: rgba(239,68,68,0.35); }
+.fp-v-icon {
+    width: 52px; height: 52px; border-radius: 12px;
+    margin: 0 auto 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+}
+.status-approved .fp-v-icon { background: rgba(34,197,94,0.1); color: #4ade80; }
+.status-pending .fp-v-icon { background: rgba(234,179,8,0.1); color: var(--gold-400); }
+.status-rejected .fp-v-icon { background: rgba(239,68,68,0.1); color: #f87171; }
+.fp-verification-card h5 { color: var(--text-primary); font-size: 15px; font-weight: 600; margin-bottom: 10px; }
+
+.fp-v-status {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 5px 14px; border-radius: 6px;
+    font-size: 12px; font-weight: 600;
+}
+.fp-v-status.approved { background: rgba(34,197,94,0.12); color: #4ade80; }
+.fp-v-status.pending { background: rgba(234,179,8,0.12); color: var(--gold-400); }
+.fp-v-status.rejected { background: rgba(239,68,68,0.12); color: #f87171; }
+
+.fp-v-reject {
+    background: rgba(239,68,68,0.08);
+    border: 1px solid rgba(239,68,68,0.2);
+    border-radius: 8px; padding: 10px 12px;
+    margin-top: 12px; font-size: 11px;
+    color: #f87171; text-align: left;
+}
+.fp-v-reject strong { display: block; margin-bottom: 3px; }
+
+.fp-v-file {
+    width: 100%; padding: 8px 10px;
+    font-size: 12px; color: var(--text-muted);
+}
+.fp-v-submit {
+    width: 100%; padding: 10px;
+    background: rgba(234,179,8,0.1);
+    border: 1px solid rgba(234,179,8,0.2);
+    border-radius: 8px;
+    color: var(--gold-400);
+    font-size: 12px; font-weight: 600;
+    cursor: pointer; transition: all 0.3s;
+    font-family: inherit;
+}
+.fp-v-submit:hover {
+    background: rgba(234,179,8,0.2);
+    border-color: rgba(234,179,8,0.3);
+}
+
+@media (max-width: 768px) {
+    .fp-vr-hero { padding: 36px 0 20px; }
+}
 </style>
 @endpush
 
 @section('content')
 <section class="fp-vr-hero">
+    <div class="fp-vr-hero-grid" aria-hidden="true"></div>
     <div class="fp-vr-orb" aria-hidden="true"></div>
     <div class="container">
         <div class="section-head reveal-up">

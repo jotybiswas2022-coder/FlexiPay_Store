@@ -3,45 +3,112 @@
 
 @push('styles')
 <style>
+/* ===== ADDRESSES HERO ===== */
 .fp-ad-hero {
-    position: relative; padding: 30px 0 20px; overflow: hidden; isolation: isolate;
-    background: linear-gradient(180deg, rgba(234,179,8,0.03) 0%, transparent 100%);
+    position: relative; padding: 50px 0 28px; overflow: hidden;
+    background: linear-gradient(135deg, #0A0A0B 0%, #1A1A1E 30%, #0A0A0B 70%);
+    border-bottom: 1px solid var(--card-border);
+}
+.fp-ad-hero-grid {
+    position: absolute; inset: 0; pointer-events: none;
+    background-image:
+        linear-gradient(rgba(234,179,8,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(234,179,8,0.025) 1px, transparent 1px);
+    background-size: 60px 60px;
 }
 .fp-ad-orb {
     position: absolute; width: 400px; height: 400px; border-radius: 50%;
     background: radial-gradient(circle, rgba(234,179,8,0.04) 0%, transparent 60%);
     top: -150px; right: -80px; pointer-events: none;
-    animation: adPulse 4s ease-in-out infinite;
+    animation: adPulse 6s ease-in-out infinite;
 }
-@keyframes adPulse { 0%,100%{transform:scale(1);opacity:0.5} 50%{transform:scale(1.1);opacity:1} }
+@keyframes adPulse { 0%,100%{transform:scale(1);opacity:0.4} 50%{transform:scale(1.15);opacity:0.8} }
 
 .fp-ad-section { padding-bottom: 80px; min-height: 60vh; }
-.fp-alert { display:flex;align-items:center;gap:8px;background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.2);color:#4ade80;padding:14px 18px;border-radius:var(--radius-sm);font-weight:500;font-size:13px;margin-bottom:24px; }
-.fp-address-card { background:var(--card-dark);border:1px solid var(--card-border);border-radius:var(--radius);padding:24px;position:relative;isolation:isolate;transition:all 0.3s;height:100%;contain:layout style;min-width:0; }
-.fp-address-card.default { border-color:rgba(234,179,8,0.3); }
-.fp-address-card:hover { border-color:rgba(234,179,8,0.2);transform:translateY(-3px);box-shadow:var(--shadow-card-hover); }
-.fp-addr-default-badge { position:absolute;top:10px;right:10px;background:var(--gold-500);color:var(--near-black);padding:3px 10px;border-radius:6px;font-size:11px;font-weight:600;display:flex;align-items:center;gap:4px; }
-.fp-addr-icon { width:44px;height:44px;border-radius:10px;background:rgba(234,179,8,0.1);display:flex;align-items:center;justify-content:center;color:var(--gold-500);font-size:20px;margin-bottom:12px; }
-.fp-address-card h5 { color:var(--text-primary);font-size:16px;font-weight:600;margin-bottom:6px; }
-.fp-address-card p { color:var(--text-muted);font-size:13px;line-height:1.6;margin-bottom:4px; }
-.fp-addr-phone { color:var(--text-dim);font-size:12px; }
-.fp-addr-actions { margin-top:14px;display:flex;gap:6px; }
-.fp-addr-btn { width:34px;height:34px;border-radius:6px;display:flex;align-items:center;justify-content:center;border:1px solid var(--card-border);color:var(--text-dim);font-size:14px;transition:all 0.2s;text-decoration:none; }
-.fp-addr-btn.edit:hover { border-color:var(--gold-400);color:var(--gold-400); }
-.fp-addr-btn.delete:hover { border-color:rgba(239,68,68,0.3);color:#ef4444; }
-.fp-input { width:100%;padding:12px 16px;background:var(--surface-dark);border:1.5px solid var(--card-border);border-radius:var(--radius-sm);color:var(--text-primary);font-size:14px;font-family:inherit;outline:none;transition:all 0.2s; }
+.fp-alert { display:flex;align-items:center;gap:10px;background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.2);color:#4ade80;padding:14px 20px;border-radius:var(--radius-sm);font-weight:500;font-size:13px;margin-bottom:24px;animation:alertSlide 0.4s ease-out; }
+@keyframes alertSlide { from{opacity:0;transform:translateY(-10px)} to{opacity:1;transform:translateY(0)} }
+
+.fp-address-card {
+    background: var(--card-dark); border: 1px solid var(--card-border);
+    border-radius: var(--radius); padding: 24px;
+    position: relative; height: 100%;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.fp-address-card::after {
+    content: ''; position: absolute; inset: 0; border-radius: var(--radius);
+    pointer-events: none; opacity: 0;
+    transition: opacity 0.4s;
+    box-shadow: inset 0 0 0 1px rgba(234,179,8,0.15);
+}
+.fp-address-card:hover::after { opacity: 1; }
+.fp-address-card.default { border-color: rgba(234,179,8,0.35); }
+.fp-address-card:hover {
+    border-color: rgba(234,179,8,0.25);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 36px rgba(0,0,0,0.3);
+}
+.fp-addr-default-badge {
+    position: absolute; top: 12px; right: 12px; z-index: 1;
+    background: linear-gradient(135deg, var(--gold-500), var(--gold-600));
+    color: var(--near-black); padding: 4px 10px;
+    border-radius: 6px; font-size: 10px; font-weight: 700;
+    display: flex; align-items: center; gap: 4px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+.fp-addr-icon {
+    width: 44px; height: 44px; border-radius: 10px;
+    background: rgba(234,179,8,0.1);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--gold-500); font-size: 20px; margin-bottom: 12px;
+}
+.fp-address-card h5 { color: var(--text-primary); font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+.fp-address-card p { color: var(--text-muted); font-size: 13px; line-height: 1.6; margin-bottom: 4px; }
+.fp-addr-phone { color: var(--text-dim); font-size: 12px; }
+.fp-addr-actions { margin-top: 14px; display: flex; gap: 6px; }
+.fp-addr-btn {
+    width: 34px; height: 34px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid var(--card-border); color: var(--text-dim);
+    font-size: 14px; transition: all 0.3s; text-decoration: none;
+}
+.fp-addr-btn.edit:hover { border-color: var(--gold-400); color: var(--gold-400); background: rgba(234,179,8,0.04); }
+.fp-addr-btn.delete:hover { border-color: rgba(239,68,68,0.3); color: #ef4444; background: rgba(239,68,68,0.04); }
+
+.fp-input { width:100%;padding:12px 16px;background:var(--surface-dark);border:1.5px solid var(--card-border);border-radius:var(--radius-sm);color:var(--text-primary);font-size:14px;font-family:inherit;outline:none;transition:all 0.25s ease; }
 .fp-input:focus { border-color:var(--gold-500);box-shadow:0 0 0 3px rgba(234,179,8,0.08); }
 .fp-input::placeholder { color:var(--text-dim); }
-.fp-modal .modal-content { background:var(--card-dark);border:1px solid var(--card-border);border-radius:var(--radius); }
-.fp-modal .modal-header { border-bottom-color:var(--card-border); }
+
+.fp-addr-empty {
+    text-align: center; padding: 60px 20px;
+}
+.fp-addr-empty-icon {
+    width: 72px; height: 72px; border-radius: 20px;
+    background: var(--card-dark); border: 1px solid var(--card-border);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 16px; font-size: 28px; color: var(--text-dim);
+    transition: all 0.3s;
+}
+.fp-addr-empty:hover .fp-addr-empty-icon {
+    border-color: rgba(234,179,8,0.2); transform: scale(1.05);
+}
+.fp-addr-empty p { color: var(--text-muted); font-size: 15px; margin: 0; }
+
+.fp-modal .modal-content { background:var(--card-dark);border:1px solid var(--card-border);border-radius:var(--radius-lg); }
+.fp-modal .modal-header { border-bottom-color:var(--card-border);padding:20px 24px; }
 .fp-modal .modal-title { color:var(--text-primary);font-family:'Syne',sans-serif;font-size:16px;font-weight:700;display:flex;align-items:center;gap:8px; }
 .fp-modal .modal-title i { color:var(--gold-500); }
-.fp-modal .modal-footer { border-top-color:var(--card-border); }
+.fp-modal .modal-body { padding:24px; }
+.fp-modal .modal-footer { border-top-color:var(--card-border);padding:16px 24px; }
+
+@media (max-width: 768px) {
+    .fp-ad-hero { padding: 36px 0 20px; }
+}
 </style>
 @endpush
 
 @section('content')
 <section class="fp-ad-hero">
+    <div class="fp-ad-hero-grid" aria-hidden="true"></div>
     <div class="fp-ad-orb" aria-hidden="true"></div>
     <div class="container">
         <div class="section-head reveal-up" style="text-align:left;">
@@ -79,9 +146,9 @@
             </div>
             @empty
             <div class="col-12">
-                <div class="text-center py-5 reveal-up">
-                    <i class="bi bi-geo-alt" style="font-size:48px;color:var(--text-dim);display:block;margin-bottom:12px;"></i>
-                    <p style="color:var(--text-muted);">No addresses saved yet. Add a delivery address!</p>
+                <div class="fp-addr-empty reveal-up">
+                    <div class="fp-addr-empty-icon"><i class="bi bi-geo-alt"></i></div>
+                    <p>No addresses saved yet. Add a delivery address!</p>
                 </div>
             </div>
             @endforelse

@@ -3,46 +3,59 @@
 
 @push('styles')
 <style>
+/* ===== SETTINGS HERO ===== */
 .fp-ed-hero {
-    position: relative; padding: 30px 0 20px; overflow: hidden; isolation: isolate;
-    background: linear-gradient(180deg, rgba(234,179,8,0.03) 0%, transparent 100%);
+    position: relative; padding: 50px 0 28px; overflow: hidden;
+    background: linear-gradient(135deg, #0A0A0B 0%, #1A1A1E 30%, #0A0A0B 70%);
+    border-bottom: 1px solid var(--card-border);
+}
+.fp-ed-hero-grid {
+    position: absolute; inset: 0; pointer-events: none;
+    background-image:
+        linear-gradient(rgba(234,179,8,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(234,179,8,0.025) 1px, transparent 1px);
+    background-size: 60px 60px;
 }
 .fp-ed-orb {
     position: absolute; width: 400px; height: 400px; border-radius: 50%;
     background: radial-gradient(circle, rgba(234,179,8,0.04) 0%, transparent 60%);
     top: -150px; right: -80px; pointer-events: none;
-    animation: edPulse 4s ease-in-out infinite;
+    animation: edPulse 6s ease-in-out infinite;
 }
-@keyframes edPulse { 0%,100%{transform:scale(1);opacity:0.5} 50%{transform:scale(1.1);opacity:1} }
+@keyframes edPulse { 0%,100%{transform:scale(1);opacity:0.4} 50%{transform:scale(1.15);opacity:0.8} }
 
 .fp-ed-section { padding-bottom: 80px; min-height: 60vh; }
-.fp-alert { display:flex;align-items:center;gap:8px;background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.2);color:#4ade80;padding:14px 18px;border-radius:var(--radius-sm);font-weight:500;font-size:13px;margin-bottom:24px; }
+.fp-alert { display:flex;align-items:center;gap:10px;background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.2);color:#4ade80;padding:14px 20px;border-radius:var(--radius-sm);font-weight:500;font-size:13px;margin-bottom:24px;animation:alertSlide 0.4s ease-out; }
+@keyframes alertSlide { from{opacity:0;transform:translateY(-10px)} to{opacity:1;transform:translateY(0)} }
+
 .fp-form-group label { display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:8px; }
 .fp-form-group label i { color:var(--gold-500);font-size:13px; }
-.fp-input { width:100%;padding:12px 16px;background:var(--surface-dark);border:1.5px solid var(--card-border);border-radius:var(--radius-sm);color:var(--text-primary);font-size:14px;font-family:inherit;outline:none;transition:all 0.2s; }
+.fp-input { width:100%;padding:12px 16px;background:var(--surface-dark);border:1.5px solid var(--card-border);border-radius:var(--radius-sm);color:var(--text-primary);font-size:14px;font-family:inherit;outline:none;transition:all 0.25s ease; }
 .fp-input:focus { border-color:var(--gold-500);box-shadow:0 0 0 3px rgba(234,179,8,0.08); }
 .fp-input::placeholder { color:var(--text-dim); }
 
-.fp-profile-sidebar { background:var(--card-dark);border:1px solid var(--card-border);border-radius:var(--radius);padding:24px;position:sticky;top:100px;transition:all 0.3s; }
-.fp-profile-sidebar:hover { border-color:rgba(234,179,8,0.15); }
+.fp-profile-sidebar { background:var(--card-dark);border:1px solid var(--card-border);border-radius:var(--radius);padding:24px;position:sticky;top:100px;transition:all 0.3s ease; }
+.fp-profile-sidebar:hover { border-color:rgba(234,179,8,0.15);box-shadow:var(--shadow-glow-sm); }
 .fp-profile-nav { display:flex;flex-direction:column;gap:4px; }
-.fp-profile-nav a { display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:6px;color:var(--text-muted);font-size:13px;transition:all 0.2s;text-decoration:none; }
-.fp-profile-nav a:hover, .fp-profile-nav a.active { background:rgba(234,179,8,0.08);color:var(--gold-400); }
-.fp-profile-nav a i { width:18px; }
+.fp-profile-nav a { display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:8px;color:var(--text-muted);font-size:13px;transition:all 0.3s;text-decoration:none; }
+.fp-profile-nav a:hover { background:rgba(234,179,8,0.08);color:var(--gold-400); }
+.fp-profile-nav a.active { background:rgba(234,179,8,0.12);color:var(--gold-400);font-weight:600; }
+.fp-profile-nav a i { width:18px;text-align:center; }
 
-.fp-card { background:var(--card-dark);border:1px solid var(--card-border);border-radius:var(--radius);overflow:hidden;transition:all 0.3s; }
-.fp-card:hover { border-color:rgba(234,179,8,0.15); }
-.fp-card-header { padding:18px 24px;border-bottom:1px solid var(--card-border); }
+.fp-card { background:var(--card-dark);border:1px solid var(--card-border);border-radius:var(--radius);overflow:hidden;transition:all 0.3s ease; }
+.fp-card:hover { border-color:rgba(234,179,8,0.15);box-shadow:var(--shadow-glow-sm); }
+.fp-card-header { padding:18px 24px;border-bottom:1px solid var(--card-border);background:var(--surface-dark); }
 .fp-card-header h4 { font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--text-primary);display:flex;align-items:center;gap:8px;margin:0; }
 .fp-card-header h4 i { color:var(--gold-500); }
 .fp-card-body { padding:24px; }
 
-@media (max-width: 991px) { .fp-profile-sidebar { position:static;margin-bottom:24px; } }
+@media (max-width: 991px) { .fp-ed-hero { padding:36px 0 20px; } .fp-profile-sidebar { position:static;margin-bottom:24px; } }
 </style>
 @endpush
 
 @section('content')
 <section class="fp-ed-hero">
+    <div class="fp-ed-hero-grid" aria-hidden="true"></div>
     <div class="fp-ed-orb" aria-hidden="true"></div>
     <div class="container">
         <div class="section-head reveal-up">
