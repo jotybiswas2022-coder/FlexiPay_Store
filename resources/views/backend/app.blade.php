@@ -282,11 +282,8 @@
                 </a>
 
                 <div class="nav-section">Users</div>
-                <a href="{{ route('admin.users.index') }}" class="{{ request()->routeIs('admin.users.*') && !request()->routeIs('admin.users.verifications*') ? 'active' : '' }}">
+                <a href="{{ route('admin.users.index') }}" class="{{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
                     <i class="bi bi-people-fill"></i> Customers
-                </a>
-                <a href="{{ route('admin.users.verifications') }}" class="{{ request()->routeIs('admin.users.verifications*') ? 'active' : '' }}">
-                    <i class="bi bi-patch-check-fill"></i> Verifications
                 </a>
 
                 <div class="nav-section">Requests</div>

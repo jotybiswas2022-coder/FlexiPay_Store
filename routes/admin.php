@@ -53,8 +53,6 @@ Route::prefix('admin')->middleware('admin')->group(function () {
         Route::post('/{user}/suspend', 'suspend')->name('admin.users.suspend');
         Route::post('/{user}/unsuspend', 'unsuspend')->name('admin.users.unsuspend');
         Route::get('/{user}/delete', 'destroy')->name('admin.users.delete');
-        Route::get('/verifications/pending', 'verifications')->name('admin.users.verifications');
-        Route::post('/verifications/{id}/update', 'updateVerification')->name('admin.users.verifications.update');
     });
 
     // ===== REQUESTS =====

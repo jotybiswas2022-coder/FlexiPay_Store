@@ -37,7 +37,7 @@ class AdminUserController extends Controller
 
     public function show(User $user)
     {
-        $user->load(['orders' => function($q) { $q->latest()->take(10); }, 'wallet', 'verifications']);
+        $user->load(['orders' => function($q) { $q->latest()->take(10); }, 'wallet']);
         return view('backend.users.show', compact('user'));
     }
 
@@ -87,43 +87,5 @@ class AdminUserController extends Controller
         return redirect()->route('admin.users.index')->with('success', 'User deleted successfully!');
     }
 
-    public function verifications()
-    {
-        $verifications = \App\Models\UserVerification::with('user')
-            ->where('status', 'pending')
-            ->latest()
-            ->paginate(20);
 
-        return view('backend.users.verifications', compact('verifications'));
-    }
-
-    public function updateVerification(Request $request, $id)
-    {
-        $verification = \App\Models\UserVerification::findOrFail($id);
-        $request->validate([
-            'status' => 'required|in:approved,rejected',
-            'rejection_reason' => 'required_if:status,rejected|nullable|string',
-        ]);
-
-        $verification->update([
-            'status' => $request->status,
-            'rejection_reason' => $request->status === 'rejected' ? $request->rejection_reason : null,
-            'verified_at' => $request->status === 'approved' ? now() : null,
-        ]);
-
-        // Update user verification status
-        $user = $verification->user;
-        $field = match($verification->type) {
-            'identity_card' => 'identity_verification',
-            'payment_card' => 'payment_card_verification',
-            'bank_account' => 'bank_account_verification',
-            'delivery_address' => 'delivery_address_verification',
-            default => null,
-        };
-        if ($field) {
-            $user->update([$field => $request->status]);
-        }
-
-        return back()->with('success', 'Verification ' . ($request->status === 'approved' ? 'approved' : 'rejected') . '!');
-    }
 }
