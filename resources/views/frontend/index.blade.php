@@ -851,12 +851,36 @@
     border-radius: 17px;
     background: linear-gradient(135deg, rgba(234,179,8,0.2), transparent 40%, transparent 60%, rgba(234,179,8,0.1));
     z-index: -1;
+    /* mask composite for gradient border - fallback for Firefox */
     mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
     -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
     padding: 1px;
     pointer-events: none;
+    /* Fallback: subtle solid border for browsers that don't support mask-composite */
+}
+.fp-vc-main {
+    border: 1px solid rgba(234,179,8,0.12);
+    box-shadow: 0 24px 80px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05);
+    position: relative;
+    overflow: hidden;
+}
+.fp-vc-main::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 17px;
+    background: linear-gradient(135deg, rgba(234,179,8,0.2), transparent 40%, transparent 60%, rgba(234,179,8,0.1));
+    z-index: -1;
+    /* mask composite for gradient border - fallback for Firefox */
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    padding: 1px;
+    pointer-events: none;
+    /* Fallback: subtle solid border for browsers that don't support mask-composite */
 }
 .fp-vc-bg-pattern {
     position: absolute; inset: 0; opacity: 0.03;
@@ -1471,11 +1495,34 @@
     border-radius: 21px;
     background: linear-gradient(135deg, rgba(234,179,8,0.15), transparent 40%, transparent 60%, rgba(234,179,8,0.08));
     z-index: -1;
+    /* mask composite for gradient border - fallback for Firefox */
     mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
     -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
     padding: 1px;
+    /* Fallback: browsers that don't support mask-composite fall back to the ":before" solid border */
+}
+.fp-cta-card {
+    border: 1px solid rgba(234,179,8,0.12);
+    box-shadow: 0 24px 80px rgba(0,0,0,0.3);
+    position: relative;
+    overflow: hidden;
+}
+.fp-cta-card::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 21px;
+    background: linear-gradient(135deg, rgba(234,179,8,0.15), transparent 40%, transparent 60%, rgba(234,179,8,0.08));
+    z-index: -1;
+    /* mask composite for gradient border */
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    padding: 1px;
+    pointer-events: none;
 }
 .fp-cta-card-avatar {
     width: 64px; height: 64px; border-radius: 16px;
@@ -1547,7 +1594,7 @@
     .fp-cta-section { padding: 60px 0; }
     .fp-cta-card { padding: 28px 20px; }
     .fp-step-card { padding: 32px 20px 28px; }
-    .fp-stats-section .section-padding { padding: 40px 0; }
+    .fp-stats-section.section-padding { padding: 40px 0; }
     .fp-scard { padding: 28px 16px; }
 }
 @media (max-width: 576px) {
