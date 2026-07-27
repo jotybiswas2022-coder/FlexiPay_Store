@@ -361,11 +361,75 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         function toggleSidebar() {
             document.getElementById('adminSidebar').classList.toggle('open');
             document.getElementById('sidebarOverlay').classList.toggle('open');
         }
+
+        // ===== SweetAlert2 Global Config =====
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 4000,
+            timerProgressBar: true,
+            background: '#1A1A1E',
+            color: '#F4F4F5',
+            iconColor: '#EAB308',
+        });
+
+        // Auto-convert confirm() dialogs to SweetAlert
+        document.addEventListener('click', function(e) {
+            const el = e.target.closest('[onclick]');
+            if (!el) return;
+            const match = el.getAttribute('onclick')?.match(/return confirm\(['"](.+?)['"]\)/);
+            if (!match) return;
+            e.preventDefault();
+            const msg = match[1];
+            const href = el.getAttribute('href') || '';
+            const form = el.closest('form');
+            Swal.fire({
+                title: 'Are you sure?',
+                text: msg,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#EAB308',
+                cancelButtonColor: '#ef4444',
+                confirmButtonText: '<i class="bi bi-check-lg"></i> Yes, proceed',
+                cancelButtonText: '<i class="bi bi-x-lg"></i> Cancel',
+                background: '#1A1A1E',
+                color: '#F4F4F5',
+                iconColor: '#EAB308',
+                reverseButtons: true,
+                customClass: {
+                    popup: 'fp-swal-popup',
+                    confirmButton: 'fp-btn fp-btn-gold',
+                    cancelButton: 'fp-btn fp-btn-danger',
+                }
+            }).then(result => {
+                if (!result.isConfirmed) return;
+                if (form) { form.submit(); }
+                else if (href) { window.location.href = href; }
+            });
+        });
+
+        // Show Laravel session flashes as SweetAlert toasts
+        document.addEventListener('DOMContentLoaded', function() {
+            @if(session('success'))
+            Toast.fire({ icon: 'success', title: '{{ session('success') }}' });
+            @endif
+            @if(session('error'))
+            Toast.fire({ icon: 'error', title: '{{ session('error') }}' });
+            @endif
+            @if(session('warning'))
+            Toast.fire({ icon: 'warning', title: '{{ session('warning') }}' });
+            @endif
+            @if(session('info'))
+            Toast.fire({ icon: 'info', title: '{{ session('info') }}' });
+            @endif
+        });
     </script>
     @stack('scripts')
 </body>
