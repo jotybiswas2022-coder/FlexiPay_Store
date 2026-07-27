@@ -12,7 +12,7 @@ class AdminCampaignController extends Controller
 {
     public function index()
     {
-        $campaigns = Campaign::latest()->paginate(20);
+        $campaigns = Campaign::withCount('logs')->latest()->paginate(20);
         return view('backend.campaigns.index', compact('campaigns'));
     }
 
@@ -29,21 +29,45 @@ class AdminCampaignController extends Controller
             'content' => 'required|string',
             'channel' => 'required|in:email,sms,both',
             'audience' => 'required|in:all,active_users,overdue_users,specific',
-            'scheduled_at' => 'nullable|date',
+            'action' => 'required|in:draft,send_now',
         ]);
 
-        $campaign = Campaign::create($request->all());
+        $status = $request->action === 'send_now' ? 'sent' : 'draft';
 
-        if ($request->status === 'send_now') {
+        $campaign = Campaign::create([
+            'name' => $request->name,
+            'subject' => $request->subject,
+            'content' => $request->content,
+            'channel' => $request->channel,
+            'audience' => $request->audience,
+            'status' => $status,
+            'sent_at' => $request->action === 'send_now' ? now() : null,
+        ]);
+
+        if ($request->action === 'send_now') {
             $this->sendCampaign($campaign);
         }
 
-        return redirect()->route('admin.campaigns.index')->with('success', 'Campaign created successfully!');
+        $msg = $request->action === 'send_now'
+            ? 'Campaign created and sent successfully!'
+            : 'Campaign saved as draft!';
+
+        return redirect()->route('admin.campaigns.index')->with('success', $msg);
     }
 
     public function send(Campaign $campaign)
     {
+        if ($campaign->status === 'sent') {
+            return back()->with('error', 'This campaign has already been sent.');
+        }
+
         $this->sendCampaign($campaign);
+
+        $campaign->update([
+            'status' => 'sent',
+            'sent_at' => now(),
+        ]);
+
         return back()->with('success', 'Campaign sent successfully!');
     }
 
@@ -55,7 +79,9 @@ class AdminCampaignController extends Controller
                 $users = User::where('is_active', true)->get();
                 break;
             case 'active_users':
-                $users = User::where('is_active', true)->where('is_suspended', false)->get();
+                $users = User::where('is_active', true)
+                    ->where('is_suspended', false)
+                    ->get();
                 break;
             case 'overdue_users':
                 $users = User::whereHas('orders.installmentPayments', function($q) {
@@ -68,12 +94,11 @@ class AdminCampaignController extends Controller
             CampaignLog::create([
                 'campaign_id' => $campaign->id,
                 'user_id' => $user->id,
-                'channel' => $campaign->channel,
+                'channel' => $campaign->channel === 'both' ? 'email' : $campaign->channel,
                 'status' => 'sent',
                 'sent_at' => now(),
             ]);
 
-            // Create notification for user
             \App\Models\Notification::create([
                 'user_id' => $user->id,
                 'type' => 'promotion',
@@ -84,17 +109,12 @@ class AdminCampaignController extends Controller
                 'sent_at' => now(),
             ]);
         }
-
-        $campaign->update([
-            'status' => 'sent',
-            'sent_at' => now(),
-        ]);
     }
 
     public function destroy(Campaign $campaign)
     {
         $campaign->logs()->delete();
         $campaign->delete();
-        return back()->with('success', 'Campaign deleted!');
+        return back()->with('success', 'Campaign deleted successfully!');
     }
 }

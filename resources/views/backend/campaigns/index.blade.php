@@ -3,36 +3,103 @@
 @section('page_title', 'Campaigns')
 
 @section('content')
+@if(session('success'))
+<div style="background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.2);border-radius:8px;padding:12px 16px;margin-bottom:20px;color:#4ade80;font-size:13px;display:flex;align-items:center;gap:8px;">
+    <i class="bi bi-check-circle-fill"></i> {{ session('success') }}
+</div>
+@endif
+
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <p class="mb-0" style="color:var(--text-muted);">{{ $campaigns->count() ?? 0 }} campaigns</p>
+    <p class="mb-0" style="color:var(--text-muted);">{{ $campaigns->total() }} campaigns</p>
     <a href="{{ route('admin.campaigns.create') }}" class="fp-btn fp-btn-gold"><i class="bi bi-plus-lg"></i> New Campaign</a>
 </div>
+
 <div class="fp-table-wrap">
     <div class="fp-table-header"><h5>All Campaigns</h5></div>
     <table class="fp-table">
-        <thead><tr><th>Title</th><th>Type</th><th>Recipients</th><th>Sent</th><th>Status</th><th>Actions</th></tr></thead>
+        <thead>
+            <tr>
+                <th>Campaign</th>
+                <th>Channel</th>
+                <th>Audience</th>
+                <th>Sent</th>
+                <th>Status</th>
+                <th>Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
         <tbody>
             @forelse($campaigns ?? [] as $c)
             <tr>
-                <td><strong style="color:var(--text-primary);">{{ $c->title }}</strong></td>
-                <td>{{ ucfirst($c->type) }}</td>
-                <td>{{ $c->recipient_count ?? 0 }}</td>
-                <td>{{ $c->sent_count ?? 0 }}</td>
-                <td><span class="fp-badge {{ $c->status == 'sent' ? 'fp-badge-active' : 'fp-badge-pending' }}">{{ ucfirst($c->status) }}</span></td>
                 <td>
-                    @if($c->status != 'sent')
-                    <form action="{{ route('admin.campaigns.send', $c) }}" method="POST" class="d-inline">
-                        @csrf
-                        <button type="submit" class="fp-btn fp-btn-gold" style="padding:4px 10px;font-size:11px;">Send Now</button>
-                    </form>
+                    <strong style="color:var(--text-primary);font-size:14px;">{{ $c->name }}</strong>
+                    @if($c->subject)
+                    <div style="font-size:11px;color:var(--text-dim);margin-top:2px;">{{ Str::limit($c->subject, 40) }}</div>
                     @endif
-                    <a href="{{ route('admin.campaigns.delete', $c) }}" class="fp-btn fp-btn-ghost" style="padding:4px 10px;color:#ef4444;" onclick="return confirm('Delete?')"><i class="bi bi-trash-fill"></i></a>
+                </td>
+                <td>
+                    @if($c->channel === 'both')
+                        <span style="color:var(--gold-400);font-size:12px;"><i class="bi bi-envelope-fill"></i> + <i class="bi bi-chat-dots-fill"></i> Both</span>
+                    @elseif($c->channel === 'email')
+                        <span style="font-size:12px;"><i class="bi bi-envelope-fill"></i> Email</span>
+                    @else
+                        <span style="font-size:12px;"><i class="bi bi-chat-dots-fill"></i> SMS</span>
+                    @endif
+                </td>
+                <td style="font-size:13px;color:var(--text-muted);">{{ ucwords(str_replace('_', ' ', $c->audience)) }}</td>
+                <td>
+                    <span style="font-weight:600;color:var(--text-primary);font-size:13px;">{{ $c->logs_count ?? 0 }}</span>
+                    <span style="font-size:11px;color:var(--text-dim);">sent</span>
+                </td>
+                <td>
+                    @if($c->status === 'sent')
+                        <span class="fp-badge fp-badge-active"><i class="bi bi-check-circle-fill"></i> Sent</span>
+                    @elseif($c->status === 'draft')
+                        <span class="fp-badge fp-badge-pending"><i class="bi bi-pencil-fill"></i> Draft</span>
+                    @elseif($c->status === 'scheduled')
+                        <span class="fp-badge fp-badge-pending"><i class="bi bi-clock-fill"></i> Scheduled</span>
+                    @else
+                        <span class="fp-badge fp-badge-inactive">{{ ucfirst($c->status) }}</span>
+                    @endif
+                </td>
+                <td style="font-size:12px;color:var(--text-dim);">
+                    @if($c->sent_at)
+                        {{ $c->sent_at->format('M d, Y') }}
+                    @else
+                        Created {{ $c->created_at->format('M d, Y') }}
+                    @endif
+                </td>
+                <td>
+                    <div style="display:flex;gap:6px;">
+                        @if($c->status === 'draft' || $c->status === 'scheduled')
+                        <form action="{{ route('admin.campaigns.send', $c) }}" method="POST" class="d-inline">
+                            @csrf
+                            <button type="submit" class="fp-btn fp-btn-gold" style="padding:4px 12px;font-size:11px;" onclick="return confirm('Send this campaign now?')">
+                                <i class="bi bi-send-fill"></i> Send
+                            </button>
+                        </form>
+                        @endif
+                        <a href="{{ route('admin.campaigns.delete', $c) }}" class="fp-btn fp-btn-ghost" style="padding:4px 10px;color:#ef4444;font-size:11px;" onclick="return confirm('Delete this campaign? This cannot be undone.')">
+                            <i class="bi bi-trash-fill"></i>
+                        </a>
+                    </div>
                 </td>
             </tr>
             @empty
-            <tr><td colspan="6" class="text-center py-4" style="color:var(--text-dim);">No campaigns yet</td></tr>
+            <tr>
+                <td colspan="7" class="text-center py-5" style="color:var(--text-dim);">
+                    <i class="bi bi-megaphone" style="font-size:36px;display:block;margin-bottom:12px;color:rgba(255,255,255,0.06);"></i>
+                    No campaigns yet. <a href="{{ route('admin.campaigns.create') }}" style="color:var(--gold-400);">Create your first campaign</a>
+                </td>
+            </tr>
             @endforelse
         </tbody>
     </table>
 </div>
+
+@if($campaigns->hasPages())
+<div style="margin-top:20px;">
+    {{ $campaigns->links() }}
+</div>
+@endif
 @endsection
