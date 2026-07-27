@@ -68,35 +68,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6 d-none d-lg-block">
-                <div class="fp-hero-grid">
-                    @php
-                    $demoProducts = ($featuredProducts ?? collect())->take(4);
-                    $gridProducts = $demoProducts->count() >= 4 ? $demoProducts : collect([
-                        (object)['slug'=>'demo1', 'name'=>'MacBook Air', 'price'=>850000, 'primaryImage'=>null, 'images'=>collect()],
-                        (object)['slug'=>'demo2', 'name'=>'iPhone 15 Pro', 'price'=>1200000, 'primaryImage'=>null, 'images'=>collect()],
-                        (object)['slug'=>'demo3', 'name'=>'AirPods Max', 'price'=>450000, 'primaryImage'=>null, 'images'=>collect()],
-                        (object)['slug'=>'demo4', 'name'=>'Samsung TV', 'price'=>650000, 'primaryImage'=>null, 'images'=>collect()],
-                    ]);
-                    @endphp
-                    @foreach($gridProducts as $i => $p)
-                    <a href="{{ url('/product/'.$p->slug) }}" class="fp-hg-card" style="--i:{{ $i }}">
-                        <div class="fp-hg-img">
-                            @php $img = $p->primaryImage ?? $p->images->first(); @endphp
-                            @if($img)
-                                <img src="{{ asset('storage/'.$img->image_path) }}" alt="{{ $p->name }}" loading="lazy">
-                            @else
-                                <i class="bi bi-image"></i>
-                            @endif
-                        </div>
-                        <div class="fp-hg-info">
-                            <span class="fp-hg-name">{{ Str::limit($p->name, 18) }}</span>
-                            <span class="fp-hg-price">₦{{ number_format($p->price, 0) }}</span>
-                        </div>
-                    </a>
-                    @endforeach
-                </div>
-            </div>
+
         </div>
     </div>
 </section>
@@ -641,60 +613,6 @@
     background: rgba(255,255,255,0.08);
 }
 
-/* Hero Product Grid */
-.fp-hero-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    position: relative;
-}
-.fp-hg-card {
-    background: rgba(26,26,30,0.6);
-    border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 14px;
-    padding: 14px;
-    text-decoration: none;
-    transition: all 0.25s ease;
-    animation: hgFadeIn 0.6s ease calc(var(--i,0) * 0.1s) both;
-}
-.fp-hg-card:nth-child(1) { --i: 0; }
-.fp-hg-card:nth-child(2) { --i: 1; }
-.fp-hg-card:nth-child(3) { --i: 2; }
-.fp-hg-card:nth-child(4) { --i: 3; margin-top: -30px; }
-@keyframes hgFadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-.fp-hg-card:hover {
-    border-color: rgba(234,179,8,0.25);
-    transform: translateY(-3px);
-    background: rgba(26,26,30,0.8);
-}
-.fp-hg-img {
-    width: 100%; height: 120px;
-    background: rgba(0,0,0,0.3);
-    border-radius: 8px;
-    overflow: hidden;
-    display: flex; align-items: center; justify-content: center;
-    margin-bottom: 10px;
-}
-.fp-hg-img img {
-    width: 100%; height: 100%; object-fit: cover;
-}
-.fp-hg-img i {
-    font-size: 32px; color: rgba(255,255,255,0.1);
-}
-.fp-hg-info {
-    display: flex; justify-content: space-between; align-items: center;
-}
-.fp-hg-name {
-    font-size: 13px; font-weight: 600; color: #f4f4f5;
-}
-.fp-hg-price {
-    font-size: 13px; font-weight: 700; color: #eab308;
-    font-family: 'Syne', sans-serif;
-}
-
 /* ============================================================
    TRUST BAR
    ============================================================ */
@@ -1101,7 +1019,7 @@
     .fp-hs-form { width: 100%; max-width: 440px; }
     .fp-hero-trust { justify-content: center; }
     .fp-hero-desc { margin-left: auto; margin-right: auto; }
-    .fp-hero-grid { max-width: 400px; margin: 0 auto; }
+
     .fp-section { padding: 50px 0; }
     .fp-card-img { height: 180px; }
 }
