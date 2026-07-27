@@ -169,6 +169,29 @@
         .btn-primary-gold:hover::before { transform: translateX(100%); }
         .btn-primary-gold:hover { transform: translateY(-2px); box-shadow: var(--shadow-gold-lg); color: var(--near-black); }
 
+        /* ===== SweetAlert Button Overrides ===== */
+        .fp-btn {
+            display: inline-flex; align-items: center; gap: 5px;
+            padding: 8px 16px; border-radius: 6px;
+            font-size: 12px; font-weight: 600; border: none; cursor: pointer;
+            font-family: inherit; transition: all 0.2s;
+        }
+        .fp-btn-gold { background: var(--gold-500); color: var(--near-black); }
+        .fp-btn-gold:hover { background: var(--gold-600); }
+        .fp-btn-danger { background: rgba(239,68,68,0.1); color: #ef4444; border: 1px solid rgba(239,68,68,0.2); }
+        .fp-btn-danger:hover { background: rgba(239,68,68,0.2); }
+        /* SweetAlert Popup Custom Styles */
+        .fp-swal-popup {
+            border: 1px solid #2A2A2E !important;
+            border-radius: 16px !important;
+            padding: 24px !important;
+        }
+        .fp-swal-popup .swal2-title {
+            font-family: 'Syne', sans-serif !important;
+            font-weight: 700 !important;
+        }
+        .fp-swal-popup .fp-btn { margin: 0 4px; }
+
         .btn-outline-gold {
             display: inline-flex; align-items: center; gap: 8px;
             background: transparent; color: var(--gold-400);
@@ -431,16 +454,16 @@
         // Show Laravel session flashes as SweetAlert toasts
         document.addEventListener('DOMContentLoaded', function() {
             @if(session('success'))
-            Toast.fire({ icon: 'success', title: '{{ session('success') }}' });
+            Toast.fire({ icon: 'success', title: @json(session('success')) });
             @endif
             @if(session('error'))
-            Toast.fire({ icon: 'error', title: '{{ session('error') }}' });
+            Toast.fire({ icon: 'error', title: @json(session('error')) });
             @endif
             @if(session('warning'))
-            Toast.fire({ icon: 'warning', title: '{{ session('warning') }}' });
+            Toast.fire({ icon: 'warning', title: @json(session('warning')) });
             @endif
             @if(session('info'))
-            Toast.fire({ icon: 'info', title: '{{ session('info') }}' });
+            Toast.fire({ icon: 'info', title: @json(session('info')) });
             @endif
         });
     </script>

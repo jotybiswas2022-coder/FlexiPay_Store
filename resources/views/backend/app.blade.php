@@ -418,16 +418,16 @@
         // Show Laravel session flashes as SweetAlert toasts
         document.addEventListener('DOMContentLoaded', function() {
             @if(session('success'))
-            Toast.fire({ icon: 'success', title: '{{ session('success') }}' });
+            Toast.fire({ icon: 'success', title: @json(session('success')) });
             @endif
             @if(session('error'))
-            Toast.fire({ icon: 'error', title: '{{ session('error') }}' });
+            Toast.fire({ icon: 'error', title: @json(session('error')) });
             @endif
             @if(session('warning'))
-            Toast.fire({ icon: 'warning', title: '{{ session('warning') }}' });
+            Toast.fire({ icon: 'warning', title: @json(session('warning')) });
             @endif
             @if(session('info'))
-            Toast.fire({ icon: 'info', title: '{{ session('info') }}' });
+            Toast.fire({ icon: 'info', title: @json(session('info')) });
             @endif
         });
     </script>
