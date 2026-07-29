@@ -19,14 +19,22 @@
     <div class="fp-hero-bg">
         <div class="fp-hero-glow g1"></div>
         <div class="fp-hero-glow g2"></div>
+        <div class="fp-hero-glow g3 d-none d-lg-block"></div>
+        <div class="fp-hero-glow g4 d-none d-lg-block"></div>
         <!-- mobile hero gradient overlay -->
         <div class="fp-hero-mobile-overlay"></div>
+        <!-- Desktop floating decorations -->
+        <div class="fp-hero-float d-none d-lg-flex">
+            <div class="fp-float-shape s1"><i class="bi bi-shield-fill-check"></i></div>
+            <div class="fp-float-shape s2"><i class="bi bi-coin"></i></div>
+            <div class="fp-float-shape s3"><i class="bi bi-lightning-fill"></i></div>
+        </div>
     </div>
     <div class="container">
         <div class="row align-items-center g-5 flex-lg-row-reverse">
             @if($sliders->count())
-            <div class="col-lg-6">
-                <div id="heroSlider" class="carousel slide" data-bs-ride="carousel">
+            <div class="col-lg-6 fp-hero-slider-col">
+                <div id="heroSlider" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
                     <div class="carousel-inner rounded-4 overflow-hidden fp-hero-slider-inner">
                         @foreach($sliders as $slider)
                         @if($slider->slider1)
@@ -42,11 +50,11 @@
                         @endforeach
                     </div>
                     @if($sliders->sum(fn($s) => ($s->slider1 ? 1 : 0) + ($s->slider2 ? 1 : 0)) > 1)
-                    <button class="carousel-control-prev" type="button" data-bs-target="#heroSlider" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <button class="carousel-control-prev fp-hero-ctrl" type="button" data-bs-target="#heroSlider" data-bs-slide="prev" aria-label="Previous slide">
+                        <i class="bi bi-chevron-left" aria-hidden="true"></i>
                     </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#heroSlider" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <button class="carousel-control-next fp-hero-ctrl" type="button" data-bs-target="#heroSlider" data-bs-slide="next" aria-label="Next slide">
+                        <i class="bi bi-chevron-right" aria-hidden="true"></i>
                     </button>
                     @endif
                     <!-- mobile slider indicators -->
@@ -60,6 +68,17 @@
                             @endif
                         @endforeach
                     </div>
+                    <!-- Desktop slide counter -->
+                    <div class="fp-hero-slide-counter d-none d-lg-flex">
+                        <span class="fp-hero-slide-current">01</span>
+                        <span class="fp-hero-slide-bar"></span>
+                        <span class="fp-hero-slide-total">0{{ min($sliders->sum(fn($s) => ($s->slider1 ? 1 : 0) + ($s->slider2 ? 1 : 0)), 9) }}</span>
+                    </div>
+                </div>
+                <!-- Floating feature pill desktop -->
+                <div class="fp-hero-pill d-none d-lg-flex">
+                    <i class="bi bi-check-circle-fill"></i>
+                    <span>No credit check &bull; Instant approval</span>
                 </div>
             </div>
             @endif
@@ -111,6 +130,11 @@
                 </div>
             </div>
         </div>
+    </div>
+    <!-- Scroll indicator -->
+    <div class="fp-hero-scroll d-none d-lg-flex">
+        <span class="fp-scroll-text">Scroll</span>
+        <span class="fp-scroll-line"></span>
     </div>
 </section>
 
@@ -499,8 +523,261 @@
 }
 .g1 { width: 450px; height: 450px; background: rgba(234,179,8,0.06); top: -180px; right: 10%; }
 .g2 { width: 350px; height: 350px; background: rgba(234,179,8,0.03); bottom: -100px; left: 5%; }
+.g3 { width: 300px; height: 300px; background: rgba(59,130,246,0.04); top: 40%; left: -80px; filter: blur(140px); }
+.g4 { width: 250px; height: 250px; background: rgba(168,85,247,0.03); bottom: 10%; right: -40px; filter: blur(120px); }
 
 .fp-hero-content { max-width: 580px; }
+
+/* ===== Desktop Floating Decorative Shapes ===== */
+.fp-hero-float {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+}
+.fp-float-shape {
+    position: absolute;
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    background: rgba(234,179,8,0.06);
+    border: 1px solid rgba(234,179,8,0.1);
+    color: rgba(234,179,8,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    backdrop-filter: blur(8px);
+    animation: floatShape 6s ease-in-out infinite;
+}
+.fp-float-shape.s1 { top: 15%; right: 8%; animation-delay: 0s; width: 48px; height: 48px; }
+.fp-float-shape.s2 { bottom: 25%; left: 6%; animation-delay: 2s; width: 38px; height: 38px; font-size: 14px; }
+.fp-float-shape.s3 { top: 35%; right: 2%; animation-delay: 4s; width: 36px; height: 36px; font-size: 13px; }
+
+@keyframes floatShape {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    33% { transform: translateY(-12px) rotate(3deg); }
+    66% { transform: translateY(6px) rotate(-2deg); }
+}
+
+/* ===== Desktop Carousel Custom Controls ===== */
+.fp-hero-ctrl {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: rgba(13,13,17,0.6);
+    border: 1px solid rgba(255,255,255,0.06);
+    backdrop-filter: blur(12px);
+    top: 50%; transform: translateY(-50%);
+    opacity: 0;
+    transition: all 0.3s ease;
+    font-size: 18px;
+    color: #a1a1aa;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+.fp-hero-slider-col:hover .fp-hero-ctrl { opacity: 1; }
+.fp-hero-ctrl:hover {
+    background: rgba(234,179,8,0.15);
+    border-color: rgba(234,179,8,0.2);
+    color: #fbbf24;
+    transform: translateY(-50%) scale(1.08);
+}
+.fp-hero-ctrl:active { transform: translateY(-50%) scale(0.95); }
+.fp-hero-ctrl i { line-height: 1; }
+.carousel-control-prev.fp-hero-ctrl { left: 16px; }
+.carousel-control-next.fp-hero-ctrl { right: 16px; }
+
+/* ===== Desktop Slide Counter ===== */
+.fp-hero-slide-counter {
+    position: absolute;
+    bottom: 20px; right: 20px;
+    display: flex; align-items: center; gap: 8px;
+    background: rgba(13,13,17,0.5);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 6px 14px;
+    border-radius: 20px;
+    z-index: 5;
+}
+.fp-hero-slide-current,
+.fp-hero-slide-total {
+    font-family: 'Syne', sans-serif;
+    font-size: 12px; font-weight: 700;
+    color: #f4f4f5;
+    line-height: 1;
+}
+.fp-hero-slide-current { color: #eab308; }
+.fp-hero-slide-bar {
+    width: 24px; height: 2px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+}
+.fp-hero-slide-bar::after {
+    content: '';
+    position: absolute; top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: #eab308;
+    animation: slideBarProgress 5s linear infinite;
+    transform-origin: left;
+}
+@keyframes slideBarProgress {
+    0% { transform: scaleX(0); }
+    100% { transform: scaleX(1); }
+}
+
+/* ===== Desktop Floating Feature Pill ===== */
+.fp-hero-pill {
+    position: absolute;
+    bottom: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #eab308, #ca8a04);
+    color: #0A0A0B;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 12px; font-weight: 700;
+    gap: 8px;
+    white-space: nowrap;
+    z-index: 4;
+    box-shadow: 0 6px 24px rgba(234,179,8,0.2);
+    align-items: center;
+    animation: pillPulse 3s ease-in-out infinite;
+}
+.fp-hero-pill i {
+    font-size: 14px;
+}
+@keyframes pillPulse {
+    0%, 100% { transform: translateX(-50%) scale(1); box-shadow: 0 6px 24px rgba(234,179,8,0.2); }
+    50% { transform: translateX(-50%) scale(1.03); box-shadow: 0 8px 32px rgba(234,179,8,0.3); }
+}
+
+/* ===== Desktop Scroll Indicator ===== */
+.fp-hero-scroll {
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    z-index: 2;
+    opacity: 0.5;
+    transition: opacity 0.3s;
+}
+.fp-hero-scroll:hover { opacity: 1; }
+.fp-scroll-text {
+    font-size: 10px; font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #71717a;
+}
+.fp-scroll-line {
+    width: 1px; height: 32px;
+    background: linear-gradient(to bottom, #eab308, transparent);
+    animation: scrollBounce 2s ease-in-out infinite;
+}
+@keyframes scrollBounce {
+    0%, 100% { transform: scaleY(1); opacity: 1; }
+    50% { transform: scaleY(0.6); opacity: 0.3; }
+}
+
+/* ===== Desktop Hero Content Entrance ===== */
+@media (min-width: 992px) {
+    .fp-hero-content > * {
+        opacity: 0;
+        transform: translateY(16px);
+        animation: desktopFadeIn 0.6s ease forwards;
+    }
+    .fp-hero-content > .fp-hero-badge { animation-delay: 0.1s; }
+    .fp-hero-content > .fp-hero-title { animation-delay: 0.2s; }
+    .fp-hero-content > .fp-hero-desc { animation-delay: 0.3s; }
+    .fp-hero-content > .fp-hero-actions { animation-delay: 0.4s; }
+    .fp-hero-content > .fp-hero-search { animation-delay: 0.5s; }
+    .fp-hero-content > .fp-hero-trust { animation-delay: 0.6s; }
+
+    @keyframes desktopFadeIn {
+        from { opacity: 0; transform: translateY(16px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Slider entrance */
+    .fp-hero-slider-col {
+        opacity: 0;
+        transform: translateX(20px);
+        animation: desktopSliderIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards;
+    }
+    @keyframes desktopSliderIn {
+        from { opacity: 0; transform: translateX(20px); }
+        to { opacity: 1; transform: translateX(0); }
+    }
+
+    /* Enhanced hover on desktop buttons */
+    .fp-btn-primary {
+        position: relative;
+        overflow: hidden;
+    }
+    .fp-btn-primary::after {
+        content: '';
+        position: absolute; inset: 0;
+        background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
+        transform: translateX(-100%);
+        transition: transform 0.4s ease;
+    }
+    .fp-btn-primary:hover::after {
+        transform: translateX(0);
+    }
+    .fp-btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 32px rgba(234,179,8,0.3);
+    }
+    .fp-btn-secondary:hover {
+        transform: translateY(-3px);
+        background: rgba(255,255,255,0.1);
+        border-color: rgba(255,255,255,0.15);
+    }
+
+    /* Trust items hover */
+    .fp-ht-item {
+        transition: all 0.3s ease;
+        cursor: default;
+    }
+    .fp-ht-item:hover {
+        transform: translateY(-2px);
+    }
+    .fp-ht-item:hover i {
+        color: #fbbf24;
+        transform: scale(1.15);
+        transition: all 0.3s ease;
+    }
+    .fp-ht-item strong {
+        transition: color 0.3s ease;
+    }
+    .fp-ht-item:hover strong {
+        color: #eab308;
+    }
+
+    /* Search bar enhanced focus */
+    .fp-hs-form {
+        transition: all 0.3s ease;
+    }
+    .fp-hs-form:focus-within {
+        border-color: rgba(234,179,8,0.4);
+        background: rgba(255,255,255,0.08);
+        box-shadow: 0 0 0 3px rgba(234,179,8,0.06), 0 4px 24px rgba(234,179,8,0.05);
+    }
+
+    /* Glow enhancements */
+    .fp-hero-glow {
+        transition: all 1s ease;
+    }
+    .fp-hero:hover .g1 {
+        background: rgba(234,179,8,0.09);
+        filter: blur(100px);
+    }
+    .fp-hero:hover .g2 {
+        background: rgba(234,179,8,0.05);
+        filter: blur(100px);
+    }
+}
 
 .fp-hero-slider-inner {
     border: 1px solid var(--card-border);
