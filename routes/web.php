@@ -22,6 +22,11 @@ Route::controller(SiteController::class)->group(function () {
     Route::get('/about', 'about')->name('about');
 });
 
+// ===== DEMO PAGE =====
+Route::get('/demo', function () {
+    return view('frontend.demo');
+});
+
 // ===== CART (Session-based) =====
 Route::prefix('cart')->controller(CartController::class)->group(function () {
     Route::get('/', 'index')->name('cart.index');
