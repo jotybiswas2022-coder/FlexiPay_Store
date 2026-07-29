@@ -86,11 +86,11 @@
                         </td>
                         <td style="font-size:12px;white-space:nowrap;">{{ $slider->created_at->format('d M Y') }}</td>
                         <td>
-                            <a href="/admin/sliders/delete/{{ $slider->id }}"
-                               onclick="return confirm('Delete this slider?')"
-                               class="fp-btn fp-btn-danger btn-sm">
+                            <button type="button"
+                                    class="fp-btn fp-btn-danger btn-sm delete-slider"
+                                    data-id="{{ $slider->id }}">
                                 <i class="bi bi-trash"></i>
-                            </a>
+                            </button>
                         </td>
                     </tr>
                     @endforeach
@@ -116,5 +116,34 @@ function previewImage(event, previewId) {
         preview.classList.remove('d-none');
     }
 }
+
+document.addEventListener('click', function(e) {
+    const btn = e.target.closest('.delete-slider');
+    if (!btn) return;
+    const id = btn.dataset.id;
+    Swal.fire({
+        title: 'Delete Slider?',
+        text: 'This will permanently delete this slider and its images.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#ef4444',
+        cancelButtonColor: '#6b7280',
+        confirmButtonText: '<i class="bi bi-trash"></i> Delete',
+        cancelButtonText: '<i class="bi bi-x-lg"></i> Cancel',
+        background: '#1A1A1E',
+        color: '#F4F4F5',
+        iconColor: '#ef4444',
+        reverseButtons: true,
+        customClass: {
+            popup: 'fp-swal-popup',
+            confirmButton: 'fp-btn fp-btn-danger',
+            cancelButton: 'fp-btn fp-btn-ghost',
+        }
+    }).then(result => {
+        if (result.isConfirmed) {
+            window.location.href = '/admin/sliders/delete/' + id;
+        }
+    });
+});
 </script>
 @endsection
