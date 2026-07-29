@@ -17,7 +17,7 @@ class SiteController extends Controller
     public function index()
     {
         $settings = Setting::first();
-        $slider = Slider::latest()->first();
+        $sliders = Slider::latest()->get();
         $featuredProducts = Product::where('featured', true)
             ->where('status', 'active')
             ->with(['category', 'primaryImage', 'images', 'installmentPlans'])
@@ -37,7 +37,7 @@ class SiteController extends Controller
             ->get();
 
         return view('frontend.index', compact(
-            'settings', 'slider', 'featuredProducts',
+            'settings', 'sliders', 'featuredProducts',
             'categories', 'brands', 'newArrivals'
         ));
     }

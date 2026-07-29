@@ -69,6 +69,34 @@
                     </div>
                 </div>
             </div>
+            @if($sliders->count())
+            <div class="col-lg-6">
+                <div id="heroSlider" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner rounded-4 overflow-hidden" style="border:1px solid var(--card-border);box-shadow:0 20px 60px rgba(0,0,0,0.4);">
+                        @foreach($sliders as $slider)
+                        @if($slider->slider1)
+                        <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
+                            <img src="{{ Storage::url($slider->slider1) }}" class="d-block w-100" style="height:420px;object-fit:cover;" alt="Slider">
+                        </div>
+                        @endif
+                        @if($slider->slider2)
+                        <div class="carousel-item {{ $loop->first && !$slider->slider1 ? 'active' : '' }}">
+                            <img src="{{ Storage::url($slider->slider2) }}" class="d-block w-100" style="height:420px;object-fit:cover;" alt="Slider">
+                        </div>
+                        @endif
+                        @endforeach
+                    </div>
+                    @if($sliders->sum(fn($s) => ($s->slider1 ? 1 : 0) + ($s->slider2 ? 1 : 0)) > 1)
+                    <button class="carousel-control-prev" type="button" data-bs-target="#heroSlider" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#heroSlider" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    </button>
+                    @endif
+                </div>
+            </div>
+            @endif
         </div>
     </div>
 </section>
