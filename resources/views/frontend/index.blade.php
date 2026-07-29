@@ -19,14 +19,55 @@
     <div class="fp-hero-bg">
         <div class="fp-hero-glow g1"></div>
         <div class="fp-hero-glow g2"></div>
+        <!-- mobile hero gradient overlay -->
+        <div class="fp-hero-mobile-overlay"></div>
     </div>
     <div class="container">
-        <div class="row align-items-center g-5">
+        <div class="row align-items-center g-5 flex-lg-row-reverse">
+            @if($sliders->count())
+            <div class="col-lg-6">
+                <div id="heroSlider" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner rounded-4 overflow-hidden fp-hero-slider-inner">
+                        @foreach($sliders as $slider)
+                        @if($slider->slider1)
+                        <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
+                            <img src="{{ Storage::url($slider->slider1) }}" class="d-block w-100 hero-slider-img" alt="Slider">
+                        </div>
+                        @endif
+                        @if($slider->slider2)
+                        <div class="carousel-item {{ $loop->first && !$slider->slider1 ? 'active' : '' }}">
+                            <img src="{{ Storage::url($slider->slider2) }}" class="d-block w-100 hero-slider-img" alt="Slider">
+                        </div>
+                        @endif
+                        @endforeach
+                    </div>
+                    @if($sliders->sum(fn($s) => ($s->slider1 ? 1 : 0) + ($s->slider2 ? 1 : 0)) > 1)
+                    <button class="carousel-control-prev" type="button" data-bs-target="#heroSlider" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#heroSlider" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    </button>
+                    @endif
+                    <!-- mobile slider indicators -->
+                    <div class="fp-hero-mobile-indicators d-lg-none">
+                        @foreach($sliders as $slider)
+                            @if($slider->slider1)
+                            <span class="fp-hero-mobile-dot {{ $loop->first ? 'active' : '' }}" data-bs-target="#heroSlider" data-bs-slide-to="{{ $loop->index * 2 }}"></span>
+                            @endif
+                            @if($slider->slider2)
+                            <span class="fp-hero-mobile-dot {{ $loop->first && !$slider->slider1 ? 'active' : '' }}" data-bs-target="#heroSlider" data-bs-slide-to="{{ $loop->index * 2 + 1 }}"></span>
+                            @endif
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+            @endif
             <div class="col-lg-6">
                 <div class="fp-hero-content">
                     <div class="fp-hero-badge">
                         <i class="bi bi-shield-fill-check"></i>
-                        100% Secure — 0% Interest Installments
+                        100% Secure — 0% Interest <span class="d-none d-sm-inline">Installments</span>
                     </div>
                     <h1 class="fp-hero-title">
                         Shop What You Love,<br>
@@ -69,34 +110,6 @@
                     </div>
                 </div>
             </div>
-            @if($sliders->count())
-            <div class="col-lg-6">
-                <div id="heroSlider" class="carousel slide" data-bs-ride="carousel">
-                    <div class="carousel-inner rounded-4 overflow-hidden" style="border:1px solid var(--card-border);box-shadow:0 20px 60px rgba(0,0,0,0.4);">
-                        @foreach($sliders as $slider)
-                        @if($slider->slider1)
-                        <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
-                            <img src="{{ Storage::url($slider->slider1) }}" class="d-block w-100" style="height:420px;object-fit:cover;" alt="Slider">
-                        </div>
-                        @endif
-                        @if($slider->slider2)
-                        <div class="carousel-item {{ $loop->first && !$slider->slider1 ? 'active' : '' }}">
-                            <img src="{{ Storage::url($slider->slider2) }}" class="d-block w-100" style="height:420px;object-fit:cover;" alt="Slider">
-                        </div>
-                        @endif
-                        @endforeach
-                    </div>
-                    @if($sliders->sum(fn($s) => ($s->slider1 ? 1 : 0) + ($s->slider2 ? 1 : 0)) > 1)
-                    <button class="carousel-control-prev" type="button" data-bs-target="#heroSlider" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#heroSlider" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    </button>
-                    @endif
-                </div>
-            </div>
-            @endif
         </div>
     </div>
 </section>
@@ -488,6 +501,31 @@
 .g2 { width: 350px; height: 350px; background: rgba(234,179,8,0.03); bottom: -100px; left: 5%; }
 
 .fp-hero-content { max-width: 580px; }
+
+.fp-hero-slider-inner {
+    border: 1px solid var(--card-border);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+
+.hero-slider-img {
+    height: 420px;
+    object-fit: cover;
+    width: 100%;
+}
+
+@media (max-width: 991px) {
+    .hero-slider-img { height: 320px; }
+}
+@media (max-width: 768px) {
+    .hero-slider-img { height: 260px; }
+}
+@media (max-width: 576px) {
+    .hero-slider-img { height: 220px; }
+}
+@media (max-width: 400px) {
+    .hero-slider-img { height: 180px; }
+}
+
 .fp-hero-badge {
     display: inline-flex; align-items: center; gap: 6px;
     background: rgba(234,179,8,0.1);
@@ -983,30 +1021,37 @@
    RESPONSIVE
    ============================================================ */
 @media (max-width: 991px) {
-    .fp-hero { min-height: auto; padding: 50px 0 70px; text-align: center; }
+    .fp-hero { min-height: auto; padding: 40px 0 50px; text-align: center; }
     .fp-hero-content { max-width: 100%; }
     .fp-hero-actions { justify-content: center; }
     .fp-hero-search { display: flex; justify-content: center; }
     .fp-hs-form { width: 100%; max-width: 440px; }
     .fp-hero-trust { justify-content: center; }
     .fp-hero-desc { margin-left: auto; margin-right: auto; max-width: 100%; }
+    .row.g-5 { --bs-gutter-y: 1.5rem; }
+    .fp-hero .col-lg-6:last-child { margin-top: 0; }
     .fp-section { padding: 50px 0; }
     .fp-card-img { height: 180px; }
 }
 @media (max-width: 768px) {
-    .fp-hero { padding: 35px 0 50px; }
-    .fp-hero-title { font-size: 26px; }
-    .fp-hero-desc { font-size: 14px; margin-bottom: 20px; }
-    .fp-hero-badge { font-size: 11px; padding: 5px 12px; }
-    .fp-hero-actions { flex-direction: column; gap: 10px; }
+    .fp-hero { padding: 28px 0 36px; }
+    .fp-hero-title { font-size: 24px; margin-bottom: 10px; }
+    .fp-hero-desc { font-size: 13px; margin-bottom: 16px; line-height: 1.6; }
+    .fp-hero-badge { font-size: 10px; padding: 4px 10px; margin-bottom: 14px; }
+    .fp-hero-actions { flex-direction: column; gap: 8px; margin-bottom: 14px; }
     .fp-hero-actions .fp-btn-primary,
-    .fp-hero-actions .fp-btn-secondary { width: 100%; justify-content: center; }
-    .fp-hero-search { margin-bottom: 18px; }
+    .fp-hero-actions .fp-btn-secondary { width: 100%; justify-content: center; padding: 12px 20px; font-size: 14px; }
+    .fp-hero-search { margin-bottom: 14px; }
     .fp-hs-form input { padding: 10px 10px; font-size: 13px; }
     .fp-hs-form button { padding: 10px 14px; font-size: 12px; }
-    .fp-hero-trust { gap: 12px; justify-content: center; }
-    .fp-ht-item { font-size: 12px; }
-    .fp-ht-item strong { font-size: 15px; }
+    .fp-hero-trust { gap: 10px; justify-content: center; flex-wrap: wrap; }
+    .fp-ht-item { font-size: 11px; }
+    .fp-ht-item strong { font-size: 14px; }
+    .hero-slider-img { height: 200px; }
+    #heroSlider .carousel-inner { border-radius: 10px !important; }
+    .row.g-5 { --bs-gutter-y: 1rem; }
+    .fp-hero-glow { display: none; }
+    .fp-section { padding: 40px 0; }
     .fp-card-img { height: 150px; }
     .fp-section-header { margin-bottom: 24px; }
     .fp-section-header h2 { font-size: 22px; }
@@ -1042,22 +1087,187 @@
     .fp-empty i { font-size: 32px; }
 }
 @media (max-width: 576px) {
-    .fp-hero { padding: 30px 0 40px; }
-    .fp-hero-title { font-size: 22px; }
-    .fp-hero-desc { font-size: 13px; margin-bottom: 16px; }
-    .fp-hero-badge { font-size: 10px; padding: 4px 10px; margin-bottom: 16px; }
-    .fp-hero-actions { gap: 8px; margin-bottom: 16px; }
+    /* ============================================================
+       MOBILE HERO — Complete Redesign
+       ============================================================ */
+    .fp-hero {
+        padding: 0 0 30px;
+        min-height: auto;
+        display: block;
+    }
+    .fp-hero-bg { position: absolute; inset: 0; pointer-events: none; }
+    .fp-hero-mobile-overlay {
+        display: block;
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+            180deg,
+            rgba(13,13,17,0) 0%,
+            rgba(13,13,17,0.85) 40%,
+            rgba(13,13,17,1) 70%
+        );
+        pointer-events: none;
+        z-index: 1;
+    }
+    .fp-hero-glow { display: none; }
+
+    /* Slider — full width hero banner */
+    .fp-hero .row {
+        --bs-gutter-y: 0;
+        position: relative;
+    }
+    .fp-hero .col-lg-6:first-child {
+        margin-bottom: -50px;
+        position: relative;
+        z-index: 2;
+    }
+    .fp-hero-slider-inner {
+        border-radius: 0 !important;
+        border: none !important;
+        box-shadow: none !important;
+    }
+    .fp-hero .hero-slider-img {
+        height: 300px;
+        object-fit: cover;
+    }
+    #heroSlider .carousel-control-prev,
+    #heroSlider .carousel-control-next {
+        display: none;
+    }
+
+    /* Mobile slider dots */
+    .fp-hero-mobile-indicators {
+        display: flex;
+        justify-content: center;
+        gap: 6px;
+        position: absolute;
+        bottom: 16px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 5;
+    }
+    .fp-hero-mobile-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.3);
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    .fp-hero-mobile-dot.active {
+        width: 20px;
+        border-radius: 3px;
+        background: #eab308;
+    }
+
+    /* Hero content — glass card style overlapping slider */
+    .fp-hero-content {
+        position: relative;
+        z-index: 3;
+        background: linear-gradient(
+            180deg,
+            rgba(22,22,29,0.95) 0%,
+            rgba(22,22,29,1) 100%
+        );
+        border: 1px solid rgba(255,255,255,0.06);
+        border-radius: 20px 20px 0 0;
+        padding: 24px 18px 18px;
+        margin-top: -40px;
+        box-shadow: 0 -20px 60px rgba(0,0,0,0.5);
+    }
+
+    .fp-hero-badge {
+        font-size: 10px;
+        padding: 5px 12px;
+        margin-bottom: 14px;
+        border-radius: 20px;
+        animation: none;
+        white-space: nowrap;
+    }
+
+    .fp-hero-title {
+        font-size: 26px;
+        margin-bottom: 10px;
+        line-height: 1.15;
+    }
+    .fp-hero-title br { display: block; }
+
+    .fp-hero-desc {
+        font-size: 13px;
+        margin-bottom: 16px;
+        line-height: 1.65;
+        max-width: 100%;
+    }
+
+    .fp-hero-actions {
+        flex-direction: row;
+        gap: 10px;
+        margin-bottom: 16px;
+    }
     .fp-hero-actions .fp-btn-primary,
-    .fp-hero-actions .fp-btn-secondary { padding: 12px 20px; font-size: 14px; }
-    .fp-hero-search { margin-bottom: 14px; }
-    .fp-hs-form { border-radius: 10px; }
-    .fp-hs-form i { font-size: 13px; padding-left: 12px; }
-    .fp-hs-form input { padding: 10px 8px; font-size: 13px; }
-    .fp-hs-form button { padding: 10px 14px; font-size: 12px; }
-    .fp-ht-item { font-size: 11px; }
+    .fp-hero-actions .fp-btn-secondary {
+        flex: 1;
+        justify-content: center;
+        padding: 14px 16px;
+        font-size: 13px;
+        border-radius: 12px;
+        white-space: nowrap;
+    }
+    .fp-hero-actions .fp-btn-primary {
+        box-shadow: 0 4px 20px rgba(234,179,8,0.2);
+    }
+    .fp-hero-actions .fp-btn-secondary {
+        background: rgba(255,255,255,0.06);
+    }
+
+    /* Search — pill style */
+    .fp-hero-search { margin-bottom: 16px; }
+    .fp-hs-form {
+        border-radius: 14px;
+        max-width: 100%;
+        background: rgba(255,255,255,0.05);
+    }
+    .fp-hs-form:focus-within {
+        border-color: rgba(234,179,8,0.35);
+        background: rgba(255,255,255,0.08);
+    }
+    .fp-hs-form i { font-size: 13px; padding-left: 14px; }
+    .fp-hs-form input {
+        padding: 11px 10px;
+        font-size: 13px;
+    }
+    .fp-hs-form button {
+        padding: 11px 14px;
+        font-size: 12px;
+    }
+
+    /* Trust — horizontal scrollable */
+    .fp-hero-trust {
+        gap: 0;
+        justify-content: flex-start;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        padding-bottom: 4px;
+        flex-wrap: nowrap;
+    }
+    .fp-hero-trust::-webkit-scrollbar { display: none; }
+    .fp-ht-item {
+        flex-shrink: 0;
+        font-size: 11px;
+        padding: 0 14px;
+        white-space: nowrap;
+    }
+    .fp-ht-item:first-child { padding-left: 0; }
     .fp-ht-item strong { font-size: 14px; }
     .fp-ht-item i { font-size: 13px; }
-    .fp-ht-divider { height: 18px; }
+    .fp-ht-divider {
+        height: 18px;
+        flex-shrink: 0;
+    }
+
+    /* Other mobile overrides */
     .fp-card-img { height: 130px; }
     .fp-card-body { padding: 10px 12px 14px; }
     .fp-card-body h3 { font-size: 13px; margin-bottom: 6px; }
@@ -1106,18 +1316,51 @@
     .fp-empty p { font-size: 13px; }
 }
 
+/* ===== Mobile Hero Entrance Animation ===== */
+@media (max-width: 576px) {
+    .fp-hero-content {
+        animation: mobileHeroSlideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .fp-hero-content > * {
+        opacity: 0;
+        animation: mobileHeroFadeIn 0.5s ease forwards;
+    }
+    .fp-hero-content > .fp-hero-badge { animation-delay: 0.1s; }
+    .fp-hero-content > .fp-hero-title { animation-delay: 0.18s; }
+    .fp-hero-content > .fp-hero-desc { animation-delay: 0.26s; }
+    .fp-hero-content > .fp-hero-actions { animation-delay: 0.34s; }
+    .fp-hero-content > .fp-hero-search { animation-delay: 0.42s; }
+    .fp-hero-content > .fp-hero-trust { animation-delay: 0.5s; }
+
+    @keyframes mobileHeroSlideUp {
+        from { transform: translateY(20px); opacity: 0.6; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes mobileHeroFadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+}
+
 /* === Very small screens (under 400px) === */
 @media (max-width: 400px) {
-    .fp-hero { padding: 24px 0 34px; }
-    .fp-hero-title { font-size: 20px; }
-    .fp-hero-desc { font-size: 12px; }
-    .fp-hero-badge { font-size: 9px; padding: 3px 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+    .fp-hero { padding: 0 0 24px; }
+    .fp-hero .hero-slider-img { height: 230px; }
+    .fp-hero-content {
+        padding: 18px 14px 14px;
+        margin-top: -30px;
+        border-radius: 16px 16px 0 0;
+    }
+    .fp-hero-title { font-size: 22px; }
+    .fp-hero-desc { font-size: 12px; margin-bottom: 14px; }
+    .fp-hero-badge { font-size: 9px; padding: 4px 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+    .fp-hero-actions { gap: 8px; margin-bottom: 14px; }
     .fp-hero-actions .fp-btn-primary,
-    .fp-hero-actions .fp-btn-secondary { padding: 10px 16px; font-size: 13px; }
+    .fp-hero-actions .fp-btn-secondary { padding: 12px 14px; font-size: 12px; }
     .fp-hs-form input { font-size: 12px; }
-    .fp-hs-form button { font-size: 11px; padding: 8px 10px; }
+    .fp-hs-form button { font-size: 11px; padding: 10px 10px; }
     .fp-ht-item strong { font-size: 13px; }
-    .fp-ht-item { font-size: 10px; }
+    .fp-ht-item { font-size: 10px; padding: 0 10px; }
     .fp-card-img { height: 110px; }
     .fp-card-body h3 { font-size: 12px; }
     .fp-price-current { font-size: 13px; }
