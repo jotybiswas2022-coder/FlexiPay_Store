@@ -205,15 +205,15 @@
 <!-- ===== FEATURED PRODUCTS ===== -->
 <section class="fp-section">
     <div class="container">
-        <div class="fp-section-header">
+        <div class="fp-section-header reveal-up">
             <span class="fp-section-tag"><i class="bi bi-star-fill"></i> Featured Products</span>
             <h2>Popular Items You'll Love</h2>
             <p>Top-rated products with flexible installment plans starting from 4 weeks</p>
         </div>
         <div class="row g-3">
             @forelse($featuredProducts ?? [] as $product)
-            <div class="col-lg-3 col-md-4 col-6">
-                <div class="fp-card">
+            <div class="col-lg-3 col-md-4 col-6 fp-product-col">
+                <div class="fp-card reveal-scale" style="transition-delay:{{ $loop->index * 0.06 }}s;">
                     <a href="{{ url('/product/'.$product->slug) }}" class="fp-card-link">
                         <div class="fp-card-img">
                             @php $img = $product->primaryImage ?? $product->images->first(); @endphp
@@ -256,7 +256,7 @@
             </div>
             @endforelse
         </div>
-        <div class="fp-section-cta">
+        <div class="fp-section-cta reveal-up">
             <a href="{{ url('/shop') }}" class="fp-btn-primary">
                 <i class="bi bi-grid-fill"></i> Browse All Products
             </a>
@@ -267,14 +267,14 @@
 <!-- ===== HOW IT WORKS ===== -->
 <section class="fp-section fp-section-alt">
     <div class="container">
-        <div class="fp-section-header">
+        <div class="fp-section-header reveal-up">
             <span class="fp-section-tag"><i class="bi bi-info-circle"></i> How It Works</span>
             <h2>Three Simple Steps</h2>
             <p>Get started in minutes — no paperwork, no delays</p>
         </div>
         <div class="row g-4">
             <div class="col-md-4">
-                <div class="fp-step">
+                <div class="fp-step reveal-up" style="transition-delay:0.1s;">
                     <div class="fp-step-num">01</div>
                     <div class="fp-step-icon"><i class="bi bi-hand-index-thumb"></i></div>
                     <h3>Choose Product</h3>
@@ -282,7 +282,7 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="fp-step fp-step-accent">
+                <div class="fp-step reveal-up" style="transition-delay:0.2s;">
                     <div class="fp-step-num">02</div>
                     <div class="fp-step-icon"><i class="bi bi-calendar-check"></i></div>
                     <h3>Pick Your Plan</h3>
@@ -290,7 +290,7 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="fp-step">
+                <div class="fp-step reveal-up" style="transition-delay:0.3s;">
                     <div class="fp-step-num">03</div>
                     <div class="fp-step-icon"><i class="bi bi-truck"></i></div>
                     <h3>Get Delivered</h3>
@@ -304,54 +304,28 @@
 <!-- ===== WHY CHOOSE US ===== -->
 <section class="fp-section">
     <div class="container">
-        <div class="fp-section-header">
+        <div class="fp-section-header reveal-up">
             <span class="fp-section-tag"><i class="bi bi-shield-check"></i> Why FlexiPay</span>
             <h2>Built for Your Convenience</h2>
             <p>Everything you need in one seamless platform</p>
         </div>
         <div class="row g-3">
+            @foreach([
+                ['icon' => 'bi-arrow-repeat', 'title' => 'Flexible Plans', 'desc' => 'Change your plan anytime, hassle-free'],
+                ['icon' => 'bi-shield-check', 'title' => 'Insurance', 'desc' => 'Protect items for just 10% of the value'],
+                ['icon' => 'bi-wallet2', 'title' => 'Wallet', 'desc' => 'Fund and earn cashback rewards'],
+                ['icon' => 'bi-truck', 'title' => 'Fast Delivery', 'desc' => 'Track your order every step of the way'],
+                ['icon' => 'bi-arrow-left-right', 'title' => 'Easy Exchanges', 'desc' => 'Request exchanges with quick approval'],
+                ['icon' => 'bi-headset', 'title' => '24/7 Support', 'desc' => 'Always here when you need us'],
+            ] as $fcard)
             <div class="col-md-4 col-6">
-                <div class="fp-fcard">
-                    <div class="fp-fcard-icon"><i class="bi bi-arrow-repeat"></i></div>
-                    <h3>Flexible Plans</h3>
-                    <p>Change your plan anytime, hassle-free</p>
+                <div class="fp-fcard reveal-up" style="transition-delay:{{ $loop->index * 0.07 }}s;">
+                    <div class="fp-fcard-icon"><i class="bi {{ $fcard['icon'] }}"></i></div>
+                    <h3>{{ $fcard['title'] }}</h3>
+                    <p>{{ $fcard['desc'] }}</p>
                 </div>
             </div>
-            <div class="col-md-4 col-6">
-                <div class="fp-fcard">
-                    <div class="fp-fcard-icon"><i class="bi bi-shield-check"></i></div>
-                    <h3>Insurance</h3>
-                    <p>Protect items for just 10% of the value</p>
-                </div>
-            </div>
-            <div class="col-md-4 col-6">
-                <div class="fp-fcard">
-                    <div class="fp-fcard-icon"><i class="bi bi-wallet2"></i></div>
-                    <h3>Wallet</h3>
-                    <p>Fund and earn cashback rewards</p>
-                </div>
-            </div>
-            <div class="col-md-4 col-6">
-                <div class="fp-fcard">
-                    <div class="fp-fcard-icon"><i class="bi bi-truck"></i></div>
-                    <h3>Fast Delivery</h3>
-                    <p>Track your order every step of the way</p>
-                </div>
-            </div>
-            <div class="col-md-4 col-6">
-                <div class="fp-fcard">
-                    <div class="fp-fcard-icon"><i class="bi bi-arrow-left-right"></i></div>
-                    <h3>Easy Exchanges</h3>
-                    <p>Request exchanges with quick approval</p>
-                </div>
-            </div>
-            <div class="col-md-4 col-6">
-                <div class="fp-fcard">
-                    <div class="fp-fcard-icon"><i class="bi bi-headset"></i></div>
-                    <h3>24/7 Support</h3>
-                    <p>Always here when you need us</p>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
 </section>
@@ -360,34 +334,16 @@
 <section class="fp-stats">
     <div class="container">
         <div class="row g-3">
+            @php $stats = [['icon' => 'bi-box-seam-fill', 'count' => 5000, 'label' => 'Products Available'], ['icon' => 'bi-emoji-smile-fill', 'count' => 15000, 'label' => 'Happy Customers'], ['icon' => 'bi-coin', 'count' => 36, 'label' => 'Payment Plans'], ['icon' => 'bi-building', 'count' => 100, 'label' => 'Trusted Brands']]; @endphp
+            @foreach($stats as $stat)
             <div class="col-md-3 col-6">
-                <div class="fp-stat">
-                    <i class="bi bi-box-seam-fill"></i>
-                    <div class="fp-stat-num counter-num" data-count="5000">0</div>
-                    <span>Products Available</span>
+                <div class="fp-stat reveal-up" style="transition-delay:{{ $loop->index * 0.08 }}s;">
+                    <i class="bi {{ $stat['icon'] }}"></i>
+                    <div class="fp-stat-num counter-num" data-count="{{ $stat['count'] }}">0</div>
+                    <span>{{ $stat['label'] }}</span>
                 </div>
             </div>
-            <div class="col-md-3 col-6">
-                <div class="fp-stat">
-                    <i class="bi bi-emoji-smile-fill"></i>
-                    <div class="fp-stat-num counter-num" data-count="15000">0</div>
-                    <span>Happy Customers</span>
-                </div>
-            </div>
-            <div class="col-md-3 col-6">
-                <div class="fp-stat">
-                    <i class="bi bi-coin"></i>
-                    <div class="fp-stat-num counter-num" data-count="36">0</div>
-                    <span>Payment Plans</span>
-                </div>
-            </div>
-            <div class="col-md-3 col-6">
-                <div class="fp-stat">
-                    <i class="bi bi-building"></i>
-                    <div class="fp-stat-num counter-num" data-count="100">0</div>
-                    <span>Trusted Brands</span>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
 </section>
@@ -397,7 +353,7 @@
 <!-- ===== TESTIMONIALS ===== -->
 <section class="fp-section">
     <div class="container">
-        <div class="fp-section-header">
+        <div class="fp-section-header reveal-up">
             <span class="fp-section-tag"><i class="bi bi-chat-quote"></i> Testimonials</span>
             <h2>What Our Customers Say</h2>
             <p>Real stories from real people</p>
@@ -412,7 +368,7 @@
             @endphp
             @foreach($testimonials as $t)
             <div class="col-md-4">
-                <div class="fp-testi">
+                <div class="fp-testi reveal-up" style="transition-delay:{{ $loop->index * 0.1 }}s;">
                     <div class="fp-testi-stars">
                         @for($s = 0; $s < 5; $s++)
                             <i class="bi {{ $s < $t['rating'] ? 'bi-star-fill' : 'bi-star' }}"></i>
@@ -443,8 +399,8 @@
         </div>
         <div class="row g-3">
             @forelse($newArrivals ?? [] as $product)
-            <div class="col-lg-3 col-md-4 col-6">
-                <div class="fp-card">
+            <div class="col-lg-3 col-md-4 col-6 fp-product-col">
+                <div class="fp-card reveal-scale" style="transition-delay:{{ $loop->index * 0.06 }}s;">
                     <a href="{{ url('/product/'.$product->slug) }}" class="fp-card-link">
                         <div class="fp-card-img">
                             @php $img = $product->primaryImage ?? $product->images->first(); @endphp
@@ -484,10 +440,10 @@
     <div class="fp-cta-glow g1"></div>
     <div class="fp-cta-glow g2"></div>
     <div class="container text-center">
-        <span class="fp-cta-tag"><i class="bi bi-gift-fill"></i> Limited Time</span>
-        <h2 class="fp-cta-title">Ready to Start Shopping?</h2>
-        <p class="fp-cta-desc">Create your free account in minutes. No credit check required, no hidden fees, cancel anytime.</p>
-        <div class="fp-cta-actions">
+        <span class="fp-cta-tag reveal-up"><i class="bi bi-gift-fill"></i> Limited Time</span>
+        <h2 class="fp-cta-title reveal-up" style="transition-delay:0.08s;">Ready to Start Shopping?</h2>
+        <p class="fp-cta-desc reveal-up" style="transition-delay:0.16s;">Create your free account in minutes. No credit check required, no hidden fees, cancel anytime.</p>
+        <div class="fp-cta-actions reveal-up" style="transition-delay:0.24s;">
             <a href="{{ url('/register') }}" class="fp-btn-primary">
                 <i class="bi bi-person-plus"></i> Create Free Account
             </a>
@@ -495,7 +451,7 @@
                 <i class="bi bi-grid-fill"></i> Browse Products
             </a>
         </div>
-        <div class="fp-cta-features">
+        <div class="fp-cta-features reveal-up" style="transition-delay:0.32s;">
             <span><i class="bi bi-check-circle-fill"></i> No credit check</span>
             <span><i class="bi bi-check-circle-fill"></i> Instant approval</span>
             <span><i class="bi bi-check-circle-fill"></i> Cancel anytime</span>
