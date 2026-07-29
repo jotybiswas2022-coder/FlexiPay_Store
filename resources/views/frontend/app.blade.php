@@ -305,6 +305,167 @@
             .section-padding { padding: 50px 0; }
             #cursorGlow { display: none; }
         }
+
+        /* ===== MOBILE BOTTOM NAV ===== */
+        .fp-bottom-nav {
+            position: fixed;
+            bottom: 0; left: 0; right: 0;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            background: rgba(18,18,20,0.92);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-top: 1px solid rgba(255,255,255,0.06);
+            padding: 6px 0 env(safe-area-inset-bottom, 6px);
+            box-shadow: 0 -4px 30px rgba(0,0,0,0.4);
+            animation: bottomNavSlideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            transform: translateY(100%);
+        }
+        @keyframes bottomNavSlideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+
+        .fp-bn-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            padding: 4px 0;
+            text-decoration: none;
+            color: #71717a;
+            transition: all 0.25s ease;
+            position: relative;
+            min-width: 52px;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .fp-bn-item:active {
+            transform: scale(0.92);
+        }
+
+        .fp-bn-icon-wrap {
+            position: relative;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .fp-bn-item .fp-bn-label {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.2px;
+            transition: all 0.3s ease;
+            line-height: 1;
+        }
+
+        /* Active state */
+        .fp-bn-active {
+            color: #eab308 !important;
+        }
+        .fp-bn-active .fp-bn-icon-wrap {
+            transform: translateY(-2px);
+        }
+        .fp-bn-active .fp-bn-label {
+            color: #eab308;
+            font-weight: 700;
+        }
+
+        /* Active indicator dot */
+        .fp-bn-active::after {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 3px;
+            background: #eab308;
+            border-radius: 0 0 3px 3px;
+            box-shadow: 0 0 10px rgba(234,179,8,0.3);
+        }
+
+        /* Cart badge */
+        .fp-bn-badge {
+            position: absolute;
+            top: -4px;
+            right: -8px;
+            background: #eab308;
+            color: #0A0A0B;
+            font-size: 8px;
+            font-weight: 800;
+            min-width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+            box-shadow: 0 2px 8px rgba(234,179,8,0.3);
+        }
+
+        /* Avatar in bottom nav */
+        .fp-bn-avatar {
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            background: linear-gradient(135deg, #eab308, #ca8a04);
+            color: #0A0A0B;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 800;
+        }
+        .fp-bn-active .fp-bn-avatar {
+            box-shadow: 0 0 0 2px rgba(234,179,8,0.3);
+        }
+
+        /* Hover effect */
+        @media (hover: hover) {
+            .fp-bn-item:hover {
+                color: #a1a1aa;
+            }
+            .fp-bn-item:hover .fp-bn-icon-wrap {
+                transform: translateY(-1px);
+            }
+        }
+
+        /* Scroll hiding */
+        .fp-bottom-nav.fp-bn-hidden {
+            transform: translateY(100%);
+            opacity: 0;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .fp-bottom-nav:not(.fp-bn-hidden) {
+            transform: translateY(0);
+            opacity: 1;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Body padding for bottom nav */
+        @media (max-width: 991px) {
+            body {
+                padding-bottom: 60px;
+            }
+        }
+
+        /* Safe area for notched devices */
+        @supports (padding-bottom: env(safe-area-inset-bottom)) {
+            .fp-bottom-nav {
+                padding-bottom: calc(6px + env(safe-area-inset-bottom));
+            }
+            @media (max-width: 991px) {
+                body {
+                    padding-bottom: calc(60px + env(safe-area-inset-bottom));
+                }
+            }
+        }
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
         }
@@ -325,6 +486,49 @@
 
     @include('frontend.partials.menu')
     @yield('content')
+
+    <!-- ===== MOBILE BOTTOM NAV ===== -->
+    <nav class="fp-bottom-nav d-lg-none" id="fpBottomNav" aria-label="Mobile navigation">
+        @php
+            $cartItems = session('cart', []);
+            $cartCount = is_array($cartItems) ? count($cartItems) : (is_object($cartItems) && method_exists($cartItems, 'count') ? $cartItems->count() : 0);
+            $currentPath = request()->path();
+        @endphp
+        <a href="{{ url('/') }}" class="fp-bn-item {{ request()->is('/') ? 'fp-bn-active' : '' }}">
+            <span class="fp-bn-icon-wrap"><i class="bi bi-house-fill"></i></span>
+            <span class="fp-bn-label">Home</span>
+        </a>
+        <a href="{{ url('/shop') }}" class="fp-bn-item {{ request()->is('shop') ? 'fp-bn-active' : '' }}">
+            <span class="fp-bn-icon-wrap"><i class="bi bi-grid-fill"></i></span>
+            <span class="fp-bn-label">Shop</span>
+        </a>
+        <a href="{{ url('/cart') }}" class="fp-bn-item {{ request()->is('cart') ? 'fp-bn-active' : '' }}">
+            <span class="fp-bn-icon-wrap">
+                <i class="bi bi-cart-fill"></i>
+                @if($cartCount > 0)
+                    <span class="fp-bn-badge">{{ $cartCount > 99 ? '99+' : $cartCount }}</span>
+                @endif
+            </span>
+            <span class="fp-bn-label">Cart</span>
+        </a>
+        <a href="{{ url('/wishlist') }}" class="fp-bn-item {{ request()->is('wishlist') ? 'fp-bn-active' : '' }}">
+            <span class="fp-bn-icon-wrap"><i class="bi bi-heart-fill"></i></span>
+            <span class="fp-bn-label">Wishlist</span>
+        </a>
+        @auth
+            <a href="{{ url('/profile') }}" class="fp-bn-item {{ request()->is('profile*') ? 'fp-bn-active' : '' }}">
+                <span class="fp-bn-icon-wrap">
+                    <span class="fp-bn-avatar">{{ substr(auth()->user()->name ?? 'U', 0, 1) }}</span>
+                </span>
+                <span class="fp-bn-label">Profile</span>
+            </a>
+        @else
+            <a href="{{ url('/login') }}" class="fp-bn-item {{ request()->is('login*') ? 'fp-bn-active' : '' }}">
+                <span class="fp-bn-icon-wrap"><i class="bi bi-person-fill"></i></span>
+                <span class="fp-bn-label">Login</span>
+            </a>
+        @endauth
+    </nav>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -387,6 +591,50 @@
             });
         }, { threshold: 0.5 });
         document.querySelectorAll('[data-count]').forEach(el => counterObs.observe(el));
+
+        // Bottom Nav Scroll Hide
+        (function() {
+            const bottomNav = document.getElementById('fpBottomNav');
+            if (!bottomNav) return;
+            let lastScroll = 0;
+            let scrollDirection = 'up';
+            const threshold = 50;
+
+            window.addEventListener('scroll', () => {
+                const currentScroll = window.scrollY;
+                const newDirection = currentScroll > lastScroll ? 'down' : 'up';
+                
+                if (currentScroll < threshold) {
+                    bottomNav.classList.remove('fp-bn-hidden');
+                } else if (newDirection === 'down' && scrollDirection === 'up') {
+                    bottomNav.classList.add('fp-bn-hidden');
+                } else if (newDirection === 'up' && scrollDirection === 'down') {
+                    bottomNav.classList.remove('fp-bn-hidden');
+                }
+                
+                scrollDirection = newDirection;
+                lastScroll = currentScroll;
+            }, { passive: true });
+
+            // Show on touch end / release
+            document.addEventListener('touchend', () => {
+                if (window.scrollY > threshold) {
+                    // Brief show on touch end, then hide after delay
+                    bottomNav.classList.remove('fp-bn-hidden');
+                    clearTimeout(window._bnTimeout);
+                    window._bnTimeout = setTimeout(() => {
+                        bottomNav.classList.add('fp-bn-hidden');
+                    }, 2000);
+                }
+            }, { passive: true });
+
+            // Always show at top of page
+            window.addEventListener('scroll', () => {
+                if (window.scrollY < threshold) {
+                    bottomNav.classList.remove('fp-bn-hidden');
+                }
+            }, { passive: true });
+        })();
 
         // Parallax on mouse move for elements with data-tilt
         document.querySelectorAll('[data-tilt]').forEach(el => {
