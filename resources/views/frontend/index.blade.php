@@ -392,7 +392,7 @@
 <!-- ===== NEW ARRIVALS ===== -->
 <section class="fp-section fp-section-alt">
     <div class="container">
-        <div class="fp-section-header">
+        <div class="fp-section-header reveal-up">
             <span class="fp-section-tag"><i class="bi bi-clock-history"></i> New Arrivals</span>
             <h2>Just Dropped</h2>
             <p>The latest additions to our catalog</p>
