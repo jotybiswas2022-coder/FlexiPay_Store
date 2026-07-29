@@ -137,6 +137,11 @@ Route::prefix('admin')->middleware('admin')->group(function () {
         Route::get('/delete/{promoCode}', 'destroy')->name('admin.promo-codes.delete');
     });
 
+    // ===== VALUE CHAMPIONS =====
+    Route::get('/value-champions', function () {
+        return view('backend.value-champions');
+    })->name('admin.value-champions');
+
     // ===== FAQS =====
     Route::prefix('faqs')->controller(AdminFaqController::class)->group(function () {
         Route::get('/', 'index')->name('admin.faqs.index');

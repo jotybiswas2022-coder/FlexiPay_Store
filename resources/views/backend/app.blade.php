@@ -309,6 +309,11 @@
                     <i class="bi bi-arrow-left-right"></i> Exchanges
                 </a>
 
+                <div class="nav-section">Culture</div>
+                <a href="{{ route('admin.value-champions') }}" class="{{ request()->routeIs('admin.value-champions*') ? 'active' : '' }}">
+                    <i class="bi bi-trophy-fill"></i> Value Champions
+                </a>
+
                 <div class="nav-section">Marketing</div>
                 <a href="{{ route('admin.campaigns.index') }}" class="{{ request()->routeIs('admin.campaigns.*') ? 'active' : '' }}">
                     <i class="bi bi-megaphone-fill"></i> Campaigns
