@@ -73,8 +73,15 @@
     display: flex; align-items: center; justify-content: center;
     margin: 0 auto 16px; color: var(--gold-500); font-size: 24px;
 }
-.fp-ab-value-card h5 { font-family: 'Syne', sans-serif; color: var(--text-primary); font-size: 15px; margin-bottom: 8px; }
+.fp-ab-value-card h5 { font-family: 'Syne', sans-serif; color: var(--text-primary); font-size: 15px; margin-bottom: 6px; }
 .fp-ab-value-card p { color: var(--text-dim); font-size: 13px; line-height: 1.6; }
+.fp-ab-value-tagline { display: block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 9px; opacity: 0.7; }
+.fp-ab-value-icon.is-trust { background: rgba(234,179,8,0.1); border-color: rgba(234,179,8,0.2); color: #eab308; }
+.fp-ab-value-icon.is-flex { background: rgba(96,165,250,0.1); border-color: rgba(96,165,250,0.2); color: #60a5fa; }
+.fp-ab-value-icon.is-speed { background: rgba(52,211,153,0.1); border-color: rgba(52,211,153,0.2); color: #34d399; }
+.fp-ab-value-icon.is-reliable { background: rgba(167,139,250,0.1); border-color: rgba(167,139,250,0.2); color: #a78bfa; }
+.fp-ab-value-icon.is-innovate { background: rgba(244,114,182,0.1); border-color: rgba(244,114,182,0.2); color: #f472b6; }
+.fp-ab-value-icon.is-team { background: rgba(251,146,60,0.1); border-color: rgba(251,146,60,0.2); color: #fb923c; }
 
 .fp-ab-timeline {
     position: relative; padding-left: 32px;
@@ -196,25 +203,52 @@
         </div>
 
         <div class="row g-4 mb-5">
-            <div class="col-md-4 reveal-up" style="transition-delay:0.1s;">
+            <div class="col-md-6 col-lg-4 reveal-up" style="transition-delay:0.05s;">
                 <div class="fp-ab-value-card">
-                    <div class="fp-ab-value-icon"><i class="bi bi-shield-fill-check"></i></div>
-                    <h5>Trust & Security</h5>
-                    <p>Your data and payments are protected with enterprise-grade encryption and secure payment gateways.</p>
+                    <div class="fp-ab-value-icon is-trust"><i class="bi bi-shield-fill-check"></i></div>
+                    <h5>Customer Trust</h5>
+                    <span class="fp-ab-value-tagline">Transparency First</span>
+                    <p>Always transparent about terms and fees, building lasting relationships through honesty and integrity.</p>
                 </div>
             </div>
-            <div class="col-md-4 reveal-up" style="transition-delay:0.2s;">
+            <div class="col-md-6 col-lg-4 reveal-up" style="transition-delay:0.12s;">
                 <div class="fp-ab-value-card">
-                    <div class="fp-ab-value-icon"><i class="bi bi-arrow-repeat"></i></div>
+                    <div class="fp-ab-value-icon is-flex"><i class="bi bi-arrow-repeat"></i></div>
                     <h5>Flexibility</h5>
-                    <p>Choose from multiple installment plans that adapt to your financial situation, not the other way around.</p>
+                    <span class="fp-ab-value-tagline">Adapt & Thrive</span>
+                    <p>Find the right plan that fits your budget — weekly, bi-weekly, or monthly. You choose what works.</p>
                 </div>
             </div>
-            <div class="col-md-4 reveal-up" style="transition-delay:0.3s;">
+            <div class="col-md-6 col-lg-4 reveal-up" style="transition-delay:0.19s;">
                 <div class="fp-ab-value-card">
-                    <div class="fp-ab-value-icon"><i class="bi bi-headset"></i></div>
-                    <h5>Customer First</h5>
-                    <p>Our dedicated support team is here to help you every step of the way, from purchase to delivery.</p>
+                    <div class="fp-ab-value-icon is-speed"><i class="bi bi-lightning-fill"></i></div>
+                    <h5>Speed</h5>
+                    <span class="fp-ab-value-tagline">Instant Action</span>
+                    <p>Process requests with instant approval mindset — no delays, no unnecessary waiting.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4 reveal-up" style="transition-delay:0.26s;">
+                <div class="fp-ab-value-card">
+                    <div class="fp-ab-value-icon is-reliable"><i class="bi bi-patch-check-fill"></i></div>
+                    <h5>Reliability</h5>
+                    <span class="fp-ab-value-tagline">Promise Kept</span>
+                    <p>Follow through on every delivery promise. We don't just commit — we deliver.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4 reveal-up" style="transition-delay:0.33s;">
+                <div class="fp-ab-value-card">
+                    <div class="fp-ab-value-icon is-innovate"><i class="bi bi-gear-fill"></i></div>
+                    <h5>Innovation</h5>
+                    <span class="fp-ab-value-tagline">Always Evolving</span>
+                    <p>Suggest improvements, take initiative, and constantly find better ways to serve our customers.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4 reveal-up" style="transition-delay:0.40s;">
+                <div class="fp-ab-value-card">
+                    <div class="fp-ab-value-icon is-team"><i class="bi bi-people-fill"></i></div>
+                    <h5>Teamwork</h5>
+                    <span class="fp-ab-value-tagline">Together We Win</span>
+                    <p>Share knowledge, support teammates, and grow together to create exceptional experiences.</p>
                 </div>
             </div>
         </div>
