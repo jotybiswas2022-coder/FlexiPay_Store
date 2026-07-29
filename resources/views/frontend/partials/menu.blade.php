@@ -1,27 +1,3 @@
-<!-- ===== TOP INFO BAR ===== -->
-<div class="fp-topbar">
-    <div class="container-fluid px-4">
-        <div class="d-flex justify-content-between align-items-center">
-            <div class="d-flex align-items-center gap-3 flex-wrap">
-                <span class="fp-topbar-item"><span class="fp-topbar-dot"></span><i class="bi bi-telephone-fill"></i> +234 800-FLEXIPAY</span>
-                <span class="fp-topbar-divider d-none d-md-inline"></span>
-                <span class="fp-topbar-item d-none d-md-inline"><i class="bi bi-envelope-fill"></i> support@flexipay.store</span>
-                <span class="fp-topbar-divider d-none d-lg-inline"></span>
-                <span class="fp-topbar-item d-none d-lg-inline"><i class="bi bi-clock-fill"></i> Mon–Sat: 8AM–6PM</span>
-                <span class="fp-topbar-divider d-none d-xl-inline"></span>
-                <span class="fp-topbar-item d-none d-xl-inline"><i class="bi bi-geo-alt-fill"></i> Lagos, Nigeria</span>
-            </div>
-            <div class="d-flex align-items-center gap-1">
-                <span class="fp-topbar-label d-none d-sm-inline">Follow Us:</span>
-                <a href="#" title="Facebook" class="fp-social-top" data-social="facebook"><i class="bi bi-facebook"></i></a>
-                <a href="#" title="Twitter/X" class="fp-social-top" data-social="twitter"><i class="bi bi-twitter-x"></i></a>
-                <a href="#" title="Instagram" class="fp-social-top" data-social="instagram"><i class="bi bi-instagram"></i></a>
-                <a href="#" title="WhatsApp" class="fp-social-top" data-social="whatsapp"><i class="bi bi-whatsapp"></i></a>
-            </div>
-        </div>
-    </div>
-</div>
-
 <!-- ===== MAIN NAVBAR ===== -->
 <nav class="fp-navbar navbar navbar-expand-lg sticky-top" id="fpMainNav" aria-label="Main navigation">
     <div class="container-fluid px-4">
