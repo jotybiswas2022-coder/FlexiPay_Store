@@ -9,14 +9,17 @@
     <title>FlexiPay — @yield('title', 'Account')</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=Syne:wght@700;800&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
             --gold-400: #FACC15;
             --gold-500: #EAB308;
             --gold-600: #CA8A04;
+            --gold-700: #A16207;
             --dark-900: #18181B;
             --dark-950: #09090B;
             --near-black: #0A0A0B;
@@ -27,6 +30,7 @@
             --text-muted: #A1A1AA;
             --text-dim: #71717A;
             --shadow-gold: 0 4px 20px rgba(234,179,8,0.15);
+            --shadow-gold-lg: 0 8px 32px rgba(234,179,8,0.25);
             --radius-sm: 8px;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -55,11 +59,13 @@
             width: 100%;
             background: rgba(18,18,20,0.9);
             backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             padding: 14px 24px;
             border-bottom: 2px solid var(--gold-500);
             display: flex;
             align-items: center;
             justify-content: space-between;
+            content-visibility: auto;
         }
         .fp-auth-brand { display: flex; align-items: center; gap: 10px; }
         .fp-auth-brand-icon {
@@ -86,6 +92,13 @@
         input[type=checkbox], input[type=radio] { accent-color: var(--gold-500); }
         .fp-badge, .fp-tag, .fp-label, .fp-btn, .fp-card-badge { user-select: none; }
         select { appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23A1A1AA' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e"); background-repeat: no-repeat; background-position: right 12px center; background-size: 12px; }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
     </style>
 <body>
     <nav class="fp-auth-nav" aria-label="Site navigation">
