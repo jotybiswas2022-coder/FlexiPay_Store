@@ -232,6 +232,17 @@
                 z-index: 1040; display: none;
             }
             .fp-overlay.open { display: block; }
+            .fp-content { padding: 16px; }
+            .fp-table th, .fp-table td { padding: 10px 14px; }
+            .fp-topbar { padding: 10px 16px; }
+            .fp-topbar-user span { display: none; }
+            .fp-stat-card .stat-num { font-size: 24px; }
+        }
+
+        @media (max-width: 576px) {
+            .fp-content { padding: 12px; }
+            .fp-topbar h5 { font-size: 14px; }
+            .fp-topbar { padding: 8px 12px; }
         }
 
         /* Scrollbar */
